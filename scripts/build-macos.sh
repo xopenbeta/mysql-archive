@@ -47,11 +47,15 @@ if [[ "${ARCH}" == "x86_64" && "${HOST_ARCH}" == "arm64" ]]; then
 
   OPENSSL_ROOT_DIR="${OPENSSL_INSTALL_DIR}"
   CMAKE_OSX_ARCH="x86_64"
+  # 交叉编译时 CMake 无法正确处理 zstd 内置的 x86_64 汇编文件，
+  # 禁用汇编优化以避免链接时出现 Undefined symbols for architecture x86_64。
+  CROSS_COMPILE_FLAGS="-DZSTD_DISABLE_ASM"
 else
   # 原生编译
   brew install openssl@3
   OPENSSL_ROOT_DIR="$(brew --prefix openssl@3)"
   CMAKE_OSX_ARCH="${ARCH}"
+  CROSS_COMPILE_FLAGS=""
 fi
 
 # ── 下载 MySQL 源码 ─────────────────────────────────────────────────
@@ -87,6 +91,7 @@ cmake -B "${BUILD_DIR}" -S "${SRC_DIR}" \
   -DDEFAULT_CHARSET=utf8mb4 \
   -DDEFAULT_COLLATION=utf8mb4_0900_ai_ci \
   -DWITH_JEMALLOC=OFF \
+  ${CROSS_COMPILE_FLAGS:+-DCMAKE_C_FLAGS="${CROSS_COMPILE_FLAGS}" -DCMAKE_CXX_FLAGS="${CROSS_COMPILE_FLAGS}"} \
   ${CMAKE_EXTRA_ARGS[@]+"${CMAKE_EXTRA_ARGS[@]}"}
 
 # ── 编译并安装 ──────────────────────────────────────────────────────
