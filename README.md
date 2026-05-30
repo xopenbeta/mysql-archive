@@ -1,16 +1,16 @@
 # mysql-archive
 
-为 macOS 预编译的 MySQL 二进制包，支持 Intel (x86_64) 和 Apple Silicon (arm64)。
+为 macOS、Linux、Windows 预编译的 MySQL 二进制包，支持 Intel (x86_64) 和 Apple Silicon / ARM (arm64)。
 
 ## 触发构建
 
 ```bash
-git tag v202605301824
+git tag v202605301834
 git push
-git push origin v202605301824
+git push origin v202605301828
 ```
 
-构建完成后，GitHub Release 页面会自动发布全部支持版本在 arm64 与 x86_64 两个目标架构上的二进制包。
+构建完成后，GitHub Release 页面会自动发布全部支持版本在所有平台与架构上的二进制包。
 
 ## 支持版本
 
@@ -19,14 +19,18 @@ git push origin v202605301824
 | 8.0 | 8.0.41 | Long-Term Support |
 | 8.4 | 8.4.4 | Long-Term Support |
 
-## 构建环境
+## 构建矩阵
 
-| 架构 | Runner | 最低 macOS |
-|------|--------|-----------|
-| x86_64 (Intel) | `macos-14` | 12.0 Monterey |
-| arm64 (Apple Silicon) | `macos-14` | 12.0 Monterey |
+每个 **操作系统 × 架构 × MySQL 版本** 组合为独立的 CI job，共 12 个 job：
 
-说明：由于 GitHub Actions 已不再稳定提供 `macos-13`，x86_64 产物改为在 `macos-14` Apple Silicon runner 上通过 Rosetta 与 x86_64 Homebrew 依赖链进行交叉编译。
+| 操作系统 | 架构 | Runner |
+|---------|------|--------|
+| macOS | arm64 | `macos-14` |
+| macOS | x86_64 | `macos-14`（Rosetta 交叉编译）|
+| Linux | arm64 | `ubuntu-24.04-arm` |
+| Linux | x86_64 | `ubuntu-24.04` |
+| Windows | arm64 | `windows-11-arm` |
+| Windows | x86_64 | `windows-latest` |
 
 ## 构建配置
 

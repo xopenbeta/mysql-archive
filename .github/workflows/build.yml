@@ -1,4 +1,4 @@
-﻿name: "Build macOS MySQL packages"
+﻿name: "Build MySQL packages"
 
 on:
   push:
@@ -8,45 +8,97 @@ on:
 
 jobs:
   build:
-    name: Build ${{ matrix.mysql_version }} / ${{ matrix.target_arch }}
-    runs-on: macos-14
+    name: Build - ${{ matrix.os_name }} - ${{ matrix.target_arch }} - MySQL ${{ matrix.mysql_version }}
+    runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - mysql_version: '8.0.41'
-            target_arch: 'arm64'
-          - mysql_version: '8.0.41'
-            target_arch: 'x86_64'
-          - mysql_version: '8.4.4'
-            target_arch: 'arm64'
-          - mysql_version: '8.4.4'
-            target_arch: 'x86_64'
+          # ── macOS / arm64 ──────────────────────────────────────────
+          - os_name: macos
+            target_arch: arm64
+            runner: macos-14
+            mysql_version: '8.0.41'
+          - os_name: macos
+            target_arch: arm64
+            runner: macos-14
+            mysql_version: '8.4.4'
+          # ── macOS / x86_64（Rosetta 交叉编译）─────────────────────
+          - os_name: macos
+            target_arch: x86_64
+            runner: macos-14
+            mysql_version: '8.0.41'
+          - os_name: macos
+            target_arch: x86_64
+            runner: macos-14
+            mysql_version: '8.4.4'
+          # ── Linux / arm64 ──────────────────────────────────────────
+          - os_name: linux
+            target_arch: arm64
+            runner: ubuntu-24.04-arm
+            mysql_version: '8.0.41'
+          - os_name: linux
+            target_arch: arm64
+            runner: ubuntu-24.04-arm
+            mysql_version: '8.4.4'
+          # ── Linux / x86_64 ─────────────────────────────────────────
+          - os_name: linux
+            target_arch: x86_64
+            runner: ubuntu-24.04
+            mysql_version: '8.0.41'
+          - os_name: linux
+            target_arch: x86_64
+            runner: ubuntu-24.04
+            mysql_version: '8.4.4'
+          # ── Windows / arm64 ────────────────────────────────────────
+          - os_name: windows
+            target_arch: arm64
+            runner: windows-11-arm
+            mysql_version: '8.0.41'
+          - os_name: windows
+            target_arch: arm64
+            runner: windows-11-arm
+            mysql_version: '8.4.4'
+          # ── Windows / x86_64 ───────────────────────────────────────
+          - os_name: windows
+            target_arch: x86_64
+            runner: windows-latest
+            mysql_version: '8.0.41'
+          - os_name: windows
+            target_arch: x86_64
+            runner: windows-latest
+            mysql_version: '8.4.4'
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Make build script executable
-        run: chmod +x ./scripts/build-macos.sh
-
-      - name: Run build script
-        env:
-          GITHUB_RUN_ID: ${{ github.run_id }}
+      # ── macOS ───────────────────────────────────────────────────────
+      - name: Run build script (macOS)
+        if: matrix.os_name == 'macos'
         run: |
-          set -eux
+          chmod +x ./scripts/build-macos.sh
           ./scripts/build-macos.sh "${{ matrix.target_arch }}" "${{ matrix.mysql_version }}"
 
-      - name: Upload binaries
-        uses: actions/upload-artifact@v4
-        with:
-          name: mysql-${{ matrix.mysql_version }}-${{ matrix.target_arch }}
-          path: dist-artifacts/mysql-${{ matrix.mysql_version }}-macos-${{ matrix.target_arch }}.tar.gz
+      # ── Linux ───────────────────────────────────────────────────────
+      - name: Run build script (Linux)
+        if: matrix.os_name == 'linux'
+        run: |
+          chmod +x ./scripts/build-linux.sh
+          ./scripts/build-linux.sh "${{ matrix.target_arch }}" "${{ matrix.mysql_version }}"
 
-      - name: Upload checksum
+      # ── Windows ─────────────────────────────────────────────────────
+      - name: Run build script (Windows)
+        if: matrix.os_name == 'windows'
+        shell: pwsh
+        run: |
+          .\scripts\build-windows.ps1 -Arch "${{ matrix.target_arch }}" -MysqlVersion "${{ matrix.mysql_version }}"
+
+      # ── Upload artifacts ────────────────────────────────────────────
+      - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
-          name: mysql-${{ matrix.mysql_version }}-${{ matrix.target_arch }}-sha256
-          path: dist-artifacts/mysql-${{ matrix.mysql_version }}-macos-${{ matrix.target_arch }}.tar.gz.sha256
+          name: mysql-${{ matrix.mysql_version }}-${{ matrix.os_name }}-${{ matrix.target_arch }}
+          path: dist-artifacts/mysql-${{ matrix.mysql_version }}-${{ matrix.os_name }}-${{ matrix.target_arch }}.*
 
   release:
     needs: build
@@ -63,4 +115,6 @@ jobs:
           files: |
             **/*.tar.gz
             **/*.tar.gz.sha256
+            **/*.zip
+            **/*.zip.sha256
           generate_release_notes: true
