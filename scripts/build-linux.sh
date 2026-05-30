@@ -13,49 +13,70 @@ mkdir -p "$OUTDIR"
 TARBALL_NAME="mysql-${MYSQL_VERSION}-linux-${ARCH}.tar.gz"
 TARBALL_PATH="$OUTDIR/$TARBALL_NAME"
 SHA_PATH="$TARBALL_PATH.sha256"
+INSTALL_DIR="${WORKDIR}/mysql-${MYSQL_VERSION}"
+BUILD_DIR="${WORKDIR}/mysql-build"
+SRC_DIR="${WORKDIR}/mysql-src"
 
-echo "Building placeholder package for arch=$ARCH mysql=$MYSQL_VERSION series=$SERIES"
+echo "=== Building MySQL ${MYSQL_VERSION} for linux/${ARCH} ==="
 
-# Download source tarball (best-effort, don't fail if unavailable)
+# ── 安装构建依赖 ────────────────────────────────────────────────────
+sudo apt-get update -y
+sudo apt-get install -y \
+  cmake ninja-build gcc g++ make \
+  libssl-dev libncurses-dev \
+  pkg-config bison \
+  libtirpc-dev rpcsvc-proto \
+  libaio-dev libldap-dev libsasl2-dev \
+  libnuma-dev
+
+# ── 下载源码 ────────────────────────────────────────────────────────
 SRC_URL="https://cdn.mysql.com/Downloads/MySQL-${SERIES}/mysql-${MYSQL_VERSION}.tar.gz"
-SRC_ARCHIVE="mysql-${MYSQL_VERSION}.tar.gz"
-if command -v curl >/dev/null 2>&1; then
-  echo "Attempting to download source from $SRC_URL"
-  curl -fSL "$SRC_URL" -o "$SRC_ARCHIVE" || echo "Download failed or not present; continuing with placeholder"
+SRC_ARCHIVE="${WORKDIR}/mysql-${MYSQL_VERSION}.tar.gz"
+echo "Downloading source from ${SRC_URL}"
+curl -fSL "${SRC_URL}" -o "${SRC_ARCHIVE}"
+
+mkdir -p "${SRC_DIR}"
+tar -xzf "${SRC_ARCHIVE}" -C "${SRC_DIR}" --strip-components=1
+
+# ── CMake 配置 ──────────────────────────────────────────────────────
+mkdir -p "${BUILD_DIR}"
+
+CMAKE_EXTRA_ARGS=()
+if [[ "${SERIES}" == "8.0" ]]; then
+  # MySQL 8.0 需要 Boost 1.77，通过 CMake 自动下载
+  CMAKE_EXTRA_ARGS+=(
+    "-DDOWNLOAD_BOOST=1"
+    "-DWITH_BOOST=${WORKDIR}/boost"
+  )
 fi
 
-# Create a minimal package layout
-BUILDTMP=$(mktemp -d)
-mkdir -p "$BUILDTMP/mysql-${MYSQL_VERSION}/bin"
-echo "Placeholder MySQL build for linux/$ARCH $MYSQL_VERSION" > "$BUILDTMP/mysql-${MYSQL_VERSION}/README.txt"
+cmake -B "${BUILD_DIR}" -S "${SRC_DIR}" \
+  -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}" \
+  -DWITH_SSL=system \
+  -DWITH_UNIT_TESTS=OFF \
+  -DENABLED_LOCAL_INFILE=1 \
+  -DDEFAULT_CHARSET=utf8mb4 \
+  -DDEFAULT_COLLATION=utf8mb4_0900_ai_ci \
+  -DWITH_JEMALLOC=OFF \
+  -DWITH_NUMA=1 \
+  "${CMAKE_EXTRA_ARGS[@]}"
 
-if [ -f "$SRC_ARCHIVE" ]; then
-  mkdir -p "$BUILDTMP/mysql-${MYSQL_VERSION}/src"
-  tar -xzf "$SRC_ARCHIVE" -C "$BUILDTMP/mysql-${MYSQL_VERSION}/src" || true
-fi
+# ── 编译并安装 ──────────────────────────────────────────────────────
+cmake --build "${BUILD_DIR}" --parallel "$(nproc)"
+cmake --install "${BUILD_DIR}"
 
-cat > "$BUILDTMP/mysql-${MYSQL_VERSION}/bin/mysqld" <<'EOF'
-#!/bin/sh
-echo "This is a placeholder mysqld binary for testing CI artifacts."
-EOF
-chmod +x "$BUILDTMP/mysql-${MYSQL_VERSION}/bin/mysqld"
+# ── Strip 精简体积 ───────────────────────────────────────────────────
+find "${INSTALL_DIR}/bin" -type f -exec strip --strip-unneeded {} \; 2>/dev/null || true
+find "${INSTALL_DIR}/lib" -name "*.so*" -type f -exec strip --strip-unneeded {} \; 2>/dev/null || true
 
-# Pack the tarball
-tar -C "$BUILDTMP" -czf "$TARBALL_PATH" "mysql-${MYSQL_VERSION}"
+# ── 打包 ────────────────────────────────────────────────────────────
+tar -C "${WORKDIR}" -czf "${TARBALL_PATH}" "mysql-${MYSQL_VERSION}"
 
-# Generate SHA256
-if command -v sha256sum >/dev/null 2>&1; then
-  sha256sum "$TARBALL_PATH" | awk '{print $1 "  " $2}' > "$SHA_PATH"
-elif command -v shasum >/dev/null 2>&1; then
-  shasum -a 256 "$TARBALL_PATH" | awk '{print $1 "  " $2}' > "$SHA_PATH"
-else
-  openssl dgst -sha256 "$TARBALL_PATH" | awk '{print $2 "  '"$TARBALL_NAME"'"}' > "$SHA_PATH" || true
-fi
+# ── 生成 SHA256 ──────────────────────────────────────────────────────
+sha256sum "${TARBALL_PATH}" | awk '{print $1 "  " $2}' > "${SHA_PATH}"
 
-echo "Created artifact: $TARBALL_PATH"
-echo "Created checksum: $SHA_PATH"
-
-# Clean up
-rm -rf "$BUILDTMP"
-
+echo "Created artifact: ${TARBALL_PATH}"
+echo "Created checksum: ${SHA_PATH}"
 echo "Done"
