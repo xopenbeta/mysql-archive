@@ -20,7 +20,8 @@ SRC_DIR="${WORKDIR}/mysql-src"
 echo "=== Building MySQL ${MYSQL_VERSION} for macOS/${ARCH} ==="
 
 # ── 安装构建工具 ────────────────────────────────────────────────────
-brew install cmake ninja pkg-config
+brew install cmake ninja pkg-config bison
+export PATH="$(brew --prefix bison)/bin:$PATH"
 
 # ── 处理 OpenSSL：区分原生 arm64 和交叉编译 x86_64 ─────────────────
 HOST_ARCH="$(uname -m)"   # 运行时真实架构（runner 为 arm64）
