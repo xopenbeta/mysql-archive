@@ -3,7 +3,8 @@ set -euo pipefail
 
 ARCH="$1"
 MYSQL_VERSION="$2"
-SERIES="$3"
+# 从版本号自动推导系列号，例如 8.0.41 → 8.0，8.4.4 → 8.4
+SERIES="${MYSQL_VERSION%.*}"
 
 WORKDIR="$(pwd)"
 OUTDIR="$WORKDIR/dist-artifacts"
