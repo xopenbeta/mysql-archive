@@ -1,4 +1,4 @@
-name: Build MySQL binaries
+﻿name: "Build macOS MySQL packages"
 
 on:
   push:
@@ -8,345 +8,45 @@ on:
 
 jobs:
   build:
+    name: Build ${{ matrix.mysql_version }} / ${{ matrix.target_arch }}
+    runs-on: macos-14
     strategy:
+      fail-fast: false
       matrix:
         include:
-          - arch: arm64
-            series: '8.0'
-            mysql_version: '8.0.41'
-          - arch: x86_64
-            series: '8.0'
-            mysql_version: '8.0.41'
-          - arch: arm64
-            series: '8.4'
-            mysql_version: '8.4.4'
-          - arch: x86_64
-            series: '8.4'
-            mysql_version: '8.4.4'
-    runs-on: macos-14
-    name: Build - ${{ matrix.arch }} - MySQL ${{ matrix.mysql_version }}
+          - mysql_version: '8.0.41'
+            target_arch: 'arm64'
+          - mysql_version: '8.0.41'
+            target_arch: 'x86_64'
+          - mysql_version: '8.4.4'
+            target_arch: 'arm64'
+          - mysql_version: '8.4.4'
+            target_arch: 'x86_64'
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Show build matrix
-        run: |
-          echo "ARCH=${{ matrix.arch }}"
-          echo "MYSQL_VERSION=${{ matrix.mysql_version }}"
-          echo "SERIES=${{ matrix.series }}"
-
-      - name: Ensure Rosetta (for x86_64 builds)
-        if: matrix.arch == 'x86_64'
-        run: |
-          /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
+      - uses: actions/checkout@v4
 
       - name: Make build script executable
-        run: |
-          chmod +x ./scripts/build-macos.sh
+        run: chmod +x ./scripts/build-macos.sh
 
       - name: Run build script
         env:
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
-          ./scripts/build-macos.sh "${{ matrix.arch }}" "${{ matrix.mysql_version }}" "${{ matrix.series }}"
+          set -eux
+          ./scripts/build-macos.sh "${{ matrix.target_arch }}" "${{ matrix.mysql_version }}"
 
       - name: Upload binaries
         uses: actions/upload-artifact@v4
         with:
-          name: mysql-${{ matrix.mysql_version }}-${{ matrix.arch }}
-          path: dist-artifacts/mysql-${{ matrix.mysql_version }}-macos-${{ matrix.arch }}.tar.gz
+          name: mysql-${{ matrix.mysql_version }}-${{ matrix.target_arch }}
+          path: dist-artifacts/mysql-${{ matrix.mysql_version }}-macos-${{ matrix.target_arch }}.tar.gz
 
       - name: Upload checksum
         uses: actions/upload-artifact@v4
         with:
-          name: mysql-${{ matrix.mysql_version }}-${{ matrix.arch }}-sha256
-          path: dist-artifacts/mysql-${{ matrix.mysql_version }}-macos-${{ matrix.arch }}.tar.gz.sha256
-name: Build MySQL for macOS
-
-on:
-  push:
-    tags:
-      - 'v*'
-
-env:
-  MACOS_DEPLOYMENT_TARGET: "12.0"
-
-jobs:
-  build:
-    name: MySQL ${{ matrix.mysql_version }} (${{ matrix.target_arch }})
-    strategy:
-      fail-fast: false
-      matrix:
-        mysql_version:
-          - "8.0.41"
-          - "8.4.4"
-        target_arch:
-          - arm64
-          - x86_64
-        include:
-          - target_arch: arm64
-            runner: macos-14
-            brew_prefix: /opt/homebrew
-            brew_bin: /opt/homebrew/bin/brew
-          - target_arch: x86_64
-            runner: macos-14
-            brew_prefix: /usr/local
-            brew_bin: /usr/local/bin/brew
-
-    runs-on: ${{ matrix.runner }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Select Xcode 15.4
-        run: |
-          XCODE_APP="/Applications/Xcode_15.4.app"
-          if [ ! -d "${XCODE_APP}" ]; then
-            echo "Expected Xcode not found: ${XCODE_APP}"
-            exit 1
-          fi
-          echo "Selected Xcode: ${XCODE_APP}"
-          sudo xcode-select -s "${XCODE_APP}/Contents/Developer"
-          xcodebuild -version
-          xcrun clang --version
-          xcrun clang++ --version
-          echo "DEVELOPER_DIR=${XCODE_APP}/Contents/Developer" >> "${GITHUB_ENV}"
-
-      - name: Prepare Rosetta and x86_64 Homebrew
-        if: matrix.target_arch == 'x86_64'
-        run: |
-          softwareupdate --install-rosetta --agree-to-license || true
-
-          if [ ! -x "/usr/local/bin/brew" ]; then
-            NONINTERACTIVE=1 arch -x86_64 /bin/bash -c \
-              "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          fi
-
-          arch -x86_64 /usr/local/bin/brew --version
-
-      - name: Install dependencies
-        run: |
-          BREW_BIN="${{ matrix.brew_bin }}"
-
-          if [ ! -x "${BREW_BIN}" ]; then
-            echo "Expected Homebrew not found: ${BREW_BIN}"
-            exit 1
-          fi
-
-          brew_cmd() {
-            if [ "${{ matrix.target_arch }}" = "x86_64" ]; then
-              arch -x86_64 "${BREW_BIN}" "$@"
-            else
-              "${BREW_BIN}" "$@"
-            fi
-          }
-
-          brew_cmd update
-          # Add pcre2 which is used by some MySQL components; keep other deps
-          brew_cmd install cmake openssl@3 bison pkg-config pcre2
-
-          MYSQL_VERSION="${{ matrix.mysql_version }}"
-          # Extract "8.0" from "8.0.41", "8.4" from "8.4.4", etc.
-          MAJOR_MINOR="${MYSQL_VERSION%.*}"
-
-          {
-            echo "MYSQL_VERSION=${MYSQL_VERSION}"
-            echo "MAJOR_MINOR=${MAJOR_MINOR}"
-            echo "INSTALL_DIR=mysql-${MYSQL_VERSION}-macos-${{ matrix.target_arch }}"
-            echo "BREW_PREFIX=${{ matrix.brew_prefix }}"
-            echo "BREW_BIN=${BREW_BIN}"
-          } >> "${GITHUB_ENV}"
-
-      - name: Sanitize environment
-        run: |
-          # Prevent Homebrew headers from shadowing Xcode/SDK system headers
-          echo "CPATH=" >> "${GITHUB_ENV}"
-          echo "C_INCLUDE_PATH=" >> "${GITHUB_ENV}"
-          echo "CPLUS_INCLUDE_PATH=" >> "${GITHUB_ENV}"
-
-      - name: Inspect libc++ headers
-        run: |
-          SDK_PATH="$(xcrun --sdk macosx --show-sdk-path)"
-          CXX="$(xcrun --find clang++)"
-          export SDKROOT="${SDK_PATH}"
-          echo "=== Diagnostics ==="
-          echo "SDK path: ${SDK_PATH}"
-          echo "CXX: ${CXX}"
-          echo "xcode-select: $(xcode-select -p)"
-          echo "Target arch: ${{ matrix.target_arch }}"
-          echo "SDK c++/v1 exists:       $([ -d "${SDK_PATH}/usr/include/c++/v1" ] && echo YES || echo NO)"
-          echo "SDK c++/v1/stddef.h:     $([ -f "${SDK_PATH}/usr/include/c++/v1/stddef.h" ] && echo YES || echo NO)"
-          echo "=== Default C++ include search order ==="
-          printf '' | "${CXX}" -arch "${{ matrix.target_arch }}" -std=c++17 -stdlib=libc++ -x c++ -E -v - 2>&1 | \
-            sed -n '/#include <...> search starts here:/,/End of search list./p'
-          echo "==================="
-          echo "SDKROOT=${SDK_PATH}" >> "${GITHUB_ENV}"
-
-      - name: Download MySQL source
-        run: |
-          URL_PRIMARY="https://cdn.mysql.com/Downloads/MySQL-${MAJOR_MINOR}/mysql-${MYSQL_VERSION}.tar.gz"
-          URL_INDEX="https://cdn.mysql.com/Downloads/MySQL-${MAJOR_MINOR}/"
-
-          echo "Attempting download: ${URL_PRIMARY}"
-          # Retry a few times in case of transient network/CND issues
-          curl --retry 3 --retry-delay 5 -fSL -o "mysql-${MYSQL_VERSION}.tar.gz" "${URL_PRIMARY}" || {
-            echo "Primary download failed. Gathering diagnostics..."
-            echo "HTTP HEAD for primary URL:"
-            curl -I "${URL_PRIMARY}" || true
-
-            echo "Attempting to fetch directory index for ${URL_INDEX} to help debugging"
-            curl -fSL -o "mysql-${MAJOR_MINOR}-index.html" "${URL_INDEX}" || true
-            if [ -f "mysql-${MAJOR_MINOR}-index.html" ]; then
-              echo "Index snippet (first 200 lines):"
-              head -n 200 "mysql-${MAJOR_MINOR}-index.html" || true
-              echo "Searching index for matching tarball name:"
-              grep -E "mysql-${MYSQL_VERSION}\.tar\.gz" -n "mysql-${MAJOR_MINOR}-index.html" || true
-            fi
-
-            echo "Download failed for ${URL_PRIMARY}. Please verify that the requested MySQL version exists at the CDN or update the workflow to point to a valid source URL. Exiting."
-            exit 22
-          }
-
-          tar xzf "mysql-${MYSQL_VERSION}.tar.gz"
-
-      - name: Configure
-        run: |
-          brew_cmd() {
-            if [ "${{ matrix.target_arch }}" = "x86_64" ]; then
-              arch -x86_64 "${BREW_BIN}" "$@"
-            else
-              "${BREW_BIN}" "$@"
-            fi
-          }
-
-          OPENSSL_ROOT="$(brew_cmd --prefix openssl@3)"
-          BISON_ROOT="$(brew_cmd --prefix bison)"
-          PCRE2_ROOT="$(brew_cmd --prefix pcre2)"
-          CMAKE_BIN="${BREW_PREFIX}/bin/cmake"
-
-          cd "mysql-${MYSQL_VERSION}"
-          rm -rf build
-          mkdir build && cd build
-
-          SDK_PATH="$(xcrun --sdk macosx --show-sdk-path)"
-          CC="$(xcrun --find clang)"
-          CXX="$(xcrun --find clang++)"
-          # zlib from SDK
-          ZLIB_INCLUDE_DIR="${SDK_PATH}/usr/include"
-          ZLIB_LIBRARY="${SDK_PATH}/usr/lib/libz.tbd"
-          echo "SDK_PATH=${SDK_PATH}"
-          echo "CC=${CC}  CXX=${CXX}"
-          echo "ZLIB_INCLUDE_DIR=${ZLIB_INCLUDE_DIR}"
-          echo "ZLIB_LIBRARY=${ZLIB_LIBRARY}"
-
-          # Export SDKROOT so Clang automatically resolves SDK and libc++ headers
-          export SDKROOT="${SDK_PATH}"
-          export PATH="${BISON_ROOT}/bin:${BREW_PREFIX}/bin:${PATH}"
-          export PKG_CONFIG_PATH="${OPENSSL_ROOT}/lib/pkgconfig:${PCRE2_ROOT}/lib/pkgconfig"
-
-          if [ ! -x "${CMAKE_BIN}" ]; then
-            echo "Expected CMake not found: ${CMAKE_BIN}"
-            exit 1
-          fi
-
-          # Boost cache directory: CMake downloads Boost here if not already present.
-          # MySQL 8.0 requires external Boost; MySQL 8.4+ bundles Boost in the source tree.
-          BOOST_CACHE="${GITHUB_WORKSPACE}/boost_cache"
-          mkdir -p "${BOOST_CACHE}"
-
-          "${CMAKE_BIN}" .. \
-            -DCMAKE_C_COMPILER="${CC}" \
-            -DCMAKE_CXX_COMPILER="${CXX}" \
-            -DCMAKE_INSTALL_PREFIX="/${INSTALL_DIR}" \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_VERBOSE_MAKEFILE=ON \
-            -DCMAKE_CXX_STANDARD=17 \
-            -DCMAKE_C_FLAGS="-arch ${{ matrix.target_arch }}" \
-            -DCMAKE_CXX_FLAGS="-arch ${{ matrix.target_arch }} -stdlib=libc++" \
-            -DCMAKE_EXE_LINKER_FLAGS="-arch ${{ matrix.target_arch }} -stdlib=libc++" \
-            -DCMAKE_SHARED_LINKER_FLAGS="-arch ${{ matrix.target_arch }} -stdlib=libc++" \
-            -DCMAKE_OSX_ARCHITECTURES="${{ matrix.target_arch }}" \
-            -DCMAKE_OSX_DEPLOYMENT_TARGET="${MACOS_DEPLOYMENT_TARGET}" \
-            -DCMAKE_OSX_SYSROOT="${SDK_PATH}" \
-            -DCMAKE_FIND_FRAMEWORK=LAST \
-            -DCMAKE_PREFIX_PATH="${OPENSSL_ROOT};${PCRE2_ROOT};${BISON_ROOT}" \
-            -DOPENSSL_ROOT_DIR="${OPENSSL_ROOT}" \
-            -DOPENSSL_INCLUDE_DIR="${OPENSSL_ROOT}/include" \
-            -DPCRE2_INCLUDE_DIR="${PCRE2_ROOT}/include" \
-            -DPCRE2_LIBRARY="${PCRE2_ROOT}/lib/libpcre2-8.dylib" \
-            -DZLIB_INCLUDE_DIR="${ZLIB_INCLUDE_DIR}" \
-            -DZLIB_LIBRARY="${ZLIB_LIBRARY}" \
-            -DWITH_SSL="${OPENSSL_ROOT}" \
-            -DBISON_EXECUTABLE="${BISON_ROOT}/bin/bison" \
-            -DWITH_BOOST="${BOOST_CACHE}" \
-            -DDOWNLOAD_BOOST=1 \
-            -DDOWNLOAD_BOOST_TIMEOUT=600 \
-            -DDEFAULT_CHARSET=utf8mb4 \
-            -DDEFAULT_COLLATION=utf8mb4_0900_ai_ci \
-            -DWITH_JEMALLOC=OFF \
-            -DWITH_UNIT_TESTS=OFF
-
-      - name: Build
-        run: |
-          cd "mysql-${MYSQL_VERSION}/build"
-          make VERBOSE=1 -j$(sysctl -n hw.logicalcpu)
-
-      - name: Package
-        run: |
-          cd "mysql-${MYSQL_VERSION}/build"
-          rm -rf "${GITHUB_WORKSPACE}/stage"
-          make install DESTDIR="${GITHUB_WORKSPACE}/stage"
-
-          cd "${GITHUB_WORKSPACE}/stage"
-
-          # Add a minimal README so users who download the archive know how to start
-          cat > "${INSTALL_DIR}/README.md" <<'EOF'
-          This archive contains a prebuilt MySQL distribution.
-
-          Usage:
-            # extract
-            tar xzf mysql-VERSION-macos-ARCH.tar.gz
-            cd mysql-VERSION-macos-ARCH
-
-            # initialize (first time only)
-            mkdir data
-            ./bin/mysqld --initialize --datadir=$(pwd)/data --basedir=$(pwd)
-
-            # start
-            ./bin/mysqld --datadir=$(pwd)/data --basedir=$(pwd) --socket=/tmp/mysql.sock --port=3306 &
-
-            # connect
-            ./bin/mysql -u root -p --socket=/tmp/mysql.sock
-
-            # shutdown
-            ./bin/mysqladmin -u root -p --socket=/tmp/mysql.sock shutdown
-
-          EOF
-
-          cd "${GITHUB_WORKSPACE}/stage"
-          # Create tar.gz (top-level directory is ${INSTALL_DIR})
-          tar czf "${GITHUB_WORKSPACE}/${INSTALL_DIR}.tar.gz" "${INSTALL_DIR}"
-
-          # Also produce a zip for convenience on platforms that prefer zip
-          # Use ditto on macOS to preserve metadata when possible; fall back to zip
-          if command -v ditto >/dev/null 2>&1; then
-            (cd "${GITHUB_WORKSPACE}/stage" && ditto -c -k --sequesterRsrc --keepParent "${INSTALL_DIR}" "${GITHUB_WORKSPACE}/${INSTALL_DIR}.zip")
-          else
-            (cd "${GITHUB_WORKSPACE}/stage" && zip -r "${GITHUB_WORKSPACE}/${INSTALL_DIR}.zip" "${INSTALL_DIR}")
-          fi
-
-          cd "${GITHUB_WORKSPACE}"
-          shasum -a 256 "${INSTALL_DIR}.tar.gz" > "${INSTALL_DIR}.tar.gz.sha256"
-          shasum -a 256 "${INSTALL_DIR}.zip" > "${INSTALL_DIR}.zip.sha256"
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: mysql-${{ matrix.mysql_version }}-macos-${{ matrix.target_arch }}
-          path: |
-            mysql-${{ matrix.mysql_version }}-macos-${{ matrix.target_arch }}.tar.gz
-            mysql-${{ matrix.mysql_version }}-macos-${{ matrix.target_arch }}.tar.gz.sha256
+          name: mysql-${{ matrix.mysql_version }}-${{ matrix.target_arch }}-sha256
+          path: dist-artifacts/mysql-${{ matrix.mysql_version }}-macos-${{ matrix.target_arch }}.tar.gz.sha256
 
   release:
     needs: build
@@ -355,13 +55,12 @@ jobs:
       contents: write
 
     steps:
-      - name: Download all artifacts
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
 
-      - name: Create GitHub Release
+      - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            mysql-*/mysql-*.tar.gz
-            mysql-*/mysql-*.tar.gz.sha256
+            **/*.tar.gz
+            **/*.tar.gz.sha256
           generate_release_notes: true
