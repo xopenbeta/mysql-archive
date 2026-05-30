@@ -54,8 +54,10 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 [System.IO.Compression.ZipFile]::ExtractToDirectory($SrcArchive, $Workdir)
 # MySQL zip 内层目录名为 mysql-<version>，移至 SrcDir
 $ExtractedDir = Get-ChildItem $Workdir -Directory -Filter "mysql-${MysqlVersion}" |
-                Where-Object { $_.FullName -ne $InstallDir } |
                 Select-Object -First 1
+if (-not $ExtractedDir) {
+    throw "Could not find extracted MySQL source directory under $Workdir"
+}
 Rename-Item -Path $ExtractedDir.FullName -NewName (Split-Path $SrcDir -Leaf)
 
 # ── CMake 平台参数 ───────────────────────────────────────────────────
