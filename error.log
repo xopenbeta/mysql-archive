@@ -1,0 +1,347 @@
+2026-05-30T16:46:15.7809158Z Current runner version: '2.334.0'
+2026-05-30T16:46:15.7837568Z ##[group]Runner Image Provisioner
+2026-05-30T16:46:15.7838432Z Hosted Compute Agent
+2026-05-30T16:46:15.7839023Z Version: 20260520.533
+2026-05-30T16:46:15.7839632Z Commit: 189110e25284a9812c124fd27b339e2fb4f2f9db
+2026-05-30T16:46:15.7840306Z Build Date: 2026-05-20T17:44:04Z
+2026-05-30T16:46:15.7841121Z Worker ID: {8527fdee-1586-4ad3-817a-4c25a08c6fb5}
+2026-05-30T16:46:15.7841819Z Azure Region: westus3
+2026-05-30T16:46:15.7842456Z ##[endgroup]
+2026-05-30T16:46:15.7844340Z ##[group]Operating System
+2026-05-30T16:46:15.7844960Z Microsoft Windows 11
+2026-05-30T16:46:15.7845518Z 10.0.26200
+2026-05-30T16:46:15.7846032Z Enterprise
+2026-05-30T16:46:15.7846529Z ##[endgroup]
+2026-05-30T16:46:15.7847072Z ##[group]Runner Image
+2026-05-30T16:46:15.7847684Z Image: windows-11-arm64
+2026-05-30T16:46:15.7848220Z Version: 20260525.56.1
+2026-05-30T16:46:15.7849784Z Included Software: https://github.com/actions/runner-images/blob/win11-arm64/20260525.56/images/windows/Windows11-Arm64-Readme.md
+2026-05-30T16:46:15.7851352Z Image Release: https://github.com/actions/runner-images/releases/tag/win11-arm64%2F20260525.56
+2026-05-30T16:46:15.7852222Z ##[endgroup]
+2026-05-30T16:46:15.7853301Z ##[group]GITHUB_TOKEN Permissions
+2026-05-30T16:46:15.7855500Z Contents: read
+2026-05-30T16:46:15.7856473Z Metadata: read
+2026-05-30T16:46:15.7857041Z Packages: read
+2026-05-30T16:46:15.7857534Z ##[endgroup]
+2026-05-30T16:46:15.7860317Z Secret source: Actions
+2026-05-30T16:46:15.7861084Z Prepare workflow directory
+2026-05-30T16:46:15.8251276Z Prepare all required actions
+2026-05-30T16:46:15.8289765Z Getting action download info
+2026-05-30T16:46:16.1814202Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-05-30T16:46:16.4859235Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-05-30T16:46:17.5057808Z Complete job name: Build - windows - arm64 - MySQL 8.4.9
+2026-05-30T16:46:17.6784984Z ##[group]Run actions/checkout@v4
+2026-05-30T16:46:17.6786913Z with:
+2026-05-30T16:46:17.6787675Z   repository: xopenbeta/mysql-archive
+2026-05-30T16:46:17.6795093Z   token: ***
+2026-05-30T16:46:17.6795730Z   ssh-strict: true
+2026-05-30T16:46:17.6796387Z   ssh-user: git
+2026-05-30T16:46:17.6797002Z   persist-credentials: true
+2026-05-30T16:46:17.6797693Z   clean: true
+2026-05-30T16:46:17.6798310Z   sparse-checkout-cone-mode: true
+2026-05-30T16:46:17.6799102Z   fetch-depth: 1
+2026-05-30T16:46:17.6799877Z   fetch-tags: false
+2026-05-30T16:46:17.6800648Z   show-progress: true
+2026-05-30T16:46:17.6801604Z   lfs: false
+2026-05-30T16:46:17.6802209Z   submodules: false
+2026-05-30T16:46:17.6802898Z   set-safe-directory: true
+2026-05-30T16:46:17.6804317Z ##[endgroup]
+2026-05-30T16:46:17.9425898Z Syncing repository: xopenbeta/mysql-archive
+2026-05-30T16:46:17.9428384Z ##[group]Getting Git version info
+2026-05-30T16:46:17.9429522Z Working directory is 'C:\a\mysql-archive\mysql-archive'
+2026-05-30T16:46:18.0494004Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-05-30T16:46:18.6284214Z git version 2.54.0.windows.1
+2026-05-30T16:46:18.6347640Z ##[endgroup]
+2026-05-30T16:46:18.6541738Z Temporarily overriding HOME='C:\a\_temp\b8daacee-817a-4760-b539-6016f05cc137' before making global git config changes
+2026-05-30T16:46:18.6542651Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-30T16:46:18.6553420Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory C:\a\mysql-archive\mysql-archive
+2026-05-30T16:46:18.8263156Z Deleting the contents of 'C:\a\mysql-archive\mysql-archive'
+2026-05-30T16:46:18.8271806Z ##[group]Initializing the repository
+2026-05-30T16:46:18.8281977Z [command]"C:\Program Files\Git\bin\git.exe" init C:\a\mysql-archive\mysql-archive
+2026-05-30T16:46:18.9873757Z Initialized empty Git repository in C:/a/mysql-archive/mysql-archive/.git/
+2026-05-30T16:46:18.9950092Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/xopenbeta/mysql-archive
+2026-05-30T16:46:19.0762588Z ##[endgroup]
+2026-05-30T16:46:19.0763302Z ##[group]Disabling automatic garbage collection
+2026-05-30T16:46:19.0774865Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-05-30T16:46:19.1345547Z ##[endgroup]
+2026-05-30T16:46:19.1346104Z ##[group]Setting up auth
+2026-05-30T16:46:19.1363545Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-05-30T16:46:19.1940062Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-05-30T16:46:22.1017740Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-30T16:46:22.1509767Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-05-30T16:46:23.2025560Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-30T16:46:23.2487513Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-05-30T16:46:24.2623960Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-05-30T16:46:24.3103081Z ##[endgroup]
+2026-05-30T16:46:24.3103676Z ##[group]Fetching the repository
+2026-05-30T16:46:24.3114943Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +c8b39eee6d003e7a43db94d6996abac3b44b63fc:refs/tags/v202605310045
+2026-05-30T16:46:25.6213050Z From https://github.com/xopenbeta/mysql-archive
+2026-05-30T16:46:25.6213958Z  * [new ref]         c8b39eee6d003e7a43db94d6996abac3b44b63fc -> v202605310045
+2026-05-30T16:46:25.6681580Z ##[endgroup]
+2026-05-30T16:46:25.6682405Z ##[group]Determining the checkout info
+2026-05-30T16:46:25.6684458Z ##[endgroup]
+2026-05-30T16:46:25.6694866Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-05-30T16:46:25.7363814Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-05-30T16:46:25.7831682Z ##[group]Checking out the ref
+2026-05-30T16:46:25.7841262Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force refs/tags/v202605310045
+2026-05-30T16:46:25.8587857Z Note: switching to 'refs/tags/v202605310045'.
+2026-05-30T16:46:25.8588202Z 
+2026-05-30T16:46:25.8588467Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-05-30T16:46:25.8589130Z changes and commit them, and you can discard any commits you make in this
+2026-05-30T16:46:25.8589672Z state without impacting any branches by switching back to a branch.
+2026-05-30T16:46:25.8590003Z 
+2026-05-30T16:46:25.8590241Z If you want to create a new branch to retain commits you create, you may
+2026-05-30T16:46:25.8590839Z do so (now or later) by using -c with the switch command. Example:
+2026-05-30T16:46:25.8591139Z 
+2026-05-30T16:46:25.8591299Z   git switch -c <new-branch-name>
+2026-05-30T16:46:25.8591484Z 
+2026-05-30T16:46:25.8591649Z Or undo this operation with:
+2026-05-30T16:46:25.8591835Z 
+2026-05-30T16:46:25.8592053Z   git switch -
+2026-05-30T16:46:25.8592182Z 
+2026-05-30T16:46:25.8592430Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-05-30T16:46:25.8592768Z 
+2026-05-30T16:46:25.8592886Z HEAD is now at c8b39ee fix
+2026-05-30T16:46:25.8746636Z ##[endgroup]
+2026-05-30T16:46:25.9258505Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-05-30T16:46:25.9677782Z c8b39eee6d003e7a43db94d6996abac3b44b63fc
+2026-05-30T16:46:26.0162908Z ##[group]Run .\scripts\build-windows.ps1 -Arch "arm64" -MysqlVersion "8.4.9"
+2026-05-30T16:46:26.0163720Z [36;1m.\scripts\build-windows.ps1 -Arch "arm64" -MysqlVersion "8.4.9"[0m
+2026-05-30T16:46:26.1045472Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-05-30T16:46:26.1045942Z ##[endgroup]
+2026-05-30T16:46:36.0981168Z === Building MySQL 8.4.9 for Windows/arm64 ===
+2026-05-30T16:46:36.0991338Z Installing OpenSSL via vcpkg for arm64...
+2026-05-30T16:46:37.1973040Z Computing installation plan...
+2026-05-30T16:46:39.2861712Z The following packages will be built and installed:
+2026-05-30T16:46:39.2862131Z     openssl:arm64-windows@3.6.2
+2026-05-30T16:46:39.2862472Z   * vcpkg-cmake:arm64-windows@2024-04-23
+2026-05-30T16:46:39.2862829Z   * vcpkg-cmake-config:arm64-windows@2024-05-23
+2026-05-30T16:46:39.2863203Z   * vcpkg-cmake-get-vars:arm64-windows@2025-05-29
+2026-05-30T16:46:39.2863871Z Additional packages (*) will be modified to complete this operation.
+2026-05-30T16:46:40.1566199Z Detecting compiler hash for triplet arm64-windows...
+2026-05-30T16:46:40.3281554Z A suitable version of powershell-core was not found (required v7.5.4).
+2026-05-30T16:46:40.3282484Z Downloading https://github.com/PowerShell/PowerShell/releases/download/v7.6.1/PowerShell-7.6.1-win-arm64.zip -> PowerShell-7.6.1-win-arm64.zip
+2026-05-30T16:46:42.3211870Z Successfully downloaded PowerShell-7.6.1-win-arm64.zip
+2026-05-30T16:46:42.3212321Z Extracting powershell-core...
+2026-05-30T16:46:42.8084373Z A suitable version of 7zip was not found (required v26.1.0).
+2026-05-30T16:46:42.8085041Z Downloading https://github.com/ip7z/7zip/releases/download/26.01/7z2601-arm64.exe -> 7z2601-arm64.7z.exe
+2026-05-30T16:46:43.1545706Z Successfully downloaded 7z2601-arm64.7z.exe
+2026-05-30T16:46:43.1546115Z Extracting 7zip...
+2026-05-30T16:46:43.1570424Z A suitable version of 7zr was not found (required v26.1.0).
+2026-05-30T16:46:43.1571424Z Downloading https://github.com/ip7z/7zip/releases/download/26.01/7zr.exe -> f798fab8-7zr.exe
+2026-05-30T16:46:43.4591333Z Successfully downloaded f798fab8-7zr.exe
+2026-05-30T16:47:04.7308767Z Compiler found: C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.44.35207/bin/Hostarm64/arm64/cl.exe
+2026-05-30T16:47:04.8246819Z Restored 0 package(s) from C:\Users\runneradmin\AppData\Local\vcpkg\archives in 93.9 us. Use --debug to see more details.
+2026-05-30T16:47:04.8247515Z Installing 1/4 vcpkg-cmake:arm64-windows@2024-04-23...
+2026-05-30T16:47:04.8248208Z vcpkg-cmake:arm64-windows@2024-04-23 package ABI: 42adabe1a4f394c5f7b1dffafada7a8dfe95e47863e05c5a238f7103191ad0e5
+2026-05-30T16:47:04.8248799Z Building vcpkg-cmake:arm64-windows@2024-04-23...
+2026-05-30T16:47:04.8674752Z -- Installing: C:/vcpkg/packages/vcpkg-cmake_arm64-windows/share/vcpkg-cmake/vcpkg_cmake_configure.cmake
+2026-05-30T16:47:04.8686138Z -- Installing: C:/vcpkg/packages/vcpkg-cmake_arm64-windows/share/vcpkg-cmake/vcpkg_cmake_build.cmake
+2026-05-30T16:47:04.8695295Z -- Installing: C:/vcpkg/packages/vcpkg-cmake_arm64-windows/share/vcpkg-cmake/vcpkg_cmake_install.cmake
+2026-05-30T16:47:04.8740717Z -- Installing: C:/vcpkg/packages/vcpkg-cmake_arm64-windows/share/vcpkg-cmake/vcpkg-port-config.cmake
+2026-05-30T16:47:04.8817882Z -- Installing: C:/vcpkg/packages/vcpkg-cmake_arm64-windows/share/vcpkg-cmake/copyright
+2026-05-30T16:47:04.9047377Z -- Performing post-build validation
+2026-05-30T16:47:04.9426120Z Starting submission of vcpkg-cmake:arm64-windows@2024-04-23 to 1 binary cache(s) in the background
+2026-05-30T16:47:04.9430914Z Elapsed time to handle vcpkg-cmake:arm64-windows: 118 ms
+2026-05-30T16:47:04.9431368Z Installing 2/4 vcpkg-cmake-config:arm64-windows@2024-05-23...
+2026-05-30T16:47:04.9432028Z vcpkg-cmake-config:arm64-windows@2024-05-23 package ABI: 6778a4ce648ddec44bb118721cc61ef042d1d930977bbd8d01e472447b9df3e3
+2026-05-30T16:47:04.9432655Z Building vcpkg-cmake-config:arm64-windows@2024-05-23...
+2026-05-30T16:47:04.9849306Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-config_arm64-windows/share/vcpkg-cmake-config/vcpkg_cmake_config_fixup.cmake
+2026-05-30T16:47:04.9858625Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-config_arm64-windows/share/vcpkg-cmake-config/vcpkg-port-config.cmake
+2026-05-30T16:47:04.9871021Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-config_arm64-windows/share/vcpkg-cmake-config/copyright
+2026-05-30T16:47:04.9953104Z -- Skipping post-build validation due to VCPKG_POLICY_EMPTY_PACKAGE
+2026-05-30T16:47:05.0576800Z Starting submission of vcpkg-cmake-config:arm64-windows@2024-05-23 to 1 binary cache(s) in the background
+2026-05-30T16:47:05.0577528Z Elapsed time to handle vcpkg-cmake-config:arm64-windows: 115 ms
+2026-05-30T16:47:05.0578064Z Completed submission of vcpkg-cmake:arm64-windows@2024-04-23 to 1 binary cache(s) in 31.6 ms
+2026-05-30T16:47:05.0578612Z Installing 3/4 vcpkg-cmake-get-vars:arm64-windows@2025-05-29...
+2026-05-30T16:47:05.0579282Z vcpkg-cmake-get-vars:arm64-windows@2025-05-29 package ABI: 32c00145617a958b7db7d914961b73c8fda7609226ee908479aea94e3685851e
+2026-05-30T16:47:05.0579931Z Building vcpkg-cmake-get-vars:arm64-windows@2025-05-29...
+2026-05-30T16:47:05.1007309Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-get-vars_arm64-windows/share/vcpkg-cmake-get-vars/vcpkg_cmake_get_vars.cmake
+2026-05-30T16:47:05.1018871Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-get-vars_arm64-windows/share/vcpkg-cmake-get-vars/cmake_get_vars
+2026-05-30T16:47:05.1027469Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-get-vars_arm64-windows/share/vcpkg-cmake-get-vars/cmake_get_vars/CMakeLists.txt
+2026-05-30T16:47:05.1037805Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-get-vars_arm64-windows/share/vcpkg-cmake-get-vars/cmake-get-vars.cmake.in
+2026-05-30T16:47:05.1066839Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-get-vars_arm64-windows/share/vcpkg-cmake-get-vars/vcpkg-port-config.cmake
+2026-05-30T16:47:05.1092819Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-get-vars_arm64-windows/share/vcpkg-cmake-get-vars/copyright
+2026-05-30T16:47:05.1157064Z -- Performing post-build validation
+2026-05-30T16:47:05.1685281Z Starting submission of vcpkg-cmake-get-vars:arm64-windows@2025-05-29 to 1 binary cache(s) in the background
+2026-05-30T16:47:05.1685959Z Elapsed time to handle vcpkg-cmake-get-vars:arm64-windows: 111 ms
+2026-05-30T16:47:05.1686524Z Completed submission of vcpkg-cmake-config:arm64-windows@2024-05-23 to 1 binary cache(s) in 31 ms
+2026-05-30T16:47:05.1687051Z Installing 4/4 openssl:arm64-windows@3.6.2...
+2026-05-30T16:47:05.1687579Z openssl:arm64-windows@3.6.2 package ABI: f71851047ea973783ebf2313d91a4beb738580bfd8b5ca45a520b62519435eaf
+2026-05-30T16:47:05.1688104Z Building openssl:arm64-windows@3.6.2...
+2026-05-30T16:47:05.2279972Z Downloading https://github.com/openssl/openssl/archive/openssl-3.6.2.tar.gz -> openssl-openssl-openssl-3.6.2.tar.gz
+2026-05-30T16:47:06.6792186Z Successfully downloaded openssl-openssl-openssl-3.6.2.tar.gz
+2026-05-30T16:47:06.8396863Z -- Extracting source C:/vcpkg/downloads/openssl-openssl-openssl-3.6.2.tar.gz
+2026-05-30T16:47:15.1069462Z -- Applying patch cmake-config.patch
+2026-05-30T16:47:15.2300489Z -- Applying patch command-line-length.patch
+2026-05-30T16:47:15.2783679Z -- Applying patch script-prefix.patch
+2026-05-30T16:47:15.3258319Z -- Applying patch windows/install-layout.patch
+2026-05-30T16:47:15.3769732Z -- Applying patch windows/install-pdbs.patch
+2026-05-30T16:47:15.4267259Z -- Applying patch windows/install-programs.diff
+2026-05-30T16:47:15.4774332Z -- Applying patch unix/android-cc.patch
+2026-05-30T16:47:15.5251305Z -- Applying patch unix/move-openssldir.patch
+2026-05-30T16:47:15.5756162Z -- Applying patch unix/no-empty-dirs.patch
+2026-05-30T16:47:15.6325076Z -- Applying patch unix/no-static-libs-for-shared.patch
+2026-05-30T16:47:15.6882804Z -- Using source at C:/vcpkg/buildtrees/openssl/src/nssl-3.6.2-a98581e5a0.clean
+2026-05-30T16:47:15.7248880Z -- Getting CMake variables for arm64-windows
+2026-05-30T16:47:20.2583197Z -- Loading CMake variables from C:/vcpkg/buildtrees/openssl/cmake-get-vars_C_CXX-arm64-windows.cmake.log
+2026-05-30T16:47:20.2800546Z Downloading https://github.com/StrawberryPerl/Perl-Dist-Strawberry/releases/download/SP_54221_64bit/strawberry-perl-5.42.2.1-64bit-portable.zip -> strawberry-perl-5.42.2.1-64bit-portable.zip
+2026-05-30T16:47:22.1821945Z Successfully downloaded strawberry-perl-5.42.2.1-64bit-portable.zip
+2026-05-30T16:47:49.3111324Z -- Getting CMake variables for arm64-windows
+2026-05-30T16:47:53.0912792Z Downloading jom_1_1_7.zip, trying https://download.qt.io/official_releases/jom/jom_1_1_7.zip
+2026-05-30T16:47:56.1086847Z Successfully downloaded jom_1_1_7.zip
+2026-05-30T16:48:06.4228660Z -- Prerunning arm64-windows-dbg
+2026-05-30T16:48:43.9731318Z -- Building arm64-windows-dbg
+2026-05-30T16:51:16.2093292Z -- Prerunning arm64-windows-rel
+2026-05-30T16:51:50.8144312Z -- Building arm64-windows-rel
+2026-05-30T16:54:32.2424721Z -- Fixing pkgconfig file: C:/vcpkg/packages/openssl_arm64-windows/lib/pkgconfig/libcrypto.pc
+2026-05-30T16:54:32.2430580Z -- Fixing pkgconfig file: C:/vcpkg/packages/openssl_arm64-windows/lib/pkgconfig/libssl.pc
+2026-05-30T16:54:32.2437048Z -- Fixing pkgconfig file: C:/vcpkg/packages/openssl_arm64-windows/lib/pkgconfig/openssl.pc
+2026-05-30T16:54:32.2682794Z Downloading msys2-mingw-w64-clang-aarch64-pkgconf-1~2.5.1-1-any.pkg.tar.zst, trying https://mirror.msys2.org/mingw/clangarm64/mingw-w64-clang-aarch64-pkgconf-1~2.5.1-1-any.pkg.tar.zst
+2026-05-30T16:54:33.1766323Z Successfully downloaded msys2-mingw-w64-clang-aarch64-pkgconf-1~2.5.1-1-any.pkg.tar.zst
+2026-05-30T16:54:33.1958188Z Downloading msys2-msys2-runtime-3.6.5-1-x86_64.pkg.tar.zst, trying https://mirror.msys2.org/msys/x86_64/msys2-runtime-3.6.5-1-x86_64.pkg.tar.zst
+2026-05-30T16:54:33.9346404Z Successfully downloaded msys2-msys2-runtime-3.6.5-1-x86_64.pkg.tar.zst
+2026-05-30T16:54:34.0912889Z -- Using msys root at C:/vcpkg/downloads/tools/msys2/e6bbf98b46cdea91
+2026-05-30T16:54:34.1425571Z -- Fixing pkgconfig file: C:/vcpkg/packages/openssl_arm64-windows/debug/lib/pkgconfig/libcrypto.pc
+2026-05-30T16:54:34.1432316Z -- Fixing pkgconfig file: C:/vcpkg/packages/openssl_arm64-windows/debug/lib/pkgconfig/libssl.pc
+2026-05-30T16:54:34.1438887Z -- Fixing pkgconfig file: C:/vcpkg/packages/openssl_arm64-windows/debug/lib/pkgconfig/openssl.pc
+2026-05-30T16:54:34.1728004Z -- Installing: C:/vcpkg/packages/openssl_arm64-windows/share/openssl/usage
+2026-05-30T16:54:34.1769787Z -- Installing: C:/vcpkg/packages/openssl_arm64-windows/share/openssl/copyright
+2026-05-30T16:54:34.1855930Z -- Performing post-build validation
+2026-05-30T16:54:34.3973557Z Starting submission of openssl:arm64-windows@3.6.2 to 1 binary cache(s) in the background
+2026-05-30T16:54:34.3974195Z Elapsed time to handle openssl:arm64-windows: 7.5 min
+2026-05-30T16:54:34.4011711Z Total install time: 7.5 min
+2026-05-30T16:54:34.4012410Z Installed contents are licensed to you by owners. Microsoft is not responsible for, nor does it grant any licenses to, third-party packages.
+2026-05-30T16:54:34.4013259Z Packages installed in this vcpkg installation declare the following licenses:
+2026-05-30T16:54:34.4013674Z Apache-2.0
+2026-05-30T16:54:34.4013908Z MIT
+2026-05-30T16:54:34.4014332Z Completed submission of vcpkg-cmake-get-vars:arm64-windows@2025-05-29 to 1 binary cache(s) in 37.8 ms
+2026-05-30T16:54:34.4014874Z Waiting for 1 remaining binary cache submissions...
+2026-05-30T16:54:36.1234451Z Completed submission of openssl:arm64-windows@3.6.2 to 1 binary cache(s) in 1.7 s (1/1)
+2026-05-30T16:54:36.1235156Z All requested installations completed successfully in: 7.5 min
+2026-05-30T16:54:36.6562592Z OpenSSL root: C:\vcpkg\installed\arm64-windows
+2026-05-30T16:55:00.4854442Z Downloading source from https://cdn.mysql.com/Downloads/MySQL-8.4/mysql-8.4.9.zip
+2026-05-30T16:55:03.8279760Z Extracting source...
+2026-05-30T16:55:59.7914724Z Running cmake configure...
+2026-05-30T16:55:59.8329212Z -- Running cmake version 4.3.3
+2026-05-30T16:55:59.8331773Z CMake Deprecation Warning at CMakeLists.txt:28 (CMAKE_MINIMUM_REQUIRED):
+2026-05-30T16:55:59.8333461Z   Compatibility with CMake < 3.10 will be removed from a future version of
+2026-05-30T16:55:59.8333885Z   CMake.
+2026-05-30T16:55:59.8334017Z 
+2026-05-30T16:55:59.8334216Z   Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+2026-05-30T16:55:59.8334789Z   to tell CMake that the project requires at least <min> but has been updated
+2026-05-30T16:55:59.8335247Z   to work with policies introduced by <max> or earlier.
+2026-05-30T16:55:59.8335482Z 
+2026-05-30T16:55:59.8335486Z 
+2026-05-30T16:55:59.9504113Z -- Found Git: C:/Program Files/Git/bin/git.exe (found version "2.54.0.windows.1")
+2026-05-30T16:55:59.9510345Z -- CMAKE_MODULE_PATH is C:/a/mysql-archive/mysql-archive/mysql-src/cmake
+2026-05-30T16:55:59.9531948Z -- MySQL 8.4.9
+2026-05-30T16:56:00.4710484Z -- The C compiler identification is MSVC 19.44.35227.0
+2026-05-30T16:56:00.6684936Z -- The CXX compiler identification is MSVC 19.44.35227.0
+2026-05-30T16:56:00.6835537Z -- Detecting C compiler ABI info
+2026-05-30T16:56:01.9410229Z -- Detecting C compiler ABI info - done
+2026-05-30T16:56:01.9611776Z -- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.44.35207/bin/Hostarm64/arm64/cl.exe - skipped
+2026-05-30T16:56:01.9616115Z -- Detecting C compile features
+2026-05-30T16:56:01.9622418Z -- Detecting C compile features - done
+2026-05-30T16:56:01.9732284Z -- Detecting CXX compiler ABI info
+2026-05-30T16:56:02.7321607Z -- Detecting CXX compiler ABI info - done
+2026-05-30T16:56:02.7514504Z -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.44.35207/bin/Hostarm64/arm64/cl.exe - skipped
+2026-05-30T16:56:02.7518439Z -- Detecting CXX compile features
+2026-05-30T16:56:02.7530361Z -- Detecting CXX compile features - done
+2026-05-30T16:56:02.7582498Z -- Source directory C:/a/mysql-archive/mysql-archive/mysql-src
+2026-05-30T16:56:02.7583039Z -- Binary directory C:/a/mysql-archive/mysql-archive/mysql-build
+2026-05-30T16:56:02.7583481Z -- CMAKE_GENERATOR: Ninja
+2026-05-30T16:56:02.8402001Z -- MSVC_VERSION is 1944
+2026-05-30T16:56:02.8606171Z -- Check size of void *
+2026-05-30T16:56:03.3049237Z -- Check size of void * - done
+2026-05-30T16:56:03.3049732Z -- SIZEOF_VOIDP 8
+2026-05-30T16:56:03.9886372Z -- Packaging as: mysql-8.4.9-winx64
+2026-05-30T16:56:03.9894289Z -- Windows EXE/DLL file info copyright line: Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+2026-05-30T16:56:04.0022009Z -- BOOST_PATCHES_DIR C:/a/mysql-archive/mysql-archive/mysql-src/include/boost_1_84_0/patches
+2026-05-30T16:56:04.0022737Z -- BOOST_INCLUDE_DIR C:/a/mysql-archive/mysql-archive/mysql-src/extra/boost/boost_1_84_0
+2026-05-30T16:56:04.0210328Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+2026-05-30T16:56:04.2800525Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+2026-05-30T16:56:04.2801118Z -- Looking for pthread_create in pthreads
+2026-05-30T16:56:04.4712508Z -- Looking for pthread_create in pthreads - not found
+2026-05-30T16:56:04.4713050Z -- Looking for pthread_create in pthread
+2026-05-30T16:56:04.6492631Z -- Looking for pthread_create in pthread - not found
+2026-05-30T16:56:04.6504820Z -- Found Threads: TRUE
+2026-05-30T16:56:04.6520244Z -- Looking for include files sys/types.h, sasl/sasl.h
+2026-05-30T16:56:04.7640163Z -- Looking for include files sys/types.h, sasl/sasl.h - not found
+2026-05-30T16:56:04.7651549Z -- Looking for strptime
+2026-05-30T16:56:05.2575971Z -- Looking for strptime - not found
+2026-05-30T16:56:05.2586520Z -- Performing Test HAVE_SETNS
+2026-05-30T16:56:05.3615918Z -- Performing Test HAVE_SETNS - Failed
+2026-05-30T16:56:05.4035582Z -- Performing Test HAVE_PTHREAD_SETNAME_NP_LINUX
+2026-05-30T16:56:05.5183109Z -- Performing Test HAVE_PTHREAD_SETNAME_NP_LINUX - Failed
+2026-05-30T16:56:05.5183816Z -- Performing Test HAVE_PTHREAD_SETNAME_NP_MACOS
+2026-05-30T16:56:05.6192740Z -- Performing Test HAVE_PTHREAD_SETNAME_NP_MACOS - Failed
+2026-05-30T16:56:05.6195695Z -- NUMA library missing or required version not available
+2026-05-30T16:56:05.6363440Z -- ZLIB_VERSION (bundled) is 1.3.2
+2026-05-30T16:56:05.6364397Z -- ZLIB_INCLUDE_DIR C:/a/mysql-archive/mysql-archive/mysql-src/extra/zlib/zlib-1.3.2
+2026-05-30T16:56:05.6386524Z -- Performing Test HAS_DEPRECATED_NON_PROTOTYPE
+2026-05-30T16:56:05.7271105Z -- Performing Test HAS_DEPRECATED_NON_PROTOTYPE - Failed
+2026-05-30T16:56:05.7521090Z -- Check size of off64_t
+2026-05-30T16:56:05.8757746Z -- Check size of off64_t - failed
+2026-05-30T16:56:05.8758793Z -- Looking for fseeko
+2026-05-30T16:56:06.6382510Z -- Looking for fseeko - not found
+2026-05-30T16:56:06.6385109Z -- Looking for stdarg.h
+2026-05-30T16:56:07.0833678Z -- Looking for stdarg.h - found
+2026-05-30T16:56:07.0835358Z -- Performing Test HAVE___ATTR__VIS_HIDDEN
+2026-05-30T16:56:07.1947271Z -- Performing Test HAVE___ATTR__VIS_HIDDEN - Failed
+2026-05-30T16:56:07.2203549Z -- ZSTD_VERSION (bundled) is 1.5.7
+2026-05-30T16:56:07.2204191Z -- ZSTD_INCLUDE_DIR C:/a/mysql-archive/mysql-archive/mysql-src/extra/zstd/zstd-1.5.7/lib
+2026-05-30T16:56:07.2231844Z -- ZSTD_LEGACY_SUPPORT not defined!
+2026-05-30T16:56:07.2246409Z -- OPENSSL_APPLINK_C C:/vcpkg/installed/arm64-windows/include/openssl/applink.c
+2026-05-30T16:56:07.2272651Z -- OPENSSL_VERSION (system) is 3.6.2
+2026-05-30T16:56:07.2277297Z -- WITH_SSL_PATH C:/vcpkg/installed/arm64-windows
+2026-05-30T16:56:07.2282511Z -- HAVE_CRYPTO_DLL HAVE_CRYPTO_DLL-NOTFOUND
+2026-05-30T16:56:07.2283205Z CMake Error at cmake/ssl.cmake:863 (MESSAGE):
+2026-05-30T16:56:07.2283727Z   Cannot find SSL dynamic libraries
+2026-05-30T16:56:07.2284060Z -- HAVE_OPENSSL_DLL HAVE_OPENSSL_DLL-NOTFOUND
+2026-05-30T16:56:07.2284400Z Call Stack (most recent call first):
+2026-05-30T16:56:07.2284729Z   cmake/ssl.cmake:489 (MYSQL_CHECK_SSL_DLLS)
+2026-05-30T16:56:07.2285043Z   cmake/ssl.cmake:568 (FIND_CUSTOM_OPENSSL)
+2026-05-30T16:56:07.2285353Z   CMakeLists.txt:1891 (MYSQL_CHECK_SSL)
+2026-05-30T16:56:07.2285576Z 
+2026-05-30T16:56:07.2285588Z 
+2026-05-30T16:56:07.2288954Z -- Configuring incomplete, errors occurred!
+2026-05-30T16:56:07.2406136Z Building with 4 parallel jobs...
+2026-05-30T16:56:07.2773229Z ninja: error: loading 'build.ninja': The system cannot find the file specified.
+2026-05-30T16:56:07.2773594Z 
+2026-05-30T16:56:07.2773600Z 
+2026-05-30T16:56:07.2831750Z Installing...
+2026-05-30T16:56:07.3130830Z CMake Error: Not a file: C:/a/mysql-archive/mysql-archive/mysql-build/cmake_install.cmake
+2026-05-30T16:56:07.3131845Z CMake Error: Error processing file: C:/a/mysql-archive/mysql-archive/mysql-build/cmake_install.cmake
+2026-05-30T16:56:07.3180520Z cmake --install failed (attempt 1/3, exit code 1), retrying in 10s...
+2026-05-30T16:56:17.4588211Z CMake Error: Not a file: C:/a/mysql-archive/mysql-archive/mysql-build/cmake_install.cmake
+2026-05-30T16:56:17.4589065Z CMake Error: Error processing file: C:/a/mysql-archive/mysql-archive/mysql-build/cmake_install.cmake
+2026-05-30T16:56:17.4630568Z cmake --install failed (attempt 2/3, exit code 1), retrying in 10s...
+2026-05-30T16:56:27.5038024Z CMake Error: Not a file: C:/a/mysql-archive/mysql-archive/mysql-build/cmake_install.cmake
+2026-05-30T16:56:27.5038788Z CMake Error: Error processing file: C:/a/mysql-archive/mysql-archive/mysql-build/cmake_install.cmake
+2026-05-30T16:56:27.5091020Z [33;1mWARNING: cmake --install failed after 3 attempts (exit code 1). Continuing with packaging...[0m
+2026-05-30T16:56:27.5093885Z Creating zip archive...
+2026-05-30T16:56:28.5480326Z [31;1mCompress-Archive: [0mC:\a\mysql-archive\mysql-archive\scripts\build-windows.ps1:129[0m
+2026-05-30T16:56:28.5481051Z [31;1m[0m[36;1mLine |[0m
+2026-05-30T16:56:28.5481760Z [31;1m[0m[36;1m[36;1m 129 | [0m [36;1mCompress-Archive -Path $InstallDir -DestinationPath $ZipPath -Force[0m
+2026-05-30T16:56:28.5482565Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m     | [31;1m ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2026-05-30T16:56:28.5485067Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m     | [31;1mThe path 'C:\a\mysql-archive\mysql-archive\mysql-8.4.9' either does not exist or is not a valid file system path.[0m
+2026-05-30T16:56:28.5946009Z ##[error]Process completed with exit code 1.
+2026-05-30T16:56:28.6287737Z Post job cleanup.
+2026-05-30T16:56:28.9201793Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-05-30T16:56:28.9632375Z git version 2.54.0.windows.1
+2026-05-30T16:56:28.9716143Z Temporarily overriding HOME='C:\a\_temp\25df0b96-aca3-4867-b169-9ebcd16b6bf9' before making global git config changes
+2026-05-30T16:56:28.9716918Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-30T16:56:28.9726944Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory C:\a\mysql-archive\mysql-archive
+2026-05-30T16:56:29.0192447Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-05-30T16:56:29.0655432Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-05-30T16:56:30.0959299Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-30T16:56:30.1369178Z http.https://github.com/.extraheader
+2026-05-30T16:56:30.1427942Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-05-30T16:56:30.1908860Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-05-30T16:56:31.2339347Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-30T16:56:31.2804810Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-05-30T16:56:32.3393568Z Cleaning up orphan processes
+2026-05-30T16:56:32.3761416Z Terminate orphan process: pid (4828) (vctip)
+2026-05-30T16:56:32.3836233Z Terminate orphan process: pid (1304) (mspdbsrv)
+2026-05-30T16:56:32.3901946Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4. Actions will be forced to run with Node.js 24 by default starting June 16th, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

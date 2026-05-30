@@ -33,6 +33,22 @@ $VcpkgTriplet = if ($Arch -eq 'arm64') { 'arm64-windows' } else { 'x64-windows' 
 $OpenSSLRoot = "$VcpkgRoot\installed\$VcpkgTriplet"
 Write-Host "OpenSSL root: $OpenSSLRoot"
 
+# MySQL 8.x 的 cmake/ssl.cmake (MYSQL_CHECK_SSL_DLLS) 硬编码搜索 *-x64.dll
+# vcpkg 为 arm64 生成的是 *-arm64.dll，需要复制一份为 x64 命名才能被找到
+if ($Arch -eq 'arm64') {
+    Write-Host "Fixing OpenSSL DLL names for arm64 (MySQL ssl.cmake expects *-x64.dll)..."
+    $BinDir = "$OpenSSLRoot\bin"
+    @('libssl-3-arm64.dll:libssl-3-x64.dll', 'libcrypto-3-arm64.dll:libcrypto-3-x64.dll') | ForEach-Object {
+        $src, $dst = $_ -split ':'
+        $srcPath = Join-Path $BinDir $src
+        $dstPath = Join-Path $BinDir $dst
+        if ((Test-Path $srcPath) -and -not (Test-Path $dstPath)) {
+            Copy-Item $srcPath $dstPath
+            Write-Host "  Copied $src -> $dst"
+        }
+    }
+}
+
 # ── 安装 Ninja（cmake --build 使用） ────────────────────────────────
 choco install ninja --no-progress -y | Out-Null
 
