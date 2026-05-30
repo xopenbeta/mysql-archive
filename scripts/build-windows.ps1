@@ -129,7 +129,19 @@ Write-Host "Building with $Jobs parallel jobs..."
 cmake --build $BuildDir --config Release --parallel $Jobs
 
 Write-Host "Installing..."
-cmake --install $BuildDir --config Release
+$installAttempts = 0
+do {
+    $installAttempts++
+    cmake --install $BuildDir --config Release
+    if ($LASTEXITCODE -ne 0) {
+        if ($installAttempts -lt 3) {
+            Write-Host "cmake --install failed (attempt $installAttempts/3, exit code $LASTEXITCODE), retrying in 10s..."
+            Start-Sleep -Seconds 10
+        } else {
+            Write-Warning "cmake --install failed after 3 attempts (exit code $LASTEXITCODE). Continuing with packaging..."
+        }
+    }
+} while ($LASTEXITCODE -ne 0 -and $installAttempts -lt 3)
 
 # ── 打包 ────────────────────────────────────────────────────────────
 Write-Host "Creating zip archive..."
