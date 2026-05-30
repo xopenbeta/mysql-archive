@@ -24,8 +24,9 @@ $SrcDir     = Join-Path $Workdir 'mysql-src'
 Write-Host "=== Building MySQL ${MysqlVersion} for Windows/${Arch} ==="
 
 # ── 安装 OpenSSL（使用 Chocolatey）──────────────────────────────────
-Write-Host "Installing OpenSSL via Chocolatey..."
-choco install openssl --no-progress -y | Out-Null
+# MySQL 8.0 仅支持 OpenSSL 1.x / 3.x，不支持 4.0+，故固定安装 3.x
+Write-Host "Installing OpenSSL 3.x via Chocolatey..."
+choco install openssl --version 3.3.2.1 --no-progress -y --allow-downgrade | Out-Null
 
 # 确定 OpenSSL 安装路径
 $OpenSSLRoot = 'C:\Program Files\OpenSSL-Win64'
