@@ -38,10 +38,10 @@ if [[ "${ARCH}" == "x86_64" && "${HOST_ARCH}" == "arm64" ]]; then
     && mv "${WORKDIR}/openssl-${OPENSSL_VERSION}" "${OPENSSL_SRC_DIR}"
 
   pushd "${OPENSSL_SRC_DIR}"
-  ./Configure darwin64-x86_64 \
+  MACOSX_DEPLOYMENT_TARGET="12.0" ./Configure darwin64-x86_64 \
     --prefix="${OPENSSL_INSTALL_DIR}" \
     no-shared no-tests
-  make -j"$(sysctl -n hw.logicalcpu)"
+  MACOSX_DEPLOYMENT_TARGET="12.0" make -j"$(sysctl -n hw.logicalcpu)"
   make install_sw
   popd
 

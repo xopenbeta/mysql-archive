@@ -49,7 +49,6 @@ Write-Host "Downloading source from $SrcUrl"
 Invoke-WebRequest -Uri $SrcUrl -OutFile $SrcArchive -UseBasicParsing
 
 Write-Host "Extracting source..."
-New-Item -ItemType Directory -Force -Path $SrcDir | Out-Null
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 [System.IO.Compression.ZipFile]::ExtractToDirectory($SrcArchive, $Workdir)
 # MySQL zip 内层目录名为 mysql-<version>，移至 SrcDir
@@ -58,6 +57,8 @@ $ExtractedDir = Get-ChildItem $Workdir -Directory -Filter "mysql-${MysqlVersion}
 if (-not $ExtractedDir) {
     throw "Could not find extracted MySQL source directory under $Workdir"
 }
+# 若目标目录已存在则先删除，避免 Rename-Item 报错
+if (Test-Path $SrcDir) { Remove-Item -Recurse -Force $SrcDir }
 Rename-Item -Path $ExtractedDir.FullName -NewName (Split-Path $SrcDir -Leaf)
 
 # ── CMake 平台参数 ───────────────────────────────────────────────────
