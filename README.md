@@ -7,7 +7,7 @@
 ```bash
 git tag v202605301844
 git push
-git push origin v202605301834
+git push origin v202605301844
 ```
 
 构建完成后，GitHub Release 页面会自动发布全部支持版本在所有平台与架构上的二进制包。
@@ -16,8 +16,8 @@ git push origin v202605301834
 
 | 系列 | 最新版本 | 类型 |
 |------|---------|------|
-| 8.0 | 8.0.41 | Long-Term Support |
-| 8.4 | 8.4.4 | Long-Term Support |
+| 8.0 | 8.0.46 | Long-Term Support |
+| 8.4 | 8.4.9 | Long-Term Support |
 
 ## 构建矩阵
 
