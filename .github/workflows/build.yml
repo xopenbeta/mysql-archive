@@ -1,3 +1,66 @@
+name: Build MySQL binaries
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - arch: arm64
+            series: '8.0'
+            mysql_version: '8.0.41'
+          - arch: x86_64
+            series: '8.0'
+            mysql_version: '8.0.41'
+          - arch: arm64
+            series: '8.4'
+            mysql_version: '8.4.4'
+          - arch: x86_64
+            series: '8.4'
+            mysql_version: '8.4.4'
+    runs-on: macos-14
+    name: Build - ${{ matrix.arch }} - MySQL ${{ matrix.mysql_version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show build matrix
+        run: |
+          echo "ARCH=${{ matrix.arch }}"
+          echo "MYSQL_VERSION=${{ matrix.mysql_version }}"
+          echo "SERIES=${{ matrix.series }}"
+
+      - name: Ensure Rosetta (for x86_64 builds)
+        if: matrix.arch == 'x86_64'
+        run: |
+          /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
+
+      - name: Make build script executable
+        run: |
+          chmod +x ./scripts/build-macos.sh
+
+      - name: Run build script
+        env:
+          GITHUB_RUN_ID: ${{ github.run_id }}
+        run: |
+          ./scripts/build-macos.sh "${{ matrix.arch }}" "${{ matrix.mysql_version }}" "${{ matrix.series }}"
+
+      - name: Upload binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: mysql-${{ matrix.mysql_version }}-${{ matrix.arch }}
+          path: dist-artifacts/mysql-${{ matrix.mysql_version }}-macos-${{ matrix.arch }}.tar.gz
+
+      - name: Upload checksum
+        uses: actions/upload-artifact@v4
+        with:
+          name: mysql-${{ matrix.mysql_version }}-${{ matrix.arch }}-sha256
+          path: dist-artifacts/mysql-${{ matrix.mysql_version }}-macos-${{ matrix.arch }}.tar.gz.sha256
 name: Build MySQL for macOS
 
 on:

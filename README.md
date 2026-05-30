@@ -5,7 +5,7 @@
 ## 触发构建
 
 ```bash
-git tag v202605301603
+git tag v202605301708
 git push
 git push origin v202605301603
 ```
@@ -72,3 +72,13 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY 'your_new_password';
 ```bash
 shasum -a 256 -c mysql-VERSION-macos-ARCH.tar.gz.sha256
 ```
+
+## CI 构建说明
+
+仓库包含一个 GitHub Actions 工作流（`.github/workflows/build.yml`），实现了 "一平台 + 一 MySQL 版本 = 一个 job" 的策略。
+
+- 触发方式：推送 tag（例如 `git tag v202605301603 && git push --tags`）或手动通过 Actions 的 `workflow_dispatch`。
+- 每个组合会生成独立的 job，job 名称形如 `Build - <arch> - MySQL <version>`。
+- 目前 workflow 中的步骤为占位实现：下载源码、按架构选择 Rosetta（x86_64）等，实际的 configure / make / 打包步骤请根据你的构建脚本替换 `Build (placeholder)` 步骤。
+
+如果需要，我可以把占位步骤替换为具体的构建脚本（包含 Homebrew 依赖、交叉编译技巧、产物打包与签名）。
