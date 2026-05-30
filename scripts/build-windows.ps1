@@ -23,32 +23,15 @@ $SrcDir     = Join-Path $Workdir 'mysql-src'
 
 Write-Host "=== Building MySQL ${MysqlVersion} for Windows/${Arch} ==="
 
-# ── 安装 OpenSSL（使用 Chocolatey）──────────────────────────────────
-# MySQL 8.0 仅支持 OpenSSL 1.x / 3.x，不支持 4.0+，故固定安装 3.x
-Write-Host "Installing OpenSSL 3.x via Chocolatey..."
-choco install openssl --version 3.3.2.1 --no-progress -y --allow-downgrade | Out-Null
+# ── 安装 OpenSSL（使用 vcpkg，支持正确目标架构）────────────────────
+# Chocolatey 的 openssl 包仅提供 x64 二进制，ARM64 构建必须用 vcpkg
+Write-Host "Installing OpenSSL via vcpkg for $Arch..."
+$VcpkgRoot    = 'C:\vcpkg'
+$VcpkgTriplet = if ($Arch -eq 'arm64') { 'arm64-windows' } else { 'x64-windows' }
+& "$VcpkgRoot\vcpkg.exe" install "openssl:$VcpkgTriplet" --no-print-usage
 
-# 确定 OpenSSL 安装路径
-$OpenSSLRoot = 'C:\Program Files\OpenSSL-Win64'
-if (-not (Test-Path $OpenSSLRoot)) {
-    $OpenSSLRoot = 'C:\Program Files\OpenSSL'
-}
-if (-not (Test-Path $OpenSSLRoot)) {
-    # winget 备选
-    $OpenSSLRoot = (Get-ChildItem 'C:\' -Filter 'OpenSSL*' -Directory -ErrorAction SilentlyContinue |
-                    Select-Object -First 1).FullName
-}
+$OpenSSLRoot = "$VcpkgRoot\installed\$VcpkgTriplet"
 Write-Host "OpenSSL root: $OpenSSLRoot"
-
-# 确定 OpenSSL 库文件路径（ARM64 的 Chocolatey 包库在 lib\VC\arm64\MD 下）
-$OpenSSLLibDir = Join-Path $OpenSSLRoot "lib\VC\${Arch}\MD"
-if (-not (Test-Path $OpenSSLLibDir)) {
-    $OpenSSLLibDir = Join-Path $OpenSSLRoot "lib\VC\x64\MD"
-}
-if (-not (Test-Path $OpenSSLLibDir)) {
-    $OpenSSLLibDir = Join-Path $OpenSSLRoot "lib"
-}
-Write-Host "OpenSSL lib dir: $OpenSSLLibDir"
 
 # ── 安装 Ninja（cmake --build 使用） ────────────────────────────────
 choco install ninja --no-progress -y | Out-Null
@@ -105,8 +88,6 @@ $CmakeArgs = @(
     "-DCMAKE_INSTALL_PREFIX=$InstallDir",
     "-DWITH_SSL=system",
     "-DOPENSSL_ROOT_DIR=$OpenSSLRoot",
-    "-DOPENSSL_LIBRARY=$OpenSSLLibDir\libssl.lib",
-    "-DCRYPTO_LIBRARY=$OpenSSLLibDir\libcrypto.lib",
     "-DWITH_UNIT_TESTS=OFF",
     "-DENABLED_LOCAL_INFILE=1",
     "-DDEFAULT_CHARSET=utf8mb4",
