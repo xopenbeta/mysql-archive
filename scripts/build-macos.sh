@@ -87,7 +87,7 @@ cmake -B "${BUILD_DIR}" -S "${SRC_DIR}" \
   -DDEFAULT_CHARSET=utf8mb4 \
   -DDEFAULT_COLLATION=utf8mb4_0900_ai_ci \
   -DWITH_JEMALLOC=OFF \
-  "${CMAKE_EXTRA_ARGS[@]}"
+  ${CMAKE_EXTRA_ARGS[@]+"${CMAKE_EXTRA_ARGS[@]}"}
 
 # ── 编译并安装 ──────────────────────────────────────────────────────
 cmake --build "${BUILD_DIR}" --parallel "$(sysctl -n hw.logicalcpu)"
