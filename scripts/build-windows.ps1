@@ -40,6 +40,16 @@ if (-not (Test-Path $OpenSSLRoot)) {
 }
 Write-Host "OpenSSL root: $OpenSSLRoot"
 
+# 确定 OpenSSL 库文件路径（ARM64 的 Chocolatey 包库在 lib\VC\arm64\MD 下）
+$OpenSSLLibDir = Join-Path $OpenSSLRoot "lib\VC\${Arch}\MD"
+if (-not (Test-Path $OpenSSLLibDir)) {
+    $OpenSSLLibDir = Join-Path $OpenSSLRoot "lib\VC\x64\MD"
+}
+if (-not (Test-Path $OpenSSLLibDir)) {
+    $OpenSSLLibDir = Join-Path $OpenSSLRoot "lib"
+}
+Write-Host "OpenSSL lib dir: $OpenSSLLibDir"
+
 # ── 安装 Ninja（cmake --build 使用） ────────────────────────────────
 choco install ninja --no-progress -y | Out-Null
 
@@ -95,6 +105,8 @@ $CmakeArgs = @(
     "-DCMAKE_INSTALL_PREFIX=$InstallDir",
     "-DWITH_SSL=system",
     "-DOPENSSL_ROOT_DIR=$OpenSSLRoot",
+    "-DOPENSSL_LIBRARY=$OpenSSLLibDir\libssl.lib",
+    "-DCRYPTO_LIBRARY=$OpenSSLLibDir\libcrypto.lib",
     "-DWITH_UNIT_TESTS=OFF",
     "-DENABLED_LOCAL_INFILE=1",
     "-DDEFAULT_CHARSET=utf8mb4",

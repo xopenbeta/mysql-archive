@@ -50,12 +50,16 @@ if [[ "${ARCH}" == "x86_64" && "${HOST_ARCH}" == "arm64" ]]; then
   # 交叉编译时 CMake 无法正确处理 zstd 内置的 x86_64 汇编文件，
   # 禁用汇编优化以避免链接时出现 Undefined symbols for architecture x86_64。
   CROSS_COMPILE_FLAGS="-DZSTD_DISABLE_ASM"
+  # Xcode 15+ 新链接器在交叉编译 x86_64 时存在 "imageOffset32 fixup" Bug，
+  # 回退到旧链接器以规避该问题。
+  CROSS_LINKER_FLAGS="-Wl,-ld_classic"
 else
   # 原生编译
   brew install openssl@3
   OPENSSL_ROOT_DIR="$(brew --prefix openssl@3)"
   CMAKE_OSX_ARCH="${ARCH}"
   CROSS_COMPILE_FLAGS=""
+  CROSS_LINKER_FLAGS=""
 fi
 
 # ── 下载 MySQL 源码 ─────────────────────────────────────────────────
@@ -92,6 +96,7 @@ cmake -B "${BUILD_DIR}" -S "${SRC_DIR}" \
   -DDEFAULT_COLLATION=utf8mb4_0900_ai_ci \
   -DWITH_JEMALLOC=OFF \
   ${CROSS_COMPILE_FLAGS:+-DCMAKE_C_FLAGS="${CROSS_COMPILE_FLAGS}" -DCMAKE_CXX_FLAGS="${CROSS_COMPILE_FLAGS}"} \
+  ${CROSS_LINKER_FLAGS:+-DCMAKE_SHARED_LINKER_FLAGS="${CROSS_LINKER_FLAGS}" -DCMAKE_EXE_LINKER_FLAGS="${CROSS_LINKER_FLAGS}"} \
   ${CMAKE_EXTRA_ARGS[@]+"${CMAKE_EXTRA_ARGS[@]}"}
 
 # ── 编译并安装 ──────────────────────────────────────────────────────
