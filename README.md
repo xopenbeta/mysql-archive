@@ -5,9 +5,9 @@
 ## 触发构建
 
 ```bash
-git tag v202603191508
+git tag v202605301603
 git push
-git push origin v202603191508
+git push origin v202605301603
 ```
 
 构建完成后，GitHub Release 页面会自动发布全部支持版本在 arm64 与 x86_64 两个目标架构上的二进制包。

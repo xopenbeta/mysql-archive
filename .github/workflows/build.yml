@@ -80,7 +80,8 @@ jobs:
           }
 
           brew_cmd update
-          brew_cmd install cmake openssl@3 bison pkg-config
+          # Add pcre2 which is used by some MySQL components; keep other deps
+          brew_cmd install cmake openssl@3 bison pkg-config pcre2
 
           MYSQL_VERSION="${{ matrix.mysql_version }}"
           # Extract "8.0" from "8.0.41", "8.4" from "8.4.4", etc.
@@ -121,8 +122,29 @@ jobs:
 
       - name: Download MySQL source
         run: |
-          curl -fSL -o "mysql-${MYSQL_VERSION}.tar.gz" \
-            "https://cdn.mysql.com/Downloads/MySQL-${MAJOR_MINOR}/mysql-${MYSQL_VERSION}.tar.gz"
+          URL_PRIMARY="https://cdn.mysql.com/Downloads/MySQL-${MAJOR_MINOR}/mysql-${MYSQL_VERSION}.tar.gz"
+          URL_INDEX="https://cdn.mysql.com/Downloads/MySQL-${MAJOR_MINOR}/"
+
+          echo "Attempting download: ${URL_PRIMARY}"
+          # Retry a few times in case of transient network/CND issues
+          curl --retry 3 --retry-delay 5 -fSL -o "mysql-${MYSQL_VERSION}.tar.gz" "${URL_PRIMARY}" || {
+            echo "Primary download failed. Gathering diagnostics..."
+            echo "HTTP HEAD for primary URL:"
+            curl -I "${URL_PRIMARY}" || true
+
+            echo "Attempting to fetch directory index for ${URL_INDEX} to help debugging"
+            curl -fSL -o "mysql-${MAJOR_MINOR}-index.html" "${URL_INDEX}" || true
+            if [ -f "mysql-${MAJOR_MINOR}-index.html" ]; then
+              echo "Index snippet (first 200 lines):"
+              head -n 200 "mysql-${MAJOR_MINOR}-index.html" || true
+              echo "Searching index for matching tarball name:"
+              grep -E "mysql-${MYSQL_VERSION}\.tar\.gz" -n "mysql-${MAJOR_MINOR}-index.html" || true
+            fi
+
+            echo "Download failed for ${URL_PRIMARY}. Please verify that the requested MySQL version exists at the CDN or update the workflow to point to a valid source URL. Exiting."
+            exit 22
+          }
+
           tar xzf "mysql-${MYSQL_VERSION}.tar.gz"
 
       - name: Configure
@@ -137,6 +159,7 @@ jobs:
 
           OPENSSL_ROOT="$(brew_cmd --prefix openssl@3)"
           BISON_ROOT="$(brew_cmd --prefix bison)"
+          PCRE2_ROOT="$(brew_cmd --prefix pcre2)"
           CMAKE_BIN="${BREW_PREFIX}/bin/cmake"
 
           cd "mysql-${MYSQL_VERSION}"
@@ -146,13 +169,18 @@ jobs:
           SDK_PATH="$(xcrun --sdk macosx --show-sdk-path)"
           CC="$(xcrun --find clang)"
           CXX="$(xcrun --find clang++)"
+          # zlib from SDK
+          ZLIB_INCLUDE_DIR="${SDK_PATH}/usr/include"
+          ZLIB_LIBRARY="${SDK_PATH}/usr/lib/libz.tbd"
           echo "SDK_PATH=${SDK_PATH}"
           echo "CC=${CC}  CXX=${CXX}"
+          echo "ZLIB_INCLUDE_DIR=${ZLIB_INCLUDE_DIR}"
+          echo "ZLIB_LIBRARY=${ZLIB_LIBRARY}"
 
           # Export SDKROOT so Clang automatically resolves SDK and libc++ headers
           export SDKROOT="${SDK_PATH}"
           export PATH="${BISON_ROOT}/bin:${BREW_PREFIX}/bin:${PATH}"
-          export PKG_CONFIG_PATH="${OPENSSL_ROOT}/lib/pkgconfig"
+          export PKG_CONFIG_PATH="${OPENSSL_ROOT}/lib/pkgconfig:${PCRE2_ROOT}/lib/pkgconfig"
 
           if [ ! -x "${CMAKE_BIN}" ]; then
             echo "Expected CMake not found: ${CMAKE_BIN}"
@@ -179,9 +207,13 @@ jobs:
             -DCMAKE_OSX_DEPLOYMENT_TARGET="${MACOS_DEPLOYMENT_TARGET}" \
             -DCMAKE_OSX_SYSROOT="${SDK_PATH}" \
             -DCMAKE_FIND_FRAMEWORK=LAST \
-            -DCMAKE_PREFIX_PATH="${OPENSSL_ROOT};${BISON_ROOT}" \
+            -DCMAKE_PREFIX_PATH="${OPENSSL_ROOT};${PCRE2_ROOT};${BISON_ROOT}" \
             -DOPENSSL_ROOT_DIR="${OPENSSL_ROOT}" \
             -DOPENSSL_INCLUDE_DIR="${OPENSSL_ROOT}/include" \
+            -DPCRE2_INCLUDE_DIR="${PCRE2_ROOT}/include" \
+            -DPCRE2_LIBRARY="${PCRE2_ROOT}/lib/libpcre2-8.dylib" \
+            -DZLIB_INCLUDE_DIR="${ZLIB_INCLUDE_DIR}" \
+            -DZLIB_LIBRARY="${ZLIB_LIBRARY}" \
             -DWITH_SSL="${OPENSSL_ROOT}" \
             -DBISON_EXECUTABLE="${BISON_ROOT}/bin/bison" \
             -DWITH_BOOST="${BOOST_CACHE}" \
@@ -204,10 +236,46 @@ jobs:
           make install DESTDIR="${GITHUB_WORKSPACE}/stage"
 
           cd "${GITHUB_WORKSPACE}/stage"
+
+          # Add a minimal README so users who download the archive know how to start
+          cat > "${INSTALL_DIR}/README.md" <<'EOF'
+          This archive contains a prebuilt MySQL distribution.
+
+          Usage:
+            # extract
+            tar xzf mysql-VERSION-macos-ARCH.tar.gz
+            cd mysql-VERSION-macos-ARCH
+
+            # initialize (first time only)
+            mkdir data
+            ./bin/mysqld --initialize --datadir=$(pwd)/data --basedir=$(pwd)
+
+            # start
+            ./bin/mysqld --datadir=$(pwd)/data --basedir=$(pwd) --socket=/tmp/mysql.sock --port=3306 &
+
+            # connect
+            ./bin/mysql -u root -p --socket=/tmp/mysql.sock
+
+            # shutdown
+            ./bin/mysqladmin -u root -p --socket=/tmp/mysql.sock shutdown
+
+          EOF
+
+          cd "${GITHUB_WORKSPACE}/stage"
+          # Create tar.gz (top-level directory is ${INSTALL_DIR})
           tar czf "${GITHUB_WORKSPACE}/${INSTALL_DIR}.tar.gz" "${INSTALL_DIR}"
+
+          # Also produce a zip for convenience on platforms that prefer zip
+          # Use ditto on macOS to preserve metadata when possible; fall back to zip
+          if command -v ditto >/dev/null 2>&1; then
+            (cd "${GITHUB_WORKSPACE}/stage" && ditto -c -k --sequesterRsrc --keepParent "${INSTALL_DIR}" "${GITHUB_WORKSPACE}/${INSTALL_DIR}.zip")
+          else
+            (cd "${GITHUB_WORKSPACE}/stage" && zip -r "${GITHUB_WORKSPACE}/${INSTALL_DIR}.zip" "${INSTALL_DIR}")
+          fi
 
           cd "${GITHUB_WORKSPACE}"
           shasum -a 256 "${INSTALL_DIR}.tar.gz" > "${INSTALL_DIR}.tar.gz.sha256"
+          shasum -a 256 "${INSTALL_DIR}.zip" > "${INSTALL_DIR}.zip.sha256"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
