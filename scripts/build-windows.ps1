@@ -143,11 +143,16 @@ $CmakeArgs = @(
     "-DWITH_UNIT_TESTS=OFF",
     "-DENABLED_LOCAL_INFILE=1",
     "-DDEFAULT_CHARSET=utf8mb4",
-    "-DDEFAULT_COLLATION=utf8mb4_0900_ai_ci",
     "-DWITH_JEMALLOC=OFF"
 )
 
-if ($Series -eq '8.0') {
+if ($Series -eq '5.7') {
+    $CmakeArgs += "-DDEFAULT_COLLATION=utf8mb4_general_ci"
+} else {
+    $CmakeArgs += "-DDEFAULT_COLLATION=utf8mb4_0900_ai_ci"
+}
+
+if ($Series -eq '8.0' -or $Series -eq '5.7') {
     $BoostDir = Join-Path $Workdir 'boost'
     New-Item -ItemType Directory -Force -Path $BoostDir | Out-Null
     $CmakeArgs += @("-DDOWNLOAD_BOOST=1", "-DWITH_BOOST=$BoostDir")

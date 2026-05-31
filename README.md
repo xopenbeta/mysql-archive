@@ -5,9 +5,9 @@
 ## 触发构建
 
 ```bash
-git tag v202605312142
+git tag v202606010020
 git push
-git push origin v202605312142
+git push origin v202606010020
 ```
 
 构建完成后，GitHub Release 页面会自动发布全部支持版本在所有平台与架构上的二进制包。
@@ -16,12 +16,13 @@ git push origin v202605312142
 
 | 系列 | 最新版本 | 类型 |
 |------|---------|------|
-| 8.0 | 8.0.46 | Long-Term Support |
-| 8.4 | 8.4.9 | Long-Term Support |
+| 9.6 | 9.6.0 | Innovation |
+| 8.4 | 8.4.7 | Long-Term Support |
+| 5.7 | 5.7.44 | End of Life |
 
 ## 构建矩阵
 
-每个 **操作系统 × 架构 × MySQL 版本** 组合为独立的 CI job，共 12 个 job：
+每个 **操作系统 × 架构 × MySQL 版本** 组合为独立的 CI job，共 15 个 job：
 
 | 操作系统 | 架构 | Runner |
 |---------|------|--------|
@@ -38,7 +39,7 @@ git push origin v202605312142
 - **默认字符集**: `utf8mb4` / `utf8mb4_0900_ai_ci`
 - **单元测试**: 禁用
 - **jemalloc**: 禁用
-- **Boost**: MySQL 8.0 在配置阶段自动下载；MySQL 8.4 已内置于源码
+- **Boost**: MySQL 5.7 在配置阶段自动下载；MySQL 8.4 / 9.6 使用源码内置 Boost
 - **源码**: 从 [cdn.mysql.com](https://cdn.mysql.com/Downloads/) 下载
 
 ## 使用方法

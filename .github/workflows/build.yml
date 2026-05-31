@@ -18,47 +18,67 @@ jobs:
           - os_name: macos
             target_arch: arm64
             runner: macos-14
-            mysql_version: '8.0.46'
+            mysql_version: '9.6.0'
           - os_name: macos
             target_arch: arm64
             runner: macos-14
-            mysql_version: '8.4.9'
+            mysql_version: '8.4.7'
+          - os_name: macos
+            target_arch: arm64
+            runner: macos-14
+            mysql_version: '5.7.44'
           # ���� macOS / x86_64��Rosetta ������룩������������������������������������������
           - os_name: macos
             target_arch: x86_64
             runner: macos-14
-            mysql_version: '8.0.46'
+            mysql_version: '9.6.0'
           - os_name: macos
             target_arch: x86_64
             runner: macos-14
-            mysql_version: '8.4.9'
+            mysql_version: '8.4.7'
+          - os_name: macos
+            target_arch: x86_64
+            runner: macos-14
+            mysql_version: '5.7.44'
           # ���� Linux / arm64 ������������������������������������������������������������������������������������
           - os_name: linux
             target_arch: arm64
             runner: ubuntu-24.04-arm
-            mysql_version: '8.0.46'
+            mysql_version: '9.6.0'
           - os_name: linux
             target_arch: arm64
             runner: ubuntu-24.04-arm
-            mysql_version: '8.4.9'
+            mysql_version: '8.4.7'
+          - os_name: linux
+            target_arch: arm64
+            runner: ubuntu-24.04-arm
+            mysql_version: '5.7.44'
           # ���� Linux / x86_64 ����������������������������������������������������������������������������������
           - os_name: linux
             target_arch: x86_64
             runner: ubuntu-24.04
-            mysql_version: '8.0.46'
+            mysql_version: '9.6.0'
           - os_name: linux
             target_arch: x86_64
             runner: ubuntu-24.04
-            mysql_version: '8.4.9'
+            mysql_version: '8.4.7'
+          - os_name: linux
+            target_arch: x86_64
+            runner: ubuntu-24.04
+            mysql_version: '5.7.44'
           # ���� Windows / x86_64 ������������������������������������������������������������������������������
           - os_name: windows
             target_arch: x86_64
             runner: windows-latest
-            mysql_version: '8.0.46'
+            mysql_version: '9.6.0'
           - os_name: windows
             target_arch: x86_64
             runner: windows-latest
-            mysql_version: '8.4.9'
+            mysql_version: '8.4.7'
+          - os_name: windows
+            target_arch: x86_64
+            runner: windows-latest
+            mysql_version: '5.7.44'
 
     steps:
       - uses: actions/checkout@v4

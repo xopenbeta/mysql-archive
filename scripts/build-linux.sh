@@ -42,12 +42,17 @@ tar -xzf "${SRC_ARCHIVE}" -C "${SRC_DIR}" --strip-components=1
 mkdir -p "${BUILD_DIR}"
 
 CMAKE_EXTRA_ARGS=()
-if [[ "${SERIES}" == "8.0" ]]; then
-  # MySQL 8.0 需要 Boost 1.77，通过 CMake 自动下载
+if [[ "${SERIES}" == "8.0" || "${SERIES}" == "5.7" ]]; then
+  # MySQL 8.0/5.7 需要外部 Boost，通过 CMake 自动下载
   CMAKE_EXTRA_ARGS+=(
     "-DDOWNLOAD_BOOST=1"
     "-DWITH_BOOST=${WORKDIR}/boost"
   )
+fi
+
+DEFAULT_COLLATION="utf8mb4_0900_ai_ci"
+if [[ "${SERIES}" == "5.7" ]]; then
+  DEFAULT_COLLATION="utf8mb4_general_ci"
 fi
 
 cmake -B "${BUILD_DIR}" -S "${SRC_DIR}" \
@@ -58,7 +63,7 @@ cmake -B "${BUILD_DIR}" -S "${SRC_DIR}" \
   -DWITH_UNIT_TESTS=OFF \
   -DENABLED_LOCAL_INFILE=1 \
   -DDEFAULT_CHARSET=utf8mb4 \
-  -DDEFAULT_COLLATION=utf8mb4_0900_ai_ci \
+  -DDEFAULT_COLLATION="${DEFAULT_COLLATION}" \
   -DWITH_JEMALLOC=OFF \
   -DWITH_NUMA=1 \
   "${CMAKE_EXTRA_ARGS[@]}"
