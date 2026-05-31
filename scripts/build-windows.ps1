@@ -96,6 +96,8 @@ if (Test-Path $VcVarsAll) {
 # ── CMake 配置 ──────────────────────────────────────────────────────
 New-Item -ItemType Directory -Force -Path $BuildDir | Out-Null
 
+$OpenSSLExe = "$OpenSSLRoot\tools\openssl\openssl.exe"
+
 $CmakeArgs = @(
     "-B", $BuildDir,
     "-S", $SrcDir,
@@ -104,6 +106,7 @@ $CmakeArgs = @(
     "-DCMAKE_INSTALL_PREFIX=$InstallDir",
     "-DWITH_SSL=system",
     "-DOPENSSL_ROOT_DIR=$OpenSSLRoot",
+    "-DOPENSSL_EXECUTABLE=$OpenSSLExe",
     "-DWITH_UNIT_TESTS=OFF",
     "-DENABLED_LOCAL_INFILE=1",
     "-DDEFAULT_CHARSET=utf8mb4",
