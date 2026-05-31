@@ -6,6 +6,17 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
+function Invoke-Native {
+    param(
+        [Parameter(Mandatory)][string]$Command,
+        [Parameter()][string[]]$Arguments = @()
+    )
+    & $Command @Arguments
+    if ($LASTEXITCODE -ne 0) {
+        throw "Command failed (exit $LASTEXITCODE): $Command $($Arguments -join ' ')"
+    }
+}
+
 # 从版本号自动推导系列号，例如 8.0.41 → 8.0，8.4.4 → 8.4
 $parts  = $MysqlVersion.Split('.')
 $Series = "$($parts[0]).$($parts[1])"
@@ -31,11 +42,11 @@ $VcpkgTriplet = if ($Arch -eq 'arm64') { 'arm64-windows' } else { 'x64-windows' 
 
 if (-not (Test-Path "$VcpkgRoot\vcpkg.exe")) {
     Write-Host "vcpkg not found at $VcpkgRoot. Cloning and bootstrapping vcpkg..."
-    git clone https://github.com/microsoft/vcpkg.git $VcpkgRoot
-    & "$VcpkgRoot\bootstrap-vcpkg.bat"
+    Invoke-Native -Command "git" -Arguments @("clone", "https://github.com/microsoft/vcpkg.git", $VcpkgRoot)
+    Invoke-Native -Command "$VcpkgRoot\bootstrap-vcpkg.bat"
 }
 
-& "$VcpkgRoot\vcpkg.exe" install "openssl:$VcpkgTriplet" --no-print-usage
+Invoke-Native -Command "$VcpkgRoot\vcpkg.exe" -Arguments @("install", "openssl:$VcpkgTriplet", "--no-print-usage")
 
 $OpenSSLRoot = "$VcpkgRoot\installed\$VcpkgTriplet"
 Write-Host "OpenSSL root: $OpenSSLRoot"
@@ -71,8 +82,8 @@ if ($Arch -eq 'arm64') {
 }
 
 # ── 安装 Ninja（cmake --build 使用） ────────────────────────────────
-choco install ninja --no-progress -y | Out-Null
-choco install winflexbison3 --no-progress -y | Out-Null
+Invoke-Native -Command "choco" -Arguments @("install", "ninja", "--no-progress", "-y")
+Invoke-Native -Command "choco" -Arguments @("install", "winflexbison3", "--no-progress", "-y")
 
 # ── 下载 MySQL 源码 ─────────────────────────────────────────────────
 $SrcUrl     = "https://cdn.mysql.com/Downloads/MySQL-${Series}/mysql-${MysqlVersion}.zip"
@@ -148,13 +159,16 @@ if ($OpenSSLExe) {
 
 Write-Host "Running cmake configure..."
 cmake @CmakeArgs
+if ($LASTEXITCODE -ne 0) {
+    throw "cmake configure failed (exit code $LASTEXITCODE)"
+}
 
 # ── Patch Boost 1.77.0 for ARM64 MSVC (intel_intrinsics.hpp bug) ───
 # Boost 1.77 guards with !defined(__arm__) but omits !defined(__aarch64__)
 # and !defined(_M_ARM64). On ARM64 Windows MSVC _M_X64 may be set,
 # causing the x86-only _addcarry_u32/_subborrow_u32 to be compiled.
 # Fixed upstream in Boost 1.78.0; patch here since MySQL 8.0 requires 1.77.
-if ($Arch -eq 'arm64') {
+if ($Arch -eq 'arm64' -and $Series -eq '8.0') {
     $BoostIntelHpp = Join-Path $BoostDir "boost_1_77_0\boost\multiprecision\cpp_int\intel_intrinsics.hpp"
     if (Test-Path $BoostIntelHpp) {
         $hpp = [System.IO.File]::ReadAllText($BoostIntelHpp)
@@ -174,6 +188,9 @@ if ($Arch -eq 'arm64') {
 $Jobs = [System.Environment]::ProcessorCount
 Write-Host "Building with $Jobs parallel jobs..."
 cmake --build $BuildDir --config Release --parallel $Jobs
+if ($LASTEXITCODE -ne 0) {
+    throw "cmake --build failed (exit code $LASTEXITCODE)"
+}
 
 Write-Host "Installing..."
 $installAttempts = 0
