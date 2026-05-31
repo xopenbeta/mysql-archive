@@ -153,6 +153,12 @@ if ($Series -eq '8.0') {
     $CmakeArgs += @("-DDOWNLOAD_BOOST=1", "-DWITH_BOOST=$BoostDir")
 }
 
+if ($Arch -eq 'arm64') {
+    # On some arm64 Windows runners, InnoDB picks a Windows MM fence path that
+    # pulls x86-style intrinsics and fails in mmintrin.h (C1189).
+    $CmakeArgs += "-DHAVE_WINDOWS_MM_FENCE=0"
+}
+
 if ($OpenSSLExe) {
     $CmakeArgs += "-DOPENSSL_EXECUTABLE=$OpenSSLExe"
 }
