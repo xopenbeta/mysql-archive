@@ -140,6 +140,27 @@ if ($OpenSSLExe) {
 Write-Host "Running cmake configure..."
 cmake @CmakeArgs
 
+# ── Patch Boost 1.77.0 for ARM64 MSVC (intel_intrinsics.hpp bug) ───
+# Boost 1.77 guards with !defined(__arm__) but omits !defined(__aarch64__)
+# and !defined(_M_ARM64). On ARM64 Windows MSVC _M_X64 may be set,
+# causing the x86-only _addcarry_u32/_subborrow_u32 to be compiled.
+# Fixed upstream in Boost 1.78.0; patch here since MySQL 8.0 requires 1.77.
+if ($Arch -eq 'arm64') {
+    $BoostIntelHpp = Join-Path $BoostDir "boost_1_77_0\boost\multiprecision\cpp_int\intel_intrinsics.hpp"
+    if (Test-Path $BoostIntelHpp) {
+        $hpp = [System.IO.File]::ReadAllText($BoostIntelHpp)
+        if ($hpp -notmatch '_M_ARM64.*ARM64 guard') {
+            $guard  = "// ARM64 guard (patched for Boost 1.77 / MySQL 8.0 ARM64 MSVC build)`r`n"
+            $guard += "#if !defined(_M_ARM64) && !defined(__aarch64__)`r`n"
+            $footer = "`r`n#endif // !defined(_M_ARM64) && !defined(__aarch64__)`r`n"
+            [System.IO.File]::WriteAllText($BoostIntelHpp, $guard + $hpp + $footer)
+            Write-Host "Patched Boost 1.77 intel_intrinsics.hpp for ARM64 MSVC compatibility"
+        }
+    } else {
+        Write-Warning "Boost intel_intrinsics.hpp not found at $BoostIntelHpp; skipping patch"
+    }
+}
+
 # ── 编译并安装 ──────────────────────────────────────────────────────
 $Jobs = [System.Environment]::ProcessorCount
 Write-Host "Building with $Jobs parallel jobs..."
