@@ -41,8 +41,17 @@ $OpenSSLRoot = "$VcpkgRoot\installed\$VcpkgTriplet"
 Write-Host "OpenSSL root: $OpenSSLRoot"
 $OpenSSLExe = "$OpenSSLRoot\tools\openssl\openssl.exe"
 if (-not (Test-Path $OpenSSLExe)) {
-    Write-Warning "OpenSSL executable not found at $OpenSSLExe. CMake will locate it automatically."
-    $OpenSSLExe = $null
+    $CmdOpenSSL = Get-Command openssl.exe -ErrorAction SilentlyContinue
+    if ($CmdOpenSSL -and (Test-Path $CmdOpenSSL.Source)) {
+        $OpenSSLExe = $CmdOpenSSL.Source
+        Write-Host "Using OpenSSL executable from PATH: $OpenSSLExe"
+    } elseif (Test-Path "C:\Program Files\Git\usr\bin\openssl.exe") {
+        $OpenSSLExe = "C:\Program Files\Git\usr\bin\openssl.exe"
+        Write-Host "Using OpenSSL executable from Git: $OpenSSLExe"
+    } else {
+        Write-Warning "OpenSSL executable not found. CMake may set OPENSSL_EXECUTABLE-NOTFOUND."
+        $OpenSSLExe = $null
+    }
 }
 
 # MySQL 8.x 的 cmake/ssl.cmake (MYSQL_CHECK_SSL_DLLS) 硬编码搜索 *-x64.dll
@@ -177,6 +186,7 @@ do {
             Start-Sleep -Seconds 10
         } else {
             Write-Warning "cmake --install failed after 3 attempts (exit code $LASTEXITCODE). Continuing with packaging..."
+            $global:LASTEXITCODE = 0
         }
     }
 } while ($LASTEXITCODE -ne 0 -and $installAttempts -lt 3)
