@@ -28,10 +28,21 @@ Write-Host "=== Building MySQL ${MysqlVersion} for Windows/${Arch} ==="
 Write-Host "Installing OpenSSL via vcpkg for $Arch..."
 $VcpkgRoot    = 'C:\vcpkg'
 $VcpkgTriplet = if ($Arch -eq 'arm64') { 'arm64-windows' } else { 'x64-windows' }
+
+if (-not (Test-Path "$VcpkgRoot\vcpkg.exe")) {
+    Write-Host "vcpkg not found at $VcpkgRoot. Cloning and bootstrapping vcpkg..."
+    git clone https://github.com/microsoft/vcpkg.git $VcpkgRoot
+    & "$VcpkgRoot\bootstrap-vcpkg.bat"
+}
+
 & "$VcpkgRoot\vcpkg.exe" install "openssl:$VcpkgTriplet" --no-print-usage
 
 $OpenSSLRoot = "$VcpkgRoot\installed\$VcpkgTriplet"
 Write-Host "OpenSSL root: $OpenSSLRoot"
+$OpenSSLExe = "$OpenSSLRoot\tools\openssl\openssl.exe"
+if (-not (Test-Path $OpenSSLExe)) {
+    throw "OpenSSL executable not found at $OpenSSLExe. Ensure the vcpkg OpenSSL package installed correctly."
+}
 
 # MySQL 8.x 的 cmake/ssl.cmake (MYSQL_CHECK_SSL_DLLS) 硬编码搜索 *-x64.dll
 # vcpkg 为 arm64 生成的是 *-arm64.dll，需要复制一份为 x64 命名才能被找到
@@ -51,6 +62,7 @@ if ($Arch -eq 'arm64') {
 
 # ── 安装 Ninja（cmake --build 使用） ────────────────────────────────
 choco install ninja --no-progress -y | Out-Null
+choco install winflexbison3 --no-progress -y | Out-Null
 
 # ── 下载 MySQL 源码 ─────────────────────────────────────────────────
 $SrcUrl     = "https://cdn.mysql.com/Downloads/MySQL-${Series}/mysql-${MysqlVersion}.zip"
@@ -104,8 +116,11 @@ $CmakeArgs = @(
     "-G", "Ninja",
     "-DCMAKE_BUILD_TYPE=Release",
     "-DCMAKE_INSTALL_PREFIX=$InstallDir",
+    "-DCMAKE_TOOLCHAIN_FILE=$VcpkgRoot\scripts\buildsystems\vcpkg.cmake",
     "-DWITH_SSL=system",
     "-DOPENSSL_ROOT_DIR=$OpenSSLRoot",
+    "-DOPENSSL_INCLUDE_DIR=$OpenSSLRoot\include",
+    "-DOPENSSL_LIBRARIES=$OpenSSLRoot\lib\libssl.lib;$OpenSSLRoot\lib\libcrypto.lib",
     "-DOPENSSL_EXECUTABLE=$OpenSSLExe",
     "-DWITH_UNIT_TESTS=OFF",
     "-DENABLED_LOCAL_INFILE=1",
