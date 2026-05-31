@@ -41,7 +41,8 @@ $OpenSSLRoot = "$VcpkgRoot\installed\$VcpkgTriplet"
 Write-Host "OpenSSL root: $OpenSSLRoot"
 $OpenSSLExe = "$OpenSSLRoot\tools\openssl\openssl.exe"
 if (-not (Test-Path $OpenSSLExe)) {
-    throw "OpenSSL executable not found at $OpenSSLExe. Ensure the vcpkg OpenSSL package installed correctly."
+    Write-Warning "OpenSSL executable not found at $OpenSSLExe. CMake will locate it automatically."
+    $OpenSSLExe = $null
 }
 
 # MySQL 8.x 的 cmake/ssl.cmake (MYSQL_CHECK_SSL_DLLS) 硬编码搜索 *-x64.dll
@@ -108,8 +109,6 @@ if (Test-Path $VcVarsAll) {
 # ── CMake 配置 ──────────────────────────────────────────────────────
 New-Item -ItemType Directory -Force -Path $BuildDir | Out-Null
 
-$OpenSSLExe = "$OpenSSLRoot\tools\openssl\openssl.exe"
-
 $CmakeArgs = @(
     "-B", $BuildDir,
     "-S", $SrcDir,
@@ -121,7 +120,6 @@ $CmakeArgs = @(
     "-DOPENSSL_ROOT_DIR=$OpenSSLRoot",
     "-DOPENSSL_INCLUDE_DIR=$OpenSSLRoot\include",
     "-DOPENSSL_LIBRARIES=$OpenSSLRoot\lib\libssl.lib;$OpenSSLRoot\lib\libcrypto.lib",
-    "-DOPENSSL_EXECUTABLE=$OpenSSLExe",
     "-DWITH_UNIT_TESTS=OFF",
     "-DENABLED_LOCAL_INFILE=1",
     "-DDEFAULT_CHARSET=utf8mb4",
@@ -133,6 +131,10 @@ if ($Series -eq '8.0') {
     $BoostDir = Join-Path $Workdir 'boost'
     New-Item -ItemType Directory -Force -Path $BoostDir | Out-Null
     $CmakeArgs += @("-DDOWNLOAD_BOOST=1", "-DWITH_BOOST=$BoostDir")
+}
+
+if ($OpenSSLExe) {
+    $CmakeArgs += "-DOPENSSL_EXECUTABLE=$OpenSSLExe"
 }
 
 Write-Host "Running cmake configure..."
