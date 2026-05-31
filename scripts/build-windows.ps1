@@ -190,6 +190,22 @@ if ($Arch -eq 'arm64' -and $Series -eq '8.0') {
     }
 }
 
+if ($Arch -eq 'arm64') {
+    # Some arm64 runners still emit -DHAVE_WINDOWS_MM_FENCE in generated rules,
+    # which triggers mmintrin.h C1189 in InnoDB. Strip it from ninja rules.
+    Write-Host "Removing HAVE_WINDOWS_MM_FENCE from generated ninja rules for arm64..."
+    $patchedFiles = 0
+    Get-ChildItem -Path $BuildDir -Recurse -File -Filter "*.ninja" | ForEach-Object {
+        $content = [System.IO.File]::ReadAllText($_.FullName)
+        $updated = $content -replace '(?<=\s)-DHAVE_WINDOWS_MM_FENCE(?=\s|$)', ''
+        if ($updated -ne $content) {
+            [System.IO.File]::WriteAllText($_.FullName, $updated)
+            $patchedFiles++
+        }
+    }
+    Write-Host "Patched $patchedFiles ninja file(s)"
+}
+
 # ── 编译并安装 ──────────────────────────────────────────────────────
 $Jobs = [System.Environment]::ProcessorCount
 Write-Host "Building with $Jobs parallel jobs..."
