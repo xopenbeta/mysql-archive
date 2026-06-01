@@ -1,0 +1,1258 @@
+2026-06-01T15:48:34.8839260Z Current runner version: '2.334.0'
+2026-06-01T15:48:34.8856340Z ##[group]Runner Image Provisioner
+2026-06-01T15:48:34.8856900Z Hosted Compute Agent
+2026-06-01T15:48:34.8857260Z Version: 20260520.533
+2026-06-01T15:48:34.8857650Z Commit: 189110e25284a9812c124fd27b339e2fb4f2f9db
+2026-06-01T15:48:34.8858110Z Build Date: 2026-05-20T17:44:04Z
+2026-06-01T15:48:34.8858540Z Worker ID: {bbd0dcc6-998e-4332-b942-3df32f847315}
+2026-06-01T15:48:34.8858980Z Azure Region: westus
+2026-06-01T15:48:34.8859340Z ##[endgroup]
+2026-06-01T15:48:34.8860280Z ##[group]Operating System
+2026-06-01T15:48:34.8860660Z macOS
+2026-06-01T15:48:34.8860970Z 14.8.7
+2026-06-01T15:48:34.8861280Z 23J520
+2026-06-01T15:48:34.8861620Z ##[endgroup]
+2026-06-01T15:48:34.8862100Z ##[group]Runner Image
+2026-06-01T15:48:34.8862470Z Image: macos-14-arm64
+2026-06-01T15:48:34.8862840Z Version: 20260525.0091.1
+2026-06-01T15:48:34.8863660Z Included Software: https://github.com/actions/runner-images/blob/macos-14-arm64/20260525.0091/images/macos/macos-14-arm64-Readme.md
+2026-06-01T15:48:34.8864680Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-14-arm64%2F20260525.0091
+2026-06-01T15:48:34.8865320Z ##[endgroup]
+2026-06-01T15:48:34.8866100Z ##[group]GITHUB_TOKEN Permissions
+2026-06-01T15:48:34.8867420Z Contents: read
+2026-06-01T15:48:34.8867780Z Metadata: read
+2026-06-01T15:48:34.8868150Z Packages: read
+2026-06-01T15:48:34.8868520Z ##[endgroup]
+2026-06-01T15:48:34.8870070Z Secret source: Actions
+2026-06-01T15:48:34.8870540Z Prepare workflow directory
+2026-06-01T15:48:34.9157520Z Prepare all required actions
+2026-06-01T15:48:34.9183760Z Getting action download info
+2026-06-01T15:48:35.3732200Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-06-01T15:48:35.7033990Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-06-01T15:48:35.9841030Z Complete job name: Build - macos - arm64 - MySQL 5.7.44
+2026-06-01T15:48:36.0294480Z ##[group]Run actions/checkout@v4
+2026-06-01T15:48:36.0295070Z with:
+2026-06-01T15:48:36.0295420Z   repository: xopenbeta/mysql-archive
+2026-06-01T15:48:36.0298460Z   token: ***
+2026-06-01T15:48:36.0298770Z   ssh-strict: true
+2026-06-01T15:48:36.0299100Z   ssh-user: git
+2026-06-01T15:48:36.0299440Z   persist-credentials: true
+2026-06-01T15:48:36.0299850Z   clean: true
+2026-06-01T15:48:36.0300190Z   sparse-checkout-cone-mode: true
+2026-06-01T15:48:36.0300570Z   fetch-depth: 1
+2026-06-01T15:48:36.0300930Z   fetch-tags: false
+2026-06-01T15:48:36.0301260Z   show-progress: true
+2026-06-01T15:48:36.0301600Z   lfs: false
+2026-06-01T15:48:36.0301920Z   submodules: false
+2026-06-01T15:48:36.0302260Z   set-safe-directory: true
+2026-06-01T15:48:36.0302850Z ##[endgroup]
+2026-06-01T15:48:36.2136760Z Syncing repository: xopenbeta/mysql-archive
+2026-06-01T15:48:36.2142970Z ##[group]Getting Git version info
+2026-06-01T15:48:36.2143810Z Working directory is '/Users/runner/work/mysql-archive/mysql-archive'
+2026-06-01T15:48:36.2144700Z [command]/opt/homebrew/bin/git version
+2026-06-01T15:48:36.2393410Z git version 2.54.0
+2026-06-01T15:48:36.2412120Z ##[endgroup]
+2026-06-01T15:48:36.2425580Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/5da90a81-bf1c-4e86-bfee-ff9e52513d76/.gitconfig'
+2026-06-01T15:48:36.2443540Z Temporarily overriding HOME='/Users/runner/work/_temp/5da90a81-bf1c-4e86-bfee-ff9e52513d76' before making global git config changes
+2026-06-01T15:48:36.2446470Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-01T15:48:36.2448970Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/mysql-archive/mysql-archive
+2026-06-01T15:48:36.2545310Z Deleting the contents of '/Users/runner/work/mysql-archive/mysql-archive'
+2026-06-01T15:48:36.2548910Z ##[group]Initializing the repository
+2026-06-01T15:48:36.2553080Z [command]/opt/homebrew/bin/git init /Users/runner/work/mysql-archive/mysql-archive
+2026-06-01T15:48:36.2812840Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-06-01T15:48:36.2814550Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-06-01T15:48:36.2815320Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-06-01T15:48:36.2815960Z hint: call:
+2026-06-01T15:48:36.2816640Z hint:
+2026-06-01T15:48:36.2817140Z hint: 	git config --global init.defaultBranch <name>
+2026-06-01T15:48:36.2819250Z hint:
+2026-06-01T15:48:36.2820960Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-06-01T15:48:36.2823130Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-06-01T15:48:36.2825010Z hint:
+2026-06-01T15:48:36.2826120Z hint: 	git branch -m <name>
+2026-06-01T15:48:36.2827550Z hint:
+2026-06-01T15:48:36.2829400Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-06-01T15:48:36.2831740Z Initialized empty Git repository in /Users/runner/work/mysql-archive/mysql-archive/.git/
+2026-06-01T15:48:36.2836270Z [command]/opt/homebrew/bin/git remote add origin https://github.com/xopenbeta/mysql-archive
+2026-06-01T15:48:36.2896570Z ##[endgroup]
+2026-06-01T15:48:36.2897390Z ##[group]Disabling automatic garbage collection
+2026-06-01T15:48:36.2900480Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-06-01T15:48:36.2954800Z ##[endgroup]
+2026-06-01T15:48:36.2956410Z ##[group]Setting up auth
+2026-06-01T15:48:36.2968150Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-01T15:48:36.3033660Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-01T15:48:36.3852050Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-01T15:48:36.3909590Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-01T15:48:36.4824170Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-01T15:48:36.4850510Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-01T15:48:36.6523780Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-01T15:48:36.6556230Z ##[endgroup]
+2026-06-01T15:48:36.6558760Z ##[group]Fetching the repository
+2026-06-01T15:48:36.6562760Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +0b122881aa4ff6e221b4615dabfe17c8c92949f0:refs/tags/v202606012345
+2026-06-01T15:48:37.2320990Z From https://github.com/xopenbeta/mysql-archive
+2026-06-01T15:48:37.2323790Z  * [new ref]         0b122881aa4ff6e221b4615dabfe17c8c92949f0 -> v202606012345
+2026-06-01T15:48:37.2396900Z ##[endgroup]
+2026-06-01T15:48:37.2400270Z ##[group]Determining the checkout info
+2026-06-01T15:48:37.2401550Z ##[endgroup]
+2026-06-01T15:48:37.2402480Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-06-01T15:48:37.2473820Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-01T15:48:37.2538050Z ##[group]Checking out the ref
+2026-06-01T15:48:37.2542080Z [command]/opt/homebrew/bin/git checkout --progress --force refs/tags/v202606012345
+2026-06-01T15:48:37.2646510Z HEAD is now at 0b12288 fix
+2026-06-01T15:48:37.2670220Z ##[endgroup]
+2026-06-01T15:48:37.2745340Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-06-01T15:48:37.2803630Z 0b122881aa4ff6e221b4615dabfe17c8c92949f0
+2026-06-01T15:48:37.3012490Z ##[group]Run chmod +x ./scripts/build-macos.sh
+2026-06-01T15:48:37.3013510Z [36;1mchmod +x ./scripts/build-macos.sh[0m
+2026-06-01T15:48:37.3014380Z [36;1m./scripts/build-macos.sh "arm64" "5.7.44"[0m
+2026-06-01T15:48:37.3113390Z shell: /bin/bash -e {0}
+2026-06-01T15:48:37.3114130Z ##[endgroup]
+2026-06-01T15:48:37.3604640Z === Building MySQL 5.7.44 for macOS/arm64 ===
+2026-06-01T15:48:39.0467720Z ✔︎ JSON API formula_tap_migrations.jws.json
+2026-06-01T15:48:39.0468170Z ✔︎ JSON API cask_tap_migrations.jws.json
+2026-06-01T15:48:40.1570950Z ##[warning]cmake 4.3.2 is already installed and up-to-date.
+To reinstall 4.3.2, run:
+  brew reinstall cmake
+
+2026-06-01T15:48:40.1577250Z ##[warning]ninja 1.13.2 is already installed and up-to-date.
+To reinstall 1.13.2, run:
+  brew reinstall ninja
+
+2026-06-01T15:48:40.1595680Z ##[warning]pkgconf 2.5.1 is already installed and up-to-date.
+To reinstall 2.5.1, run:
+  brew reinstall pkgconf
+
+2026-06-01T15:48:40.9744540Z Inspect the formula dependency plan before installing with `brew install --ask`.
+2026-06-01T15:48:40.9746410Z Enable ask mode by setting `HOMEBREW_ASK=1`.
+2026-06-01T15:48:40.9749350Z Hide these hints with `HOMEBREW_NO_ENV_HINTS=1` (see `man brew`).
+2026-06-01T15:48:40.9758130Z [32m==>[0m [1mFetching downloads for: [32mbison[39m[0m
+2026-06-01T15:48:41.8654260Z ✔︎ Bottle Manifest bison (3.8.2)
+2026-06-01T15:48:43.0869940Z ✔︎ Bottle bison (3.8.2)
+2026-06-01T15:48:43.3333810Z [34m==>[0m [1mPouring bison--3.8.2.arm64_sonoma.bottle.tar.gz[0m
+2026-06-01T15:48:45.4758200Z [34m==>[0m [1mCaveats[0m
+2026-06-01T15:48:45.4759680Z bison is keg-only, which means it was not symlinked into /opt/homebrew,
+2026-06-01T15:48:45.4797400Z because macOS already provides this software and installing another version in
+2026-06-01T15:48:45.4798570Z parallel can cause all kinds of trouble.
+2026-06-01T15:48:45.4800230Z 
+2026-06-01T15:48:45.4800810Z If you need to have bison first in your PATH, run:
+2026-06-01T15:48:45.4801610Z   echo 'export PATH="/opt/homebrew/opt/bison/bin:$PATH"' >> /Users/runner/.bash_profile
+2026-06-01T15:48:45.4802060Z 
+2026-06-01T15:48:45.4802240Z For compilers to find bison you may need to set:
+2026-06-01T15:48:45.4802700Z   export LDFLAGS="-L/opt/homebrew/opt/bison/lib"
+2026-06-01T15:48:45.4803540Z [34m==>[0m [1mSummary[0m
+2026-06-01T15:48:45.4804000Z 🍺  /opt/homebrew/Cellar/bison/3.8.2: 100 files, 3.9MB
+2026-06-01T15:48:46.7847140Z ##[warning]openssl@3 3.6.2 is already installed and up-to-date.
+To reinstall 3.6.2, run:
+  brew reinstall openssl@3
+
+2026-06-01T15:48:46.8258900Z Downloading source from https://cdn.mysql.com/Downloads/MySQL-5.7/mysql-5.7.44.tar.gz
+2026-06-01T15:48:46.8338170Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-06-01T15:48:46.8338730Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-06-01T15:48:46.8340070Z 
+2026-06-01T15:48:47.5741910Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-06-01T15:48:48.1582670Z  30 53.9M   30 16.4M    0     0  22.2M      0  0:00:02 --:--:--  0:00:02 22.2M
+2026-06-01T15:48:48.1583720Z 100 53.9M  100 53.9M    0     0  40.7M      0  0:00:01  0:00:01 --:--:-- 40.7M
+2026-06-01T15:48:53.2432510Z CMake Deprecation Warning at CMakeLists.txt:30 (CMAKE_MINIMUM_REQUIRED):
+2026-06-01T15:48:53.2433330Z   Compatibility with CMake < 3.10 will be removed from a future version of
+2026-06-01T15:48:53.2433690Z   CMake.
+2026-06-01T15:48:53.2433810Z 
+2026-06-01T15:48:53.2433980Z   Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+2026-06-01T15:48:53.2434470Z   to tell CMake that the project requires at least <min> but has been updated
+2026-06-01T15:48:53.2435010Z   to work with policies introduced by <max> or earlier.
+2026-06-01T15:48:53.2435230Z 
+2026-06-01T15:48:53.2435240Z 
+2026-06-01T15:48:53.2439510Z CMake Error at CMakeLists.txt:35 (CMAKE_POLICY):
+2026-06-01T15:48:53.2442360Z -- Running cmake version 4.3.2
+2026-06-01T15:48:53.2445580Z   Policy CMP0018 may not be set to OLD behavior because this version of CMake
+2026-06-01T15:48:53.2448410Z   no longer supports it.  The policy was introduced in CMake version 2.8.9,
+2026-06-01T15:48:53.2450470Z   and use of NEW behavior is now required.
+2026-06-01T15:48:53.2457170Z 
+2026-06-01T15:48:53.2457340Z   Please either update your CMakeLists.txt files to conform to the new
+2026-06-01T15:48:53.2457780Z   behavior or use an older version of CMake that still supports the old
+2026-06-01T15:48:53.2458430Z   behavior.  Run cmake --help-policy CMP0018 for more information.
+2026-06-01T15:48:53.2458750Z 
+2026-06-01T15:48:53.2458760Z 
+2026-06-01T15:48:53.2459030Z CMake Error at CMakeLists.txt:41 (CMAKE_POLICY):
+2026-06-01T15:48:53.2459380Z   Policy CMP0022 may not be set to OLD behavior because this version of CMake
+2026-06-01T15:48:53.2459830Z   no longer supports it.  The policy was introduced in CMake version 2.8.12,
+2026-06-01T15:48:53.2460160Z   and use of NEW behavior is now required.
+2026-06-01T15:48:53.2460330Z 
+2026-06-01T15:48:53.2460520Z   Please either update your CMakeLists.txt files to conform to the new
+2026-06-01T15:48:53.2461000Z   behavior or use an older version of CMake that still supports the old
+2026-06-01T15:48:53.2461440Z   behavior.  Run cmake --help-policy CMP0022 for more information.
+2026-06-01T15:48:53.2461690Z 
+2026-06-01T15:48:53.2461700Z 
+2026-06-01T15:48:53.2461790Z CMake Error at CMakeLists.txt:48 (CMAKE_POLICY):
+2026-06-01T15:48:53.2462150Z   Policy CMP0045 may not be set to OLD behavior because this version of CMake
+2026-06-01T15:48:53.2462740Z   no longer supports it.  The policy was introduced in CMake version 3.0.0,
+2026-06-01T15:48:53.2463110Z   and use of NEW behavior is now required.
+2026-06-01T15:48:53.2463320Z 
+2026-06-01T15:48:53.2463480Z   Please either update your CMakeLists.txt files to conform to the new
+2026-06-01T15:48:53.2463860Z   behavior or use an older version of CMake that still supports the old
+2026-06-01T15:48:53.2464310Z   behavior.  Run cmake --help-policy CMP0045 for more information.
+2026-06-01T15:48:53.2464570Z 
+2026-06-01T15:48:53.2464570Z 
+2026-06-01T15:48:53.2464660Z CMake Error at CMakeLists.txt:49 (CMAKE_POLICY):
+2026-06-01T15:48:53.2465050Z   Policy CMP0042 may not be set to OLD behavior because this version of CMake
+2026-06-01T15:48:53.2465550Z   no longer supports it.  The policy was introduced in CMake version 3.0.0,
+2026-06-01T15:48:53.2465950Z   and use of NEW behavior is now required.
+2026-06-01T15:48:53.2466110Z 
+2026-06-01T15:48:53.2466280Z   Please either update your CMakeLists.txt files to conform to the new
+2026-06-01T15:48:53.2466690Z   behavior or use an older version of CMake that still supports the old
+2026-06-01T15:48:53.2467100Z   behavior.  Run cmake --help-policy CMP0042 for more information.
+2026-06-01T15:48:53.2467380Z 
+2026-06-01T15:48:53.2467390Z 
+2026-06-01T15:48:53.2467530Z CMake Deprecation Warning at CMakeLists.txt:62 (CMAKE_POLICY):
+2026-06-01T15:48:53.2467890Z   The OLD behavior for policy CMP0075 will be removed from a future version
+2026-06-01T15:48:53.2468200Z   of CMake.
+2026-06-01T15:48:53.2468300Z 
+2026-06-01T15:48:53.2468450Z   The cmake-policies(7) manual explains that the OLD behaviors of all
+2026-06-01T15:48:53.2468860Z   policies are deprecated and that a policy should be set to OLD only under
+2026-06-01T15:48:53.2469280Z   specific short-term circumstances.  Projects should be ported to the NEW
+2026-06-01T15:48:53.2469620Z   behavior and not rely on setting a policy to OLD.
+2026-06-01T15:48:53.2469840Z 
+2026-06-01T15:48:53.2469850Z 
+2026-06-01T15:48:53.2620400Z -- Found Git: /opt/homebrew/bin/git (found version "2.54.0")
+2026-06-01T15:48:53.2627120Z -- Configuring with MAX_INDEXES = 64U
+2026-06-01T15:48:54.0100870Z -- The C compiler identification is AppleClang 15.0.0.15000309
+2026-06-01T15:48:55.1683410Z -- The CXX compiler identification is AppleClang 15.0.0.15000309
+2026-06-01T15:48:55.2153330Z -- Detecting C compiler ABI info
+2026-06-01T15:48:55.3996600Z -- Detecting C compiler ABI info - done
+2026-06-01T15:48:55.4378840Z -- Check for working C compiler: /usr/bin/cc - skipped
+2026-06-01T15:48:55.4389140Z -- Detecting C compile features
+2026-06-01T15:48:55.4401990Z -- Detecting C compile features - done
+2026-06-01T15:48:55.4482960Z -- Detecting CXX compiler ABI info
+2026-06-01T15:48:55.5879250Z -- Detecting CXX compiler ABI info - done
+2026-06-01T15:48:55.6221120Z -- Check for working CXX compiler: /usr/bin/c++ - skipped
+2026-06-01T15:48:55.6232880Z -- Detecting CXX compile features
+2026-06-01T15:48:55.6234070Z -- Detecting CXX compile features - done
+2026-06-01T15:48:55.6269730Z -- CMAKE_GENERATOR: Ninja
+2026-06-01T15:48:55.6288030Z -- Performing Test HAVE_SUPPORTED_CLANG_VERSION
+2026-06-01T15:48:55.8696250Z -- Performing Test HAVE_SUPPORTED_CLANG_VERSION - Success
+2026-06-01T15:48:55.8955600Z -- Looking for sys/types.h
+2026-06-01T15:48:56.1129330Z -- Looking for sys/types.h - found
+2026-06-01T15:48:56.1129620Z -- Looking for stdint.h
+2026-06-01T15:48:56.2682180Z -- Looking for stdint.h - found
+2026-06-01T15:48:56.2684390Z -- Looking for stddef.h
+2026-06-01T15:48:56.4242360Z -- Looking for stddef.h - found
+2026-06-01T15:48:56.4243270Z -- Check size of void *
+2026-06-01T15:48:56.6131860Z -- Check size of void * - done
+2026-06-01T15:48:56.6132150Z -- SIZEOF_VOIDP 8
+2026-06-01T15:48:56.6195830Z getconf: no such configuration parameter `LEVEL1_DCACHE_LINESIZE'
+2026-06-01T15:48:56.6223830Z -- MySQL 5.7.44
+2026-06-01T15:48:56.6268620Z -- Packaging as: mysql-5.7.44-osx12.0-arm64
+2026-06-01T15:48:56.6438940Z -- DTRACE is enabled
+2026-06-01T15:48:56.6473530Z -- Downloading boost_1_59_0.tar.gz to /Users/runner/work/mysql-archive/mysql-archive/boost
+2026-06-01T15:48:56.7559140Z -- [download 100% complete]
+2026-06-01T15:48:57.5922400Z -- [download 0% complete]
+2026-06-01T15:48:58.7312400Z -- [download 1% complete]
+2026-06-01T15:48:58.7735310Z -- [download 2% complete]
+2026-06-01T15:48:58.8715440Z -- [download 3% complete]
+2026-06-01T15:48:58.9535940Z -- [download 4% complete]
+2026-06-01T15:48:58.9776880Z -- [download 5% complete]
+2026-06-01T15:48:59.0147450Z -- [download 6% complete]
+2026-06-01T15:48:59.0622590Z -- [download 7% complete]
+2026-06-01T15:48:59.0977330Z -- [download 8% complete]
+2026-06-01T15:48:59.1592250Z -- [download 9% complete]
+2026-06-01T15:48:59.9503460Z -- [download 10% complete]
+2026-06-01T15:48:59.9762450Z -- [download 11% complete]
+2026-06-01T15:49:00.0055070Z -- [download 12% complete]
+2026-06-01T15:49:00.0628970Z -- [download 13% complete]
+2026-06-01T15:49:01.5183210Z -- [download 14% complete]
+2026-06-01T15:49:01.5410970Z -- [download 15% complete]
+2026-06-01T15:49:01.5622880Z -- [download 16% complete]
+2026-06-01T15:49:01.5788860Z -- [download 17% complete]
+2026-06-01T15:49:01.7494150Z -- [download 18% complete]
+2026-06-01T15:49:01.8217470Z -- [download 19% complete]
+2026-06-01T15:49:01.8574340Z -- [download 20% complete]
+2026-06-01T15:49:01.8880440Z -- [download 21% complete]
+2026-06-01T15:49:02.1221470Z -- [download 22% complete]
+2026-06-01T15:49:02.1426080Z -- [download 23% complete]
+2026-06-01T15:49:02.1936380Z -- [download 24% complete]
+2026-06-01T15:49:02.2016970Z -- [download 25% complete]
+2026-06-01T15:49:02.8112860Z -- [download 26% complete]
+2026-06-01T15:49:04.2831710Z -- [download 27% complete]
+2026-06-01T15:49:04.3479430Z -- [download 28% complete]
+2026-06-01T15:49:04.3689980Z -- [download 29% complete]
+2026-06-01T15:49:04.4147560Z -- [download 30% complete]
+2026-06-01T15:49:04.4451590Z -- [download 31% complete]
+2026-06-01T15:49:04.4501590Z -- [download 32% complete]
+2026-06-01T15:49:04.4873620Z -- [download 33% complete]
+2026-06-01T15:49:04.6124740Z -- [download 34% complete]
+2026-06-01T15:49:04.6767020Z -- [download 35% complete]
+2026-06-01T15:49:06.4867600Z -- [download 36% complete]
+2026-06-01T15:49:06.5528430Z -- [download 37% complete]
+2026-06-01T15:49:06.5768340Z -- [download 38% complete]
+2026-06-01T15:49:07.3184700Z -- [download 39% complete]
+2026-06-01T15:49:07.3738540Z -- [download 40% complete]
+2026-06-01T15:49:07.4427900Z -- [download 41% complete]
+2026-06-01T15:49:07.5319360Z -- [download 42% complete]
+2026-06-01T15:49:07.9961340Z -- [download 43% complete]
+2026-06-01T15:49:08.0194460Z -- [download 44% complete]
+2026-06-01T15:49:08.0444720Z -- [download 45% complete]
+2026-06-01T15:49:08.0776400Z -- [download 46% complete]
+2026-06-01T15:49:09.7100350Z -- [download 47% complete]
+2026-06-01T15:49:12.0201440Z -- [download 48% complete]
+2026-06-01T15:49:12.0433330Z -- [download 49% complete]
+2026-06-01T15:49:12.0695200Z -- [download 50% complete]
+2026-06-01T15:49:12.1208020Z -- [download 51% complete]
+2026-06-01T15:49:12.1438510Z -- [download 52% complete]
+2026-06-01T15:49:12.1601310Z -- [download 53% complete]
+2026-06-01T15:49:12.1690470Z -- [download 54% complete]
+2026-06-01T15:49:12.1725060Z -- [download 55% complete]
+2026-06-01T15:49:12.2239630Z -- [download 56% complete]
+2026-06-01T15:49:12.3067360Z -- [download 57% complete]
+2026-06-01T15:49:12.3484930Z -- [download 58% complete]
+2026-06-01T15:49:12.7895360Z -- [download 59% complete]
+2026-06-01T15:49:12.8293890Z -- [download 60% complete]
+2026-06-01T15:49:12.8640640Z -- [download 61% complete]
+2026-06-01T15:49:12.8788650Z -- [download 62% complete]
+2026-06-01T15:49:12.8833510Z -- [download 63% complete]
+2026-06-01T15:49:13.0092790Z -- [download 64% complete]
+2026-06-01T15:49:13.4971760Z -- [download 65% complete]
+2026-06-01T15:49:13.5337460Z -- [download 66% complete]
+2026-06-01T15:49:13.5688330Z -- [download 67% complete]
+2026-06-01T15:49:13.5791000Z -- [download 68% complete]
+2026-06-01T15:49:13.9648020Z -- [download 69% complete]
+2026-06-01T15:49:13.9731890Z -- [download 70% complete]
+2026-06-01T15:49:15.9502830Z -- [download 71% complete]
+2026-06-01T15:49:15.9973440Z -- [download 72% complete]
+2026-06-01T15:49:16.0281260Z -- [download 73% complete]
+2026-06-01T15:49:16.0462020Z -- [download 74% complete]
+2026-06-01T15:49:17.9742500Z -- [download 75% complete]
+2026-06-01T15:49:18.9259800Z -- [download 76% complete]
+2026-06-01T15:49:19.0106690Z -- [download 77% complete]
+2026-06-01T15:49:19.5519260Z -- [download 78% complete]
+2026-06-01T15:49:19.8974450Z -- [download 79% complete]
+2026-06-01T15:49:20.0507990Z -- [download 80% complete]
+2026-06-01T15:49:20.1621450Z -- [download 81% complete]
+2026-06-01T15:49:20.2511030Z -- [download 82% complete]
+2026-06-01T15:49:20.5606240Z -- [download 83% complete]
+2026-06-01T15:49:20.6483420Z -- [download 84% complete]
+2026-06-01T15:49:20.6722840Z -- [download 85% complete]
+2026-06-01T15:49:20.8740810Z -- [download 86% complete]
+2026-06-01T15:49:21.0011090Z -- [download 87% complete]
+2026-06-01T15:49:21.1467340Z -- [download 88% complete]
+2026-06-01T15:49:21.3937410Z -- [download 89% complete]
+2026-06-01T15:49:21.5260360Z -- [download 90% complete]
+2026-06-01T15:49:21.9273710Z -- [download 91% complete]
+2026-06-01T15:49:22.2268460Z -- [download 92% complete]
+2026-06-01T15:49:24.1900860Z -- [download 93% complete]
+2026-06-01T15:49:24.2673650Z -- [download 94% complete]
+2026-06-01T15:49:24.3040620Z -- [download 95% complete]
+2026-06-01T15:49:24.3847380Z -- [download 96% complete]
+2026-06-01T15:49:26.7107790Z -- [download 97% complete]
+2026-06-01T15:49:26.7338730Z -- [download 98% complete]
+2026-06-01T15:49:26.8336360Z -- [download 99% complete]
+2026-06-01T15:49:26.8374390Z -- [download 100% complete]
+2026-06-01T15:49:26.8857980Z -- cd /Users/runner/work/mysql-archive/mysql-archive/boost; tar xfz /Users/runner/work/mysql-archive/mysql-archive/boost/boost_1_59_0.tar.gz
+2026-06-01T15:49:36.1545100Z -- Found /Users/runner/work/mysql-archive/mysql-archive/boost/boost_1_59_0/boost/version.hpp 
+2026-06-01T15:49:36.1648190Z -- BOOST_VERSION_NUMBER is #define BOOST_VERSION 105900
+2026-06-01T15:49:36.1664950Z -- BOOST_INCLUDE_DIR /Users/runner/work/mysql-archive/mysql-archive/boost/boost_1_59_0
+2026-06-01T15:49:36.1665490Z -- Performing Test HAVE_LLVM_LIBCPP
+2026-06-01T15:49:36.3995150Z -- Performing Test HAVE_LLVM_LIBCPP - Success
+2026-06-01T15:49:36.4025730Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+2026-06-01T15:49:36.5885940Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+2026-06-01T15:49:36.6193100Z -- Found Threads: TRUE
+2026-06-01T15:49:36.6289600Z -- Looking for floor
+2026-06-01T15:49:36.7662970Z -- Looking for floor - found
+2026-06-01T15:49:36.7663800Z -- Looking for __infinity
+2026-06-01T15:49:36.9066000Z -- Looking for __infinity - not found
+2026-06-01T15:49:36.9311830Z -- Looking for __infinity in m
+2026-06-01T15:49:37.0468630Z -- Looking for __infinity in m - not found
+2026-06-01T15:49:37.0471540Z -- Looking for gethostbyname_r
+2026-06-01T15:49:37.1918090Z -- Looking for gethostbyname_r - not found
+2026-06-01T15:49:37.1921090Z -- Looking for gethostbyname_r in nsl_r
+2026-06-01T15:49:37.3087520Z -- Looking for gethostbyname_r in nsl_r - not found
+2026-06-01T15:49:37.3089090Z -- Looking for gethostbyname_r in nsl
+2026-06-01T15:49:37.4252140Z -- Looking for gethostbyname_r in nsl - not found
+2026-06-01T15:49:37.4253040Z -- Looking for bind
+2026-06-01T15:49:37.5706420Z -- Looking for bind - found
+2026-06-01T15:49:37.5707070Z -- Looking for crypt
+2026-06-01T15:49:37.7219630Z -- Looking for crypt - found
+2026-06-01T15:49:37.7220330Z -- Looking for setsockopt
+2026-06-01T15:49:37.8639200Z -- Looking for setsockopt - found
+2026-06-01T15:49:37.8641500Z -- Looking for dlopen
+2026-06-01T15:49:37.9997950Z -- Looking for dlopen - found
+2026-06-01T15:49:38.0000540Z -- Looking for dlsym
+2026-06-01T15:49:38.1360350Z -- Looking for dlsym - found
+2026-06-01T15:49:38.1361530Z -- Looking for sched_yield
+2026-06-01T15:49:38.2742140Z -- Looking for sched_yield - found
+2026-06-01T15:49:38.2744540Z -- Looking for clock_gettime
+2026-06-01T15:49:38.4118520Z -- Looking for clock_gettime - found
+2026-06-01T15:49:38.4120030Z -- Looking for timer_create
+2026-06-01T15:49:38.5635270Z -- Looking for timer_create - not found
+2026-06-01T15:49:38.5635960Z -- Looking for timer_create in rt
+2026-06-01T15:49:38.6879500Z -- Looking for timer_create in rt - not found
+2026-06-01T15:49:38.6880360Z -- Looking for atomic_thread_fence
+2026-06-01T15:49:38.8358120Z -- Looking for atomic_thread_fence - found
+2026-06-01T15:49:38.8361430Z -- Looking for backtrace
+2026-06-01T15:49:38.9827230Z -- Looking for backtrace - found
+2026-06-01T15:49:38.9829480Z -- Looking for include file alloca.h
+2026-06-01T15:49:39.1630020Z -- Looking for include file alloca.h - found
+2026-06-01T15:49:39.1632270Z -- Looking for include file arpa/inet.h
+2026-06-01T15:49:39.3490520Z -- Looking for include file arpa/inet.h - found
+2026-06-01T15:49:39.3491570Z -- Looking for include file crypt.h
+2026-06-01T15:49:39.4685040Z -- Looking for include file crypt.h - not found
+2026-06-01T15:49:39.4686230Z -- Looking for include file dlfcn.h
+2026-06-01T15:49:39.6083990Z -- Looking for include file dlfcn.h - found
+2026-06-01T15:49:39.6085760Z -- Looking for include file execinfo.h
+2026-06-01T15:49:39.7856530Z -- Looking for include file execinfo.h - found
+2026-06-01T15:49:39.7857180Z -- Looking for include file fpu_control.h
+2026-06-01T15:49:39.8888570Z -- Looking for include file fpu_control.h - not found
+2026-06-01T15:49:39.8889390Z -- Looking for include file grp.h
+2026-06-01T15:49:40.0282130Z -- Looking for include file grp.h - found
+2026-06-01T15:49:40.0282920Z -- Looking for include file ieeefp.h
+2026-06-01T15:49:40.1405910Z -- Looking for include file ieeefp.h - not found
+2026-06-01T15:49:40.1418000Z -- Looking for include file langinfo.h
+2026-06-01T15:49:40.2783970Z -- Looking for include file langinfo.h - found
+2026-06-01T15:49:40.2784950Z -- Looking for include file malloc.h
+2026-06-01T15:49:40.3818220Z -- Looking for include file malloc.h - not found
+2026-06-01T15:49:40.3821190Z -- Looking for include file netinet/in.h
+2026-06-01T15:49:40.5196170Z -- Looking for include file netinet/in.h - found
+2026-06-01T15:49:40.5197400Z -- Looking for include file poll.h
+2026-06-01T15:49:40.7053280Z -- Looking for include file poll.h - found
+2026-06-01T15:49:40.7054450Z -- Looking for include file pwd.h
+2026-06-01T15:49:40.8734340Z -- Looking for include file pwd.h - found
+2026-06-01T15:49:40.8735870Z -- Looking for include file strings.h
+2026-06-01T15:49:41.0376530Z -- Looking for include file strings.h - found
+2026-06-01T15:49:41.0378200Z -- Looking for include file sys/ioctl.h
+2026-06-01T15:49:41.1998940Z -- Looking for include file sys/ioctl.h - found
+2026-06-01T15:49:41.2000030Z -- Looking for include file sys/mman.h
+2026-06-01T15:49:41.3591090Z -- Looking for include file sys/mman.h - found
+2026-06-01T15:49:41.3592290Z -- Looking for include file sys/resource.h
+2026-06-01T15:49:41.5270110Z -- Looking for include file sys/resource.h - found
+2026-06-01T15:49:41.5270910Z -- Looking for include file sys/select.h
+2026-06-01T15:49:41.6873280Z -- Looking for include file sys/select.h - found
+2026-06-01T15:49:41.6874330Z -- Looking for include file sys/socket.h
+2026-06-01T15:49:41.8707480Z -- Looking for include file sys/socket.h - found
+2026-06-01T15:49:41.8711290Z -- Looking for include files curses.h, term.h
+2026-06-01T15:49:42.0830070Z -- Looking for include files curses.h, term.h - found
+2026-06-01T15:49:42.0831210Z -- Looking for include file termios.h
+2026-06-01T15:49:42.2427920Z -- Looking for include file termios.h - found
+2026-06-01T15:49:42.2430000Z -- Looking for include file termio.h
+2026-06-01T15:49:42.3609810Z -- Looking for include file termio.h - not found
+2026-06-01T15:49:42.3613050Z -- Looking for include file unistd.h
+2026-06-01T15:49:42.5059180Z -- Looking for include file unistd.h - found
+2026-06-01T15:49:42.5061790Z -- Looking for include file sys/wait.h
+2026-06-01T15:49:42.6803750Z -- Looking for include file sys/wait.h - found
+2026-06-01T15:49:42.6805500Z -- Looking for include file sys/param.h
+2026-06-01T15:49:42.8538320Z -- Looking for include file sys/param.h - found
+2026-06-01T15:49:42.8539140Z -- Looking for include file fnmatch.h
+2026-06-01T15:49:43.0154560Z -- Looking for include file fnmatch.h - found
+2026-06-01T15:49:43.0155380Z -- Looking for include file sys/un.h
+2026-06-01T15:49:43.1875830Z -- Looking for include file sys/un.h - found
+2026-06-01T15:49:43.1877040Z -- Looking for include file sys/devpoll.h
+2026-06-01T15:49:43.3248930Z -- Looking for include file sys/devpoll.h - not found
+2026-06-01T15:49:43.3250130Z -- Looking for include file sys/epoll.h
+2026-06-01T15:49:43.4487760Z -- Looking for include file sys/epoll.h - not found
+2026-06-01T15:49:43.4492050Z -- Looking for TAILQ_FOREACH
+2026-06-01T15:49:43.6251910Z -- Looking for TAILQ_FOREACH - found
+2026-06-01T15:49:43.6255010Z -- Looking for _aligned_malloc
+2026-06-01T15:49:43.7828730Z -- Looking for _aligned_malloc - not found
+2026-06-01T15:49:43.7829480Z -- Looking for backtrace
+2026-06-01T15:49:43.9457610Z -- Looking for backtrace - found
+2026-06-01T15:49:43.9458220Z -- Looking for printstack
+2026-06-01T15:49:44.0825680Z -- Looking for printstack - not found
+2026-06-01T15:49:44.0827950Z -- Looking for index
+2026-06-01T15:49:44.2273240Z -- Looking for index - found
+2026-06-01T15:49:44.2273930Z -- Looking for clock_gettime
+2026-06-01T15:49:44.3683110Z -- Looking for clock_gettime - found
+2026-06-01T15:49:44.3683890Z -- Looking for cuserid
+2026-06-01T15:49:44.5064650Z -- Looking for cuserid - not found
+2026-06-01T15:49:44.5065300Z -- Looking for directio
+2026-06-01T15:49:44.6976550Z -- Looking for directio - not found
+2026-06-01T15:49:44.7008150Z -- Looking for ftruncate
+2026-06-01T15:49:44.9085190Z -- Looking for ftruncate - found
+2026-06-01T15:49:44.9088530Z -- Looking for compress
+2026-06-01T15:49:45.1668710Z -- Looking for compress - not found
+2026-06-01T15:49:45.1672210Z -- Looking for crypt
+2026-06-01T15:49:45.3548730Z -- Looking for crypt - found
+2026-06-01T15:49:45.3551650Z -- Looking for dlopen
+2026-06-01T15:49:45.5205510Z -- Looking for dlopen - found
+2026-06-01T15:49:45.5213270Z -- Looking for fchmod
+2026-06-01T15:49:45.7010590Z -- Looking for fchmod - found
+2026-06-01T15:49:45.7021620Z -- Looking for fcntl
+2026-06-01T15:49:45.8841830Z -- Looking for fcntl - found
+2026-06-01T15:49:45.8846520Z -- Looking for fdatasync
+2026-06-01T15:49:46.0492690Z -- Looking for fdatasync - found
+2026-06-01T15:49:46.0494050Z -- Looking for fdatasync
+2026-06-01T15:49:46.1656950Z -- Looking for fdatasync - not found
+2026-06-01T15:49:46.1658450Z -- Looking for fedisableexcept
+2026-06-01T15:49:46.2944640Z -- Looking for fedisableexcept - not found
+2026-06-01T15:49:46.2946280Z -- Looking for fseeko
+2026-06-01T15:49:46.4334760Z -- Looking for fseeko - found
+2026-06-01T15:49:46.4336590Z -- Looking for fsync
+2026-06-01T15:49:46.5851570Z -- Looking for fsync - found
+2026-06-01T15:49:46.5855590Z -- Looking for gethostbyaddr_r
+2026-06-01T15:49:46.7326210Z -- Looking for gethostbyaddr_r - not found
+2026-06-01T15:49:46.7326700Z -- Looking for gethrtime
+2026-06-01T15:49:46.8711880Z -- Looking for gethrtime - not found
+2026-06-01T15:49:46.8712810Z -- Looking for getnameinfo
+2026-06-01T15:49:47.0248940Z -- Looking for getnameinfo - found
+2026-06-01T15:49:47.0249580Z -- Looking for getpass
+2026-06-01T15:49:47.1682150Z -- Looking for getpass - found
+2026-06-01T15:49:47.1683120Z -- Looking for getpassphrase
+2026-06-01T15:49:47.3046000Z -- Looking for getpassphrase - not found
+2026-06-01T15:49:47.3046940Z -- Looking for getpwnam
+2026-06-01T15:49:47.4471280Z -- Looking for getpwnam - found
+2026-06-01T15:49:47.4471890Z -- Looking for getpwuid
+2026-06-01T15:49:47.5882330Z -- Looking for getpwuid - found
+2026-06-01T15:49:47.5882800Z -- Looking for getrlimit
+2026-06-01T15:49:47.7195360Z -- Looking for getrlimit - found
+2026-06-01T15:49:47.7196710Z -- Looking for getrusage
+2026-06-01T15:49:47.8511840Z -- Looking for getrusage - found
+2026-06-01T15:49:47.8512450Z -- Looking for initgroups
+2026-06-01T15:49:47.9736020Z -- Looking for initgroups - found
+2026-06-01T15:49:47.9736810Z -- Looking for issetugid
+2026-06-01T15:49:48.1105920Z -- Looking for issetugid - found
+2026-06-01T15:49:48.1107530Z -- Looking for getuid
+2026-06-01T15:49:48.2486480Z -- Looking for getuid - found
+2026-06-01T15:49:48.2487050Z -- Looking for geteuid
+2026-06-01T15:49:48.3845060Z -- Looking for geteuid - found
+2026-06-01T15:49:48.3845650Z -- Looking for getgid
+2026-06-01T15:49:48.5242820Z -- Looking for getgid - found
+2026-06-01T15:49:48.5245130Z -- Looking for getegid
+2026-06-01T15:49:48.6655530Z -- Looking for getegid - found
+2026-06-01T15:49:48.6656180Z -- Looking for lstat
+2026-06-01T15:49:48.8060660Z -- Looking for lstat - found
+2026-06-01T15:49:48.8068320Z -- Looking for madvise
+2026-06-01T15:49:48.9584210Z -- Looking for madvise - found
+2026-06-01T15:49:48.9584840Z -- Looking for malloc_info
+2026-06-01T15:49:49.0994670Z -- Looking for malloc_info - not found
+2026-06-01T15:49:49.0995310Z -- Looking for memrchr
+2026-06-01T15:49:49.2393830Z -- Looking for memrchr - not found
+2026-06-01T15:49:49.2396490Z -- Looking for mlock
+2026-06-01T15:49:49.3772050Z -- Looking for mlock - found
+2026-06-01T15:49:49.3772630Z -- Looking for mlockall
+2026-06-01T15:49:49.5224280Z -- Looking for mlockall - found
+2026-06-01T15:49:49.5224790Z -- Looking for mmap64
+2026-06-01T15:49:49.6670600Z -- Looking for mmap64 - not found
+2026-06-01T15:49:49.6671390Z -- Looking for poll
+2026-06-01T15:49:49.8109970Z -- Looking for poll - found
+2026-06-01T15:49:49.8110680Z -- Looking for posix_fallocate
+2026-06-01T15:49:49.9523060Z -- Looking for posix_fallocate - not found
+2026-06-01T15:49:49.9526030Z -- Looking for posix_memalign
+2026-06-01T15:49:50.0917660Z -- Looking for posix_memalign - found
+2026-06-01T15:49:50.0918960Z -- Looking for pread
+2026-06-01T15:49:50.2352330Z -- Looking for pread - found
+2026-06-01T15:49:50.2360010Z -- Looking for pthread_condattr_setclock
+2026-06-01T15:49:50.3777360Z -- Looking for pthread_condattr_setclock - not found
+2026-06-01T15:49:50.3778640Z -- Looking for pthread_sigmask
+2026-06-01T15:49:50.5131110Z -- Looking for pthread_sigmask - found
+2026-06-01T15:49:50.5135070Z -- Looking for readlink
+2026-06-01T15:49:50.6593690Z -- Looking for readlink - found
+2026-06-01T15:49:50.6599270Z -- Looking for realpath
+2026-06-01T15:49:50.7945610Z -- Looking for realpath - found
+2026-06-01T15:49:50.7946200Z -- Looking for setfd
+2026-06-01T15:49:50.9313020Z -- Looking for setfd - not found
+2026-06-01T15:49:50.9315340Z -- Looking for sigaction
+2026-06-01T15:49:51.0656820Z -- Looking for sigaction - found
+2026-06-01T15:49:51.0660370Z -- Looking for sleep
+2026-06-01T15:49:51.2028020Z -- Looking for sleep - found
+2026-06-01T15:49:51.2029060Z -- Looking for stpcpy
+2026-06-01T15:49:51.3451890Z -- Looking for stpcpy - found
+2026-06-01T15:49:51.3452690Z -- Looking for stpncpy
+2026-06-01T15:49:51.4938760Z -- Looking for stpncpy - found
+2026-06-01T15:49:51.4939370Z -- Looking for strlcpy
+2026-06-01T15:49:51.6345980Z -- Looking for strlcpy - found
+2026-06-01T15:49:51.6346570Z -- Looking for strndup
+2026-06-01T15:49:51.7743870Z -- Looking for strndup - found
+2026-06-01T15:49:51.7744450Z -- Looking for strnlen
+2026-06-01T15:49:51.9167110Z -- Looking for strnlen - found
+2026-06-01T15:49:51.9167740Z -- Looking for strlcat
+2026-06-01T15:49:52.0637780Z -- Looking for strlcat - found
+2026-06-01T15:49:52.0640180Z -- Looking for strsignal
+2026-06-01T15:49:52.2488520Z -- Looking for strsignal - found
+2026-06-01T15:49:52.2494650Z -- Looking for fgetln
+2026-06-01T15:49:52.4487170Z -- Looking for fgetln - found
+2026-06-01T15:49:52.4487760Z -- Looking for strsep
+2026-06-01T15:49:52.5921800Z -- Looking for strsep - found
+2026-06-01T15:49:52.5923170Z -- Looking for tell
+2026-06-01T15:49:52.7291790Z -- Looking for tell - not found
+2026-06-01T15:49:52.7292390Z -- Looking for vasprintf
+2026-06-01T15:49:52.8610070Z -- Looking for vasprintf - found
+2026-06-01T15:49:52.8611200Z -- Looking for memalign
+2026-06-01T15:49:52.9985560Z -- Looking for memalign - not found
+2026-06-01T15:49:52.9986370Z -- Looking for nl_langinfo
+2026-06-01T15:49:53.1321630Z -- Looking for nl_langinfo - found
+2026-06-01T15:49:53.1324370Z -- Looking for ntohll
+2026-06-01T15:49:53.2766670Z -- Looking for ntohll - not found
+2026-06-01T15:49:53.2770220Z -- Looking for clock_gettime
+2026-06-01T15:49:53.4469270Z -- Looking for clock_gettime - found
+2026-06-01T15:49:53.4469920Z -- Looking for epoll_create
+2026-06-01T15:49:53.5855160Z -- Looking for epoll_create - not found
+2026-06-01T15:49:53.5856600Z -- Looking for inet_ntop
+2026-06-01T15:49:53.7244130Z -- Looking for inet_ntop - found
+2026-06-01T15:49:53.7244770Z -- Looking for kqueue
+2026-06-01T15:49:53.8703680Z -- Looking for kqueue - found
+2026-06-01T15:49:53.8706780Z -- Looking for timeradd
+2026-06-01T15:49:54.0369690Z -- Looking for timeradd - found
+2026-06-01T15:49:54.0370430Z -- Looking for timerclear
+2026-06-01T15:49:54.1976640Z -- Looking for timerclear - found
+2026-06-01T15:49:54.1977890Z -- Looking for timercmp
+2026-06-01T15:49:54.3494430Z -- Looking for timercmp - found
+2026-06-01T15:49:54.3495120Z -- Looking for timerisset
+2026-06-01T15:49:54.5066310Z -- Looking for timerisset - found
+2026-06-01T15:49:54.5067040Z -- Looking for include file sys/time.h
+2026-06-01T15:49:54.6637460Z -- Looking for include file sys/time.h - found
+2026-06-01T15:49:54.6638200Z -- Looking for include file sys/times.h
+2026-06-01T15:49:54.8275900Z -- Looking for include file sys/times.h - found
+2026-06-01T15:49:54.8276630Z -- Looking for times
+2026-06-01T15:49:54.9784210Z -- Looking for times - found
+2026-06-01T15:49:54.9784780Z -- Looking for gettimeofday
+2026-06-01T15:49:55.1190960Z -- Looking for gettimeofday - found
+2026-06-01T15:49:55.1193210Z -- Looking for lrand48
+2026-06-01T15:49:55.2859300Z -- Looking for lrand48 - found
+2026-06-01T15:49:55.2860000Z -- Looking for TIOCGWINSZ
+2026-06-01T15:49:55.4343600Z -- Looking for TIOCGWINSZ - found
+2026-06-01T15:49:55.4344220Z -- Looking for FIONREAD
+2026-06-01T15:49:55.5853930Z -- Looking for FIONREAD - found
+2026-06-01T15:49:55.5854630Z -- Looking for FIONREAD
+2026-06-01T15:49:55.7468860Z -- Looking for FIONREAD - found
+2026-06-01T15:49:55.7469600Z -- Looking for SIGEV_THREAD_ID
+2026-06-01T15:49:55.8555320Z -- Looking for SIGEV_THREAD_ID - not found
+2026-06-01T15:49:55.8560160Z -- Looking for SIGEV_PORT
+2026-06-01T15:49:55.9434810Z -- Looking for SIGEV_PORT - not found
+2026-06-01T15:49:55.9435720Z -- Looking for log2
+2026-06-01T15:49:56.0825330Z -- Looking for log2 - found
+2026-06-01T15:49:56.0826030Z -- Looking for isinf
+2026-06-01T15:49:56.2524170Z -- Looking for isinf - found
+2026-06-01T15:49:56.2525950Z -- Performing Test HAVE_CXX_ISINF
+2026-06-01T15:49:56.5901490Z -- Performing Test HAVE_CXX_ISINF - Success
+2026-06-01T15:49:56.5902740Z -- Looking for timer_create
+2026-06-01T15:49:56.7258090Z -- Looking for timer_create - not found
+2026-06-01T15:49:56.7260020Z -- Looking for timer_settime
+2026-06-01T15:49:56.8556970Z -- Looking for timer_settime - not found
+2026-06-01T15:49:56.8559650Z -- Looking for kqueue
+2026-06-01T15:49:57.0050250Z -- Looking for kqueue - found
+2026-06-01T15:49:57.0050860Z -- Looking for EVFILT_TIMER
+2026-06-01T15:49:57.1865210Z -- Looking for EVFILT_TIMER - found
+2026-06-01T15:49:57.2163080Z -- Check size of char *
+2026-06-01T15:49:57.3817110Z -- Check size of char * - done
+2026-06-01T15:49:57.3817800Z -- Check size of long
+2026-06-01T15:49:57.5577150Z -- Check size of long - done
+2026-06-01T15:49:57.5578040Z -- Check size of short
+2026-06-01T15:49:57.7249190Z -- Check size of short - done
+2026-06-01T15:49:57.7250070Z -- Check size of int
+2026-06-01T15:49:57.8973420Z -- Check size of int - done
+2026-06-01T15:49:57.8975710Z -- Check size of long long
+2026-06-01T15:49:58.0635320Z -- Check size of long long - done
+2026-06-01T15:49:58.0644240Z -- Check size of off_t
+2026-06-01T15:49:58.2430140Z -- Check size of off_t - done
+2026-06-01T15:49:58.2430750Z -- Check size of time_t
+2026-06-01T15:49:58.4058040Z -- Check size of time_t - done
+2026-06-01T15:49:58.4058810Z -- Check size of struct timespec
+2026-06-01T15:49:58.5657750Z -- Check size of struct timespec - done
+2026-06-01T15:49:58.5658430Z -- Performing Test HAVE_TM_GMTOFF
+2026-06-01T15:49:58.7269250Z -- Performing Test HAVE_TM_GMTOFF - Success
+2026-06-01T15:49:58.7269910Z -- Check size of uint
+2026-06-01T15:49:58.8983690Z -- Check size of uint - done
+2026-06-01T15:49:58.8984450Z -- Check size of ulong
+2026-06-01T15:49:58.9995720Z -- Check size of ulong - failed
+2026-06-01T15:49:58.9998700Z -- Check size of u_int32_t
+2026-06-01T15:49:59.1544880Z -- Check size of u_int32_t - done
+2026-06-01T15:49:59.1546020Z -- Performing Test HAVE_VISIBILITY_HIDDEN
+2026-06-01T15:49:59.2986370Z -- Performing Test HAVE_VISIBILITY_HIDDEN - Success
+2026-06-01T15:49:59.3863830Z -- Checking stack direction : 1
+2026-06-01T15:49:59.3864940Z -- Looking for include files time.h, sys/time.h
+2026-06-01T15:49:59.5136100Z -- Looking for include files time.h, sys/time.h - found
+2026-06-01T15:49:59.5137150Z -- Looking for O_NONBLOCK
+2026-06-01T15:49:59.6662720Z -- Looking for O_NONBLOCK - found
+2026-06-01T15:49:59.6664080Z -- Performing Test HAVE_FAKE_PAUSE_INSTRUCTION
+2026-06-01T15:49:59.7675770Z -- Performing Test HAVE_FAKE_PAUSE_INSTRUCTION - Failed
+2026-06-01T15:49:59.7676630Z -- Performing Test HAVE_HMT_PRIORITY_INSTRUCTION
+2026-06-01T15:49:59.8577900Z -- Performing Test HAVE_HMT_PRIORITY_INSTRUCTION - Failed
+2026-06-01T15:49:59.8579260Z -- Performing Test HAVE_BUILTIN_UNREACHABLE
+2026-06-01T15:49:59.9840380Z -- Performing Test HAVE_BUILTIN_UNREACHABLE - Success
+2026-06-01T15:49:59.9841380Z -- Performing Test HAVE_BUILTIN_EXPECT
+2026-06-01T15:50:00.1435830Z -- Performing Test HAVE_BUILTIN_EXPECT - Success
+2026-06-01T15:50:00.1436670Z -- Performing Test HAVE_BUILTIN_STPCPY
+2026-06-01T15:50:00.2878040Z -- Performing Test HAVE_BUILTIN_STPCPY - Success
+2026-06-01T15:50:00.2878590Z -- Performing Test HAVE_GCC_ATOMIC_BUILTINS
+2026-06-01T15:50:00.4318190Z -- Performing Test HAVE_GCC_ATOMIC_BUILTINS - Success
+2026-06-01T15:50:00.4319590Z -- Performing Test HAVE_GCC_SYNC_BUILTINS
+2026-06-01T15:50:00.5757140Z -- Performing Test HAVE_GCC_SYNC_BUILTINS - Success
+2026-06-01T15:50:00.5758030Z -- Looking for netinet/in6.h
+2026-06-01T15:50:00.6682300Z -- Looking for netinet/in6.h - not found
+2026-06-01T15:50:00.6683440Z -- Check size of struct sockaddr_in6
+2026-06-01T15:50:00.8177490Z -- Check size of struct sockaddr_in6 - done
+2026-06-01T15:50:00.8178450Z -- Check size of struct in6_addr
+2026-06-01T15:50:00.9833750Z -- Check size of struct in6_addr - done
+2026-06-01T15:50:00.9834670Z -- Performing Test HAVE_SOCKADDR_STORAGE_SS_FAMILY
+2026-06-01T15:50:01.1206100Z -- Performing Test HAVE_SOCKADDR_STORAGE_SS_FAMILY - Success
+2026-06-01T15:50:01.1207010Z -- Performing Test HAVE_SOCKADDR_IN_SIN_LEN
+2026-06-01T15:50:01.2726310Z -- Performing Test HAVE_SOCKADDR_IN_SIN_LEN - Success
+2026-06-01T15:50:01.2727110Z -- Performing Test HAVE_SOCKADDR_IN6_SIN6_LEN
+2026-06-01T15:50:01.4206860Z -- Performing Test HAVE_SOCKADDR_IN6_SIN6_LEN - Success
+2026-06-01T15:50:01.4207670Z -- Performing Test HAVE_PTHREAD_THREADID_NP
+2026-06-01T15:50:01.5979720Z -- Performing Test HAVE_PTHREAD_THREADID_NP - Success
+2026-06-01T15:50:01.5980740Z -- Performing Test HAVE_IMPLICIT_DEPENDENT_NAME_TYPING
+2026-06-01T15:50:02.3135750Z -- Performing Test HAVE_IMPLICIT_DEPENDENT_NAME_TYPING - Failed
+2026-06-01T15:50:02.3136470Z -- Looking for chown
+2026-06-01T15:50:02.4562020Z -- Looking for chown - found
+2026-06-01T15:50:02.4563280Z -- Looking for include file numa.h
+2026-06-01T15:50:02.5751180Z -- Looking for include file numa.h - not found
+2026-06-01T15:50:02.5755450Z -- Looking for include file numaif.h
+2026-06-01T15:50:02.6802440Z -- Looking for include file numaif.h - not found
+2026-06-01T15:50:02.6806160Z -- NUMA library missing or required version not available
+2026-06-01T15:50:02.6807210Z -- Check size of socklen_t
+2026-06-01T15:50:02.7677200Z -- Check size of socklen_t - failed
+2026-06-01T15:50:02.7700110Z -- Check size of off64_t
+2026-06-01T15:50:02.8565050Z -- Check size of off64_t - failed
+2026-06-01T15:50:02.8566140Z -- Looking for unistd.h
+2026-06-01T15:50:02.9837680Z -- Looking for unistd.h - found
+2026-06-01T15:50:03.0158580Z -- ZLIB_VERSION (bundled) is 1.2.13
+2026-06-01T15:50:03.0159670Z -- ZLIB_INCLUDE_DIR /Users/runner/work/mysql-archive/mysql-archive/mysql-src/extra/zlib/zlib-1.2.13
+2026-06-01T15:50:03.0160810Z -- ZLIB_LIBRARY zlib
+2026-06-01T15:50:04.5950600Z -- suffixes <.a;.so;.dylib;.tbd>
+2026-06-01T15:50:04.6075570Z -- OPENSSL_VERSION (system) is 3.6.2
+2026-06-01T15:50:04.6081500Z -- OPENSSL_INCLUDE_DIR = /opt/homebrew/opt/openssl@3/include
+2026-06-01T15:50:04.6082580Z -- OPENSSL_LIBRARY = /opt/homebrew/opt/openssl@3/lib/libssl.a
+2026-06-01T15:50:04.6083620Z -- CRYPTO_LIBRARY = /opt/homebrew/opt/openssl@3/lib/libcrypto.a
+2026-06-01T15:50:04.6084420Z -- OPENSSL_MAJOR_VERSION = 3
+2026-06-01T15:50:04.6084980Z -- OPENSSL_MINOR_VERSION = 6
+2026-06-01T15:50:04.6085550Z -- OPENSSL_FIX_VERSION = 2
+2026-06-01T15:50:04.6086090Z -- Looking for SHA512_DIGEST_LENGTH
+2026-06-01T15:50:04.7528240Z -- Looking for SHA512_DIGEST_LENGTH - found
+2026-06-01T15:50:04.7529070Z -- SSL_LIBRARIES = imported_openssl;imported_crypto
+2026-06-01T15:50:04.7530840Z -- Check size of mbstate_t
+2026-06-01T15:50:04.9675390Z -- Check size of mbstate_t - done
+2026-06-01T15:50:04.9676060Z -- Performing Test HAVE_LANGINFO_CODESET
+2026-06-01T15:50:05.1005530Z -- Performing Test HAVE_LANGINFO_CODESET - Success
+2026-06-01T15:50:05.1006320Z -- Looking for wcsdup
+2026-06-01T15:50:05.2329390Z -- Looking for wcsdup - found
+2026-06-01T15:50:05.2330200Z -- Check size of wchar_t
+2026-06-01T15:50:05.4115430Z -- Check size of wchar_t - done
+2026-06-01T15:50:05.4116210Z -- Check size of wint_t
+2026-06-01T15:50:05.5767980Z -- Check size of wint_t - done
+2026-06-01T15:50:05.7183140Z -- Found Curses: /Applications/Xcode_15.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/libcurses.tbd
+2026-06-01T15:50:05.7195120Z -- Looking for include file sys/cdefs.h
+2026-06-01T15:50:05.8495920Z -- Looking for include file sys/cdefs.h - found
+2026-06-01T15:50:05.8503560Z -- AWK_EXECUTABLE is /usr/bin/awk
+2026-06-01T15:50:05.8633360Z -- Performing Test HAVE_GETPW_R_POSIX
+2026-06-01T15:50:06.0354110Z -- Performing Test HAVE_GETPW_R_POSIX - Success
+2026-06-01T15:50:06.0354890Z -- Performing Test HAVE_GETPW_R_DRAFT
+2026-06-01T15:50:06.1486470Z -- Performing Test HAVE_GETPW_R_DRAFT - Failed
+2026-06-01T15:50:06.1487860Z -- Looking for getline
+2026-06-01T15:50:06.2925680Z -- Looking for getline - found
+2026-06-01T15:50:06.2926270Z -- Looking for vis
+2026-06-01T15:50:06.4260510Z -- Looking for vis - found
+2026-06-01T15:50:06.4261630Z -- Looking for unvis
+2026-06-01T15:50:06.5564760Z -- Looking for unvis - found
+2026-06-01T15:50:06.5565500Z -- Looking for __secure_getenv
+2026-06-01T15:50:06.6871520Z -- Looking for __secure_getenv - not found
+2026-06-01T15:50:06.6872640Z -- Looking for secure_getenv
+2026-06-01T15:50:06.8193120Z -- Looking for secure_getenv - not found
+2026-06-01T15:50:06.8200540Z -- Performing Test HAVE_POINTER_SIGN
+2026-06-01T15:50:06.9674250Z -- Performing Test HAVE_POINTER_SIGN - Success
+2026-06-01T15:50:06.9675520Z -- Performing Test HAVE_STRINGOP_OVERFLOW
+2026-06-01T15:50:07.1011780Z -- Performing Test HAVE_STRINGOP_OVERFLOW - Failed
+2026-06-01T15:50:07.1012540Z -- Performing Test HAVE_UNUSED_RESULT
+2026-06-01T15:50:07.2362210Z -- Performing Test HAVE_UNUSED_RESULT - Success
+2026-06-01T15:50:07.2363090Z -- Performing Test HAVE_STRINGOP_TRUNCATION
+2026-06-01T15:50:07.3853540Z -- Performing Test HAVE_STRINGOP_TRUNCATION - Failed
+2026-06-01T15:50:07.3854350Z -- Performing Test HAVE_ADDRESS
+2026-06-01T15:50:07.5219990Z -- Performing Test HAVE_ADDRESS - Success
+2026-06-01T15:50:07.5220810Z -- Performing Test HAVE_USE_AFTER_FREE
+2026-06-01T15:50:07.6644640Z -- Performing Test HAVE_USE_AFTER_FREE - Failed
+2026-06-01T15:50:07.6960280Z CMake Deprecation Warning at extra/libevent/libevent-2.1.11-stable/CMakeLists.txt:22 (cmake_minimum_required):
+2026-06-01T15:50:07.6961910Z   Compatibility with CMake < 3.10 will be removed from a future version of
+2026-06-01T15:50:07.6963170Z   CMake.
+2026-06-01T15:50:07.6963330Z 
+2026-06-01T15:50:07.6963570Z   Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+2026-06-01T15:50:07.6963980Z   to tell CMake that the project requires at least <min> but has been updated
+2026-06-01T15:50:07.6964330Z   to work with policies introduced by <max> or earlier.
+2026-06-01T15:50:07.6964510Z 
+2026-06-01T15:50:07.6964520Z 
+2026-06-01T15:50:07.7021260Z -- Found Git: /opt/homebrew/bin/git
+2026-06-01T15:50:07.7027740Z -- Performing Test check_c_compiler_flag__fdiagnostics_color_always
+2026-06-01T15:50:07.8216900Z -- Performing Test check_c_compiler_flag__fdiagnostics_color_always - Success
+2026-06-01T15:50:07.8221750Z -- Performing Test check_c_compiler_flag__Wall
+2026-06-01T15:50:07.9662360Z -- Performing Test check_c_compiler_flag__Wall - Success
+2026-06-01T15:50:07.9666300Z -- Performing Test check_c_compiler_flag__Wextra
+2026-06-01T15:50:08.0992570Z -- Performing Test check_c_compiler_flag__Wextra - Success
+2026-06-01T15:50:08.0996780Z -- Performing Test check_c_compiler_flag__Wno_unused_parameter
+2026-06-01T15:50:08.2377600Z -- Performing Test check_c_compiler_flag__Wno_unused_parameter - Success
+2026-06-01T15:50:08.2381570Z -- Performing Test check_c_compiler_flag__Wstrict_aliasing
+2026-06-01T15:50:08.3756530Z -- Performing Test check_c_compiler_flag__Wstrict_aliasing - Success
+2026-06-01T15:50:08.3760530Z -- Performing Test check_c_compiler_flag__Wstrict_prototypes
+2026-06-01T15:50:08.5230020Z -- Performing Test check_c_compiler_flag__Wstrict_prototypes - Success
+2026-06-01T15:50:08.5233990Z -- Performing Test check_c_compiler_flag__fno_strict_aliasing
+2026-06-01T15:50:08.6658630Z -- Performing Test check_c_compiler_flag__fno_strict_aliasing - Success
+2026-06-01T15:50:08.6662440Z -- Performing Test check_c_compiler_flag__Wmissing_prototypes
+2026-06-01T15:50:08.8153930Z -- Performing Test check_c_compiler_flag__Wmissing_prototypes - Success
+2026-06-01T15:50:08.8157620Z -- Performing Test check_c_compiler_flag__Winit_self
+2026-06-01T15:50:08.9613630Z -- Performing Test check_c_compiler_flag__Winit_self - Success
+2026-06-01T15:50:08.9617730Z -- Performing Test check_c_compiler_flag__Wmissing_field_initializers
+2026-06-01T15:50:09.1087450Z -- Performing Test check_c_compiler_flag__Wmissing_field_initializers - Success
+2026-06-01T15:50:09.1091050Z -- Performing Test check_c_compiler_flag__Wdeclaration_after_statement
+2026-06-01T15:50:09.2468240Z -- Performing Test check_c_compiler_flag__Wdeclaration_after_statement - Success
+2026-06-01T15:50:09.2472210Z -- Performing Test check_c_compiler_flag__Waddress
+2026-06-01T15:50:09.3911590Z -- Performing Test check_c_compiler_flag__Waddress - Success
+2026-06-01T15:50:09.3915170Z -- Performing Test check_c_compiler_flag__Wnormalized_id
+2026-06-01T15:50:09.5234070Z -- Performing Test check_c_compiler_flag__Wnormalized_id - Failed
+2026-06-01T15:50:09.5238730Z -- Performing Test check_c_compiler_flag__Woverride_init
+2026-06-01T15:50:09.6643850Z -- Performing Test check_c_compiler_flag__Woverride_init - Success
+2026-06-01T15:50:09.6647420Z -- Performing Test check_c_compiler_flag__Wlogical_op
+2026-06-01T15:50:09.8087180Z -- Performing Test check_c_compiler_flag__Wlogical_op - Failed
+2026-06-01T15:50:09.8091190Z -- Performing Test check_c_compiler_flag__Wwrite_strings
+2026-06-01T15:50:09.9481410Z -- Performing Test check_c_compiler_flag__Wwrite_strings - Success
+2026-06-01T15:50:09.9485430Z -- Performing Test check_c_compiler_flag__Wno_unused_function
+2026-06-01T15:50:10.0920820Z -- Performing Test check_c_compiler_flag__Wno_unused_function - Success
+2026-06-01T15:50:10.0925610Z -- Performing Test check_c_compiler_flag__Wno_error_deprecated_declarations
+2026-06-01T15:50:10.2345990Z -- Performing Test check_c_compiler_flag__Wno_error_deprecated_declarations - Success
+2026-06-01T15:50:10.2351460Z -- Performing Test check_c_compiler_flag__Qunused_arguments
+2026-06-01T15:50:10.3690450Z -- Performing Test check_c_compiler_flag__Qunused_arguments - Success
+2026-06-01T15:50:10.3691750Z -- Looking for __GNU_LIBRARY__
+2026-06-01T15:50:10.4640540Z -- Looking for __GNU_LIBRARY__ - not found
+2026-06-01T15:50:10.4641660Z -- Looking for _GNU_SOURCE
+2026-06-01T15:50:10.5442810Z -- Looking for _GNU_SOURCE - not found
+2026-06-01T15:50:10.5443830Z -- Looking for sys/types.h
+2026-06-01T15:50:10.6728570Z -- Looking for sys/types.h - found
+2026-06-01T15:50:10.6729190Z -- Looking for sys/socket.h
+2026-06-01T15:50:10.8269020Z -- Looking for sys/socket.h - found
+2026-06-01T15:50:10.8269640Z -- Looking for netinet/in.h
+2026-06-01T15:50:10.9687920Z -- Looking for netinet/in.h - found
+2026-06-01T15:50:10.9688540Z -- Looking for sys/un.h
+2026-06-01T15:50:11.1110960Z -- Looking for sys/un.h - found
+2026-06-01T15:50:11.1111690Z -- Check size of struct sockaddr_un
+2026-06-01T15:50:11.2950180Z -- Check size of struct sockaddr_un - done
+2026-06-01T15:50:11.2950860Z -- Looking for netinet/in6.h
+2026-06-01T15:50:11.3771860Z -- Looking for netinet/in6.h - not found
+2026-06-01T15:50:11.3772890Z -- Looking for unistd.h
+2026-06-01T15:50:11.5060120Z -- Looking for unistd.h - found
+2026-06-01T15:50:11.5060960Z -- Looking for netdb.h
+2026-06-01T15:50:11.6449820Z -- Looking for netdb.h - found
+2026-06-01T15:50:11.6450420Z -- Looking for dlfcn.h
+2026-06-01T15:50:11.7943370Z -- Looking for dlfcn.h - found
+2026-06-01T15:50:11.7943990Z -- Looking for arpa/inet.h
+2026-06-01T15:50:11.9388210Z -- Looking for arpa/inet.h - found
+2026-06-01T15:50:11.9388890Z -- Looking for fcntl.h
+2026-06-01T15:50:12.0879650Z -- Looking for fcntl.h - found
+2026-06-01T15:50:12.0880260Z -- Looking for inttypes.h
+2026-06-01T15:50:12.2281530Z -- Looking for inttypes.h - found
+2026-06-01T15:50:12.2282180Z -- Looking for memory.h
+2026-06-01T15:50:12.3773200Z -- Looking for memory.h - found
+2026-06-01T15:50:12.3773820Z -- Looking for poll.h
+2026-06-01T15:50:12.5106620Z -- Looking for poll.h - found
+2026-06-01T15:50:12.5107250Z -- Looking for port.h
+2026-06-01T15:50:12.5998730Z -- Looking for port.h - not found
+2026-06-01T15:50:12.5999910Z -- Looking for signal.h
+2026-06-01T15:50:12.7401090Z -- Looking for signal.h - found
+2026-06-01T15:50:12.7402130Z -- Looking for stdarg.h
+2026-06-01T15:50:12.9114480Z -- Looking for stdarg.h - found
+2026-06-01T15:50:12.9115590Z -- Looking for stddef.h
+2026-06-01T15:50:13.0909870Z -- Looking for stddef.h - found
+2026-06-01T15:50:13.0910480Z -- Looking for stdint.h
+2026-06-01T15:50:13.2270210Z -- Looking for stdint.h - found
+2026-06-01T15:50:13.2270800Z -- Looking for stdlib.h
+2026-06-01T15:50:13.3752280Z -- Looking for stdlib.h - found
+2026-06-01T15:50:13.3752980Z -- Looking for strings.h
+2026-06-01T15:50:13.5141810Z -- Looking for strings.h - found
+2026-06-01T15:50:13.5143180Z -- Looking for string.h
+2026-06-01T15:50:13.6586190Z -- Looking for string.h - found
+2026-06-01T15:50:13.6586800Z -- Looking for sys/devpoll.h
+2026-06-01T15:50:13.7643860Z -- Looking for sys/devpoll.h - not found
+2026-06-01T15:50:13.7645250Z -- Looking for sys/epoll.h
+2026-06-01T15:50:13.8421970Z -- Looking for sys/epoll.h - not found
+2026-06-01T15:50:13.8422630Z -- Looking for sys/eventfd.h
+2026-06-01T15:50:13.9175850Z -- Looking for sys/eventfd.h - not found
+2026-06-01T15:50:13.9176720Z -- Looking for sys/event.h
+2026-06-01T15:50:14.0408360Z -- Looking for sys/event.h - found
+2026-06-01T15:50:14.0409130Z -- Looking for sys/ioctl.h
+2026-06-01T15:50:14.1797010Z -- Looking for sys/ioctl.h - found
+2026-06-01T15:50:14.1797660Z -- Looking for sys/mman.h
+2026-06-01T15:50:14.3353030Z -- Looking for sys/mman.h - found
+2026-06-01T15:50:14.3353680Z -- Looking for sys/param.h
+2026-06-01T15:50:14.4840610Z -- Looking for sys/param.h - found
+2026-06-01T15:50:14.4841250Z -- Looking for sys/queue.h
+2026-06-01T15:50:14.6268770Z -- Looking for sys/queue.h - found
+2026-06-01T15:50:14.6269510Z -- Looking for sys/select.h
+2026-06-01T15:50:14.7790970Z -- Looking for sys/select.h - found
+2026-06-01T15:50:14.7791730Z -- Looking for sys/sendfile.h
+2026-06-01T15:50:14.8706770Z -- Looking for sys/sendfile.h - not found
+2026-06-01T15:50:14.8707930Z -- Looking for sys/stat.h
+2026-06-01T15:50:15.0053780Z -- Looking for sys/stat.h - found
+2026-06-01T15:50:15.0054420Z -- Looking for sys/time.h
+2026-06-01T15:50:15.2034450Z -- Looking for sys/time.h - found
+2026-06-01T15:50:15.2037210Z -- Looking for sys/uio.h
+2026-06-01T15:50:15.4031170Z -- Looking for sys/uio.h - found
+2026-06-01T15:50:15.4031870Z -- Looking for include files sys/types.h, ifaddrs.h
+2026-06-01T15:50:15.6016690Z -- Looking for include files sys/types.h, ifaddrs.h - found
+2026-06-01T15:50:15.6018130Z -- Looking for mach/mach_time.h
+2026-06-01T15:50:15.7976630Z -- Looking for mach/mach_time.h - found
+2026-06-01T15:50:15.7977350Z -- Looking for netinet/tcp.h
+2026-06-01T15:50:15.9506990Z -- Looking for netinet/tcp.h - found
+2026-06-01T15:50:15.9507690Z -- Looking for sys/wait.h
+2026-06-01T15:50:16.0962120Z -- Looking for sys/wait.h - found
+2026-06-01T15:50:16.0962980Z -- Looking for sys/resource.h
+2026-06-01T15:50:16.2556020Z -- Looking for sys/resource.h - found
+2026-06-01T15:50:16.2556990Z -- Looking for sys/sysctl.h
+2026-06-01T15:50:16.4503750Z -- Looking for sys/sysctl.h - found
+2026-06-01T15:50:16.4504380Z -- Looking for sys/timerfd.h
+2026-06-01T15:50:16.5516300Z -- Looking for sys/timerfd.h - not found
+2026-06-01T15:50:16.5517090Z -- Looking for errno.h
+2026-06-01T15:50:16.6781100Z -- Looking for errno.h - found
+2026-06-01T15:50:16.6781900Z -- Performing Test HAVE_PREPROCESSOR_WARNINGS
+2026-06-01T15:50:16.8199410Z -- Performing Test HAVE_PREPROCESSOR_WARNINGS - Success
+2026-06-01T15:50:16.8200440Z -- Performing Test HAVE_CPP_WARNINGS
+2026-06-01T15:50:16.9668960Z -- Performing Test HAVE_CPP_WARNINGS - Success
+2026-06-01T15:50:16.9670640Z -- Performing Test HAVE_DEPRECATED_DECLARATIONS
+2026-06-01T15:50:17.1100170Z -- Performing Test HAVE_DEPRECATED_DECLARATIONS - Success
+2026-06-01T15:50:17.1100930Z -- Looking for epoll_create
+2026-06-01T15:50:17.2450860Z -- Looking for epoll_create - not found
+2026-06-01T15:50:17.2518100Z -- Looking for epoll_ctl
+2026-06-01T15:50:17.3888130Z -- Looking for epoll_ctl - not found
+2026-06-01T15:50:17.3958720Z -- Looking for eventfd
+2026-06-01T15:50:17.5341260Z -- Looking for eventfd - not found
+2026-06-01T15:50:17.5472840Z -- Looking for clock_gettime
+2026-06-01T15:50:17.6860680Z -- Looking for clock_gettime - found
+2026-06-01T15:50:17.6930290Z -- Looking for fcntl
+2026-06-01T15:50:17.8361260Z -- Looking for fcntl - found
+2026-06-01T15:50:17.8412890Z -- Looking for getaddrinfo
+2026-06-01T15:50:18.0259920Z -- Looking for getaddrinfo - found
+2026-06-01T15:50:18.0311460Z -- Looking for getnameinfo
+2026-06-01T15:50:18.1722100Z -- Looking for getnameinfo - found
+2026-06-01T15:50:18.1791050Z -- Looking for gettimeofday
+2026-06-01T15:50:18.3152400Z -- Looking for gettimeofday - found
+2026-06-01T15:50:18.3270120Z -- Looking for getprotobynumber
+2026-06-01T15:50:18.4679070Z -- Looking for getprotobynumber - found
+2026-06-01T15:50:18.4748040Z -- Looking for getservbyname
+2026-06-01T15:50:18.6136890Z -- Looking for getservbyname - found
+2026-06-01T15:50:18.6204360Z -- Looking for inet_ntop
+2026-06-01T15:50:18.7638690Z -- Looking for inet_ntop - found
+2026-06-01T15:50:18.7702670Z -- Looking for inet_pton
+2026-06-01T15:50:18.9168030Z -- Looking for inet_pton - found
+2026-06-01T15:50:18.9169020Z -- Looking for kqueue
+2026-06-01T15:50:19.0490690Z -- Looking for kqueue - found
+2026-06-01T15:50:19.0545390Z -- Looking for mmap
+2026-06-01T15:50:19.1895670Z -- Looking for mmap - found
+2026-06-01T15:50:19.2030190Z -- Looking for pipe
+2026-06-01T15:50:19.3476190Z -- Looking for pipe - found
+2026-06-01T15:50:19.3537750Z -- Looking for pipe2
+2026-06-01T15:50:19.4975530Z -- Looking for pipe2 - not found
+2026-06-01T15:50:19.5036260Z -- Looking for poll
+2026-06-01T15:50:19.6445180Z -- Looking for poll - found
+2026-06-01T15:50:19.6508070Z -- Looking for port_create
+2026-06-01T15:50:19.7900910Z -- Looking for port_create - not found
+2026-06-01T15:50:19.7969920Z -- Looking for sendfile
+2026-06-01T15:50:19.9657690Z -- Looking for sendfile - found
+2026-06-01T15:50:19.9718210Z -- Looking for sigaction
+2026-06-01T15:50:20.1088930Z -- Looking for sigaction - found
+2026-06-01T15:50:20.1216440Z -- Looking for signal
+2026-06-01T15:50:20.2758010Z -- Looking for signal - found
+2026-06-01T15:50:20.2828060Z -- Looking for splice
+2026-06-01T15:50:20.4180640Z -- Looking for splice - not found
+2026-06-01T15:50:20.4247820Z -- Looking for strlcpy
+2026-06-01T15:50:20.5721090Z -- Looking for strlcpy - found
+2026-06-01T15:50:20.5841050Z -- Looking for strsep
+2026-06-01T15:50:20.7207720Z -- Looking for strsep - found
+2026-06-01T15:50:20.7260430Z -- Looking for strtok_r
+2026-06-01T15:50:20.8665920Z -- Looking for strtok_r - found
+2026-06-01T15:50:20.8738330Z -- Looking for strtoll
+2026-06-01T15:50:21.0194720Z -- Looking for strtoll - found
+2026-06-01T15:50:21.0246890Z -- Looking for vasprintf
+2026-06-01T15:50:21.1634990Z -- Looking for vasprintf - found
+2026-06-01T15:50:21.1704140Z -- Looking for sysctl
+2026-06-01T15:50:21.3080940Z -- Looking for sysctl - found
+2026-06-01T15:50:21.3218870Z -- Looking for accept4
+2026-06-01T15:50:21.4682860Z -- Looking for accept4 - not found
+2026-06-01T15:50:21.4810770Z -- Looking for arc4random
+2026-06-01T15:50:21.6214540Z -- Looking for arc4random - found
+2026-06-01T15:50:21.6284550Z -- Looking for arc4random_buf
+2026-06-01T15:50:21.7797380Z -- Looking for arc4random_buf - found
+2026-06-01T15:50:21.7848770Z -- Looking for epoll_create1
+2026-06-01T15:50:21.9268050Z -- Looking for epoll_create1 - not found
+2026-06-01T15:50:21.9328370Z -- Looking for getegid
+2026-06-01T15:50:22.0743190Z -- Looking for getegid - found
+2026-06-01T15:50:22.0871350Z -- Looking for geteuid
+2026-06-01T15:50:22.2388510Z -- Looking for geteuid - found
+2026-06-01T15:50:22.2512260Z -- Looking for getifaddrs
+2026-06-01T15:50:22.4823140Z -- Looking for getifaddrs - found
+2026-06-01T15:50:22.4935480Z -- Looking for issetugid
+2026-06-01T15:50:22.6364180Z -- Looking for issetugid - found
+2026-06-01T15:50:22.6424850Z -- Looking for mach_absolute_time
+2026-06-01T15:50:22.7852340Z -- Looking for mach_absolute_time - found
+2026-06-01T15:50:22.7920310Z -- Looking for nanosleep
+2026-06-01T15:50:22.9359750Z -- Looking for nanosleep - found
+2026-06-01T15:50:22.9481820Z -- Looking for usleep
+2026-06-01T15:50:23.1097150Z -- Looking for usleep - found
+2026-06-01T15:50:23.1154950Z -- Looking for timeradd
+2026-06-01T15:50:23.2990250Z -- Looking for timeradd - not found
+2026-06-01T15:50:23.3049750Z -- Looking for timerclear
+2026-06-01T15:50:23.4503620Z -- Looking for timerclear - not found
+2026-06-01T15:50:23.4633620Z -- Looking for timercmp
+2026-06-01T15:50:23.6021160Z -- Looking for timercmp - not found
+2026-06-01T15:50:23.6091370Z -- Looking for timerfd_create
+2026-06-01T15:50:23.7490230Z -- Looking for timerfd_create - not found
+2026-06-01T15:50:23.7558880Z -- Looking for timerisset
+2026-06-01T15:50:23.8970790Z -- Looking for timerisset - not found
+2026-06-01T15:50:23.9030450Z -- Looking for putenv
+2026-06-01T15:50:24.0544580Z -- Looking for putenv - found
+2026-06-01T15:50:24.0612960Z -- Looking for setenv
+2026-06-01T15:50:24.2546160Z -- Looking for setenv - found
+2026-06-01T15:50:24.2599360Z -- Looking for setrlimit
+2026-06-01T15:50:24.4048540Z -- Looking for setrlimit - found
+2026-06-01T15:50:24.4115060Z -- Looking for umask
+2026-06-01T15:50:24.5436280Z -- Looking for umask - found
+2026-06-01T15:50:24.5573320Z -- Looking for unsetenv
+2026-06-01T15:50:24.6969800Z -- Looking for unsetenv - found
+2026-06-01T15:50:24.7040760Z -- Looking for gethostbyname_r
+2026-06-01T15:50:24.8372660Z -- Looking for gethostbyname_r - not found
+2026-06-01T15:50:24.8440420Z -- Looking for select
+2026-06-01T15:50:24.9776680Z -- Looking for select - found
+2026-06-01T15:50:24.9842830Z -- Check size of uint8_t
+2026-06-01T15:50:25.1545110Z -- Check size of uint8_t - done
+2026-06-01T15:50:25.1546100Z -- Check size of uint16_t
+2026-06-01T15:50:25.3136090Z -- Check size of uint16_t - done
+2026-06-01T15:50:25.3136840Z -- Check size of uint32_t
+2026-06-01T15:50:25.4572980Z -- Check size of uint32_t - done
+2026-06-01T15:50:25.4573650Z -- Check size of uint64_t
+2026-06-01T15:50:25.6386060Z -- Check size of uint64_t - done
+2026-06-01T15:50:25.6386660Z -- Check size of short
+2026-06-01T15:50:25.7950760Z -- Check size of short - done
+2026-06-01T15:50:25.7951360Z -- Check size of int
+2026-06-01T15:50:25.9403470Z -- Check size of int - done
+2026-06-01T15:50:25.9404050Z -- Check size of unsigned
+2026-06-01T15:50:26.1038260Z -- Check size of unsigned - done
+2026-06-01T15:50:26.1038890Z -- Check size of unsigned int
+2026-06-01T15:50:26.2655440Z -- Check size of unsigned int - done
+2026-06-01T15:50:26.2656460Z -- Check size of long
+2026-06-01T15:50:26.4489170Z -- Check size of long - done
+2026-06-01T15:50:26.4489750Z -- Check size of long long
+2026-06-01T15:50:26.6057770Z -- Check size of long long - done
+2026-06-01T15:50:26.6058040Z -- Performing Test HAVE_INLINE
+2026-06-01T15:50:26.7453950Z -- Performing Test HAVE_INLINE - Success
+2026-06-01T15:50:26.7454620Z -- Looking for __func__
+2026-06-01T15:50:26.9069550Z -- Looking for __func__ - found
+2026-06-01T15:50:26.9070200Z -- Looking for __FUNCTION__
+2026-06-01T15:50:27.0869200Z -- Looking for __FUNCTION__ - found
+2026-06-01T15:50:27.0869990Z -- Looking for TAILQ_FOREACH
+2026-06-01T15:50:27.2231640Z -- Looking for TAILQ_FOREACH - found
+2026-06-01T15:50:27.2232640Z -- Performing Test EVENT__HAVE_DECL_CTL_KERN
+2026-06-01T15:50:27.3814670Z -- Performing Test EVENT__HAVE_DECL_CTL_KERN - Success
+2026-06-01T15:50:27.3815390Z -- Looking for CTL_KERN - found
+2026-06-01T15:50:27.3815950Z -- Performing Test EVENT__HAVE_DECL_KERN_ARND
+2026-06-01T15:50:27.4985520Z -- Performing Test EVENT__HAVE_DECL_KERN_ARND - Failed
+2026-06-01T15:50:27.4986710Z -- Looking for KERN_ARND - not found
+2026-06-01T15:50:27.4990560Z -- Performing Test EVENT__HAVE_DECL_KERN_RANDOM
+2026-06-01T15:50:27.5882260Z -- Performing Test EVENT__HAVE_DECL_KERN_RANDOM - Failed
+2026-06-01T15:50:27.5883090Z -- Looking for KERN_RANDOM - not found
+2026-06-01T15:50:27.5883950Z -- Performing Test EVENT__HAVE_DECL_RANDOM_UUID
+2026-06-01T15:50:27.6792710Z -- Performing Test EVENT__HAVE_DECL_RANDOM_UUID - Failed
+2026-06-01T15:50:27.6793680Z -- Looking for RANDOM_UUID - not found
+2026-06-01T15:50:27.6794230Z -- Looking for F_SETFD
+2026-06-01T15:50:27.8130330Z -- Looking for F_SETFD - found
+2026-06-01T15:50:27.8131090Z -- Check size of fd_mask
+2026-06-01T15:50:27.9843770Z -- Check size of fd_mask - done
+2026-06-01T15:50:27.9844560Z -- Check size of size_t
+2026-06-01T15:50:28.1452550Z -- Check size of size_t - done
+2026-06-01T15:50:28.1453190Z -- Check size of off_t
+2026-06-01T15:50:28.3064320Z -- Check size of off_t - done
+2026-06-01T15:50:28.3065100Z -- Check size of ssize_t
+2026-06-01T15:50:28.4628620Z -- Check size of ssize_t - done
+2026-06-01T15:50:28.4629320Z -- Check size of SSIZE_T
+2026-06-01T15:50:28.5578050Z -- Check size of SSIZE_T - failed
+2026-06-01T15:50:28.5578700Z -- Check size of socklen_t
+2026-06-01T15:50:28.7111840Z -- Check size of socklen_t - done
+2026-06-01T15:50:28.7112620Z -- Check size of pid_t
+2026-06-01T15:50:28.8719930Z -- Check size of pid_t - done
+2026-06-01T15:50:28.8720660Z -- Check size of pthread_t
+2026-06-01T15:50:29.0277800Z -- Check size of pthread_t - done
+2026-06-01T15:50:29.0278650Z -- Check size of uintptr_t
+2026-06-01T15:50:29.1883780Z -- Check size of uintptr_t - done
+2026-06-01T15:50:29.1889750Z -- Check size of void *
+2026-06-01T15:50:29.3525280Z -- Check size of void * - done
+2026-06-01T15:50:29.3525950Z -- Check size of time_t
+2026-06-01T15:50:29.5083560Z -- Check size of time_t - done
+2026-06-01T15:50:29.5084740Z CMake Warning at extra/libevent/libevent-2.1.11-stable/CMakeLists.txt:666 (message):
+2026-06-01T15:50:29.5085840Z   Cannot check if kqueue works with pipes when running on APPLE or
+2026-06-01T15:50:29.5086840Z   crosscompiling, use EVENT__FORCE_KQUEUE_CHECK to be sure (this requires
+2026-06-01T15:50:29.5087860Z   manually running a test program on the cross compilation target)
+2026-06-01T15:50:29.5088440Z 
+2026-06-01T15:50:29.5088440Z 
+2026-06-01T15:50:29.5088730Z -- Check size of struct addrinfo
+2026-06-01T15:50:29.6763570Z -- Check size of struct addrinfo - done
+2026-06-01T15:50:29.6764360Z -- Check size of struct in6_addr
+2026-06-01T15:50:29.8404920Z -- Check size of struct in6_addr - done
+2026-06-01T15:50:29.8405710Z -- Performing Test EVENT__HAVE_STRUCT_IN6_ADDR_S6_ADDR16
+2026-06-01T15:50:29.9347820Z -- Performing Test EVENT__HAVE_STRUCT_IN6_ADDR_S6_ADDR16 - Failed
+2026-06-01T15:50:29.9348840Z -- Performing Test EVENT__HAVE_STRUCT_IN6_ADDR_S6_ADDR32
+2026-06-01T15:50:30.0198720Z -- Performing Test EVENT__HAVE_STRUCT_IN6_ADDR_S6_ADDR32 - Failed
+2026-06-01T15:50:30.0199720Z -- Check size of sa_family_t
+2026-06-01T15:50:30.1837720Z -- Check size of sa_family_t - done
+2026-06-01T15:50:30.1838380Z -- Check size of struct sockaddr_in6
+2026-06-01T15:50:30.3435740Z -- Check size of struct sockaddr_in6 - done
+2026-06-01T15:50:30.3436580Z -- Performing Test EVENT__HAVE_STRUCT_SOCKADDR_IN6_SIN6_LEN
+2026-06-01T15:50:30.4829080Z -- Performing Test EVENT__HAVE_STRUCT_SOCKADDR_IN6_SIN6_LEN - Success
+2026-06-01T15:50:30.4830070Z -- Performing Test EVENT__HAVE_STRUCT_SOCKADDR_IN_SIN_LEN
+2026-06-01T15:50:30.5965040Z -- Performing Test EVENT__HAVE_STRUCT_SOCKADDR_IN_SIN_LEN - Failed
+2026-06-01T15:50:30.5965930Z -- Check size of struct sockaddr_storage
+2026-06-01T15:50:30.7529520Z -- Check size of struct sockaddr_storage - done
+2026-06-01T15:50:30.7530400Z -- Performing Test EVENT__HAVE_STRUCT_SOCKADDR_STORAGE_SS_FAMILY
+2026-06-01T15:50:30.8936230Z -- Performing Test EVENT__HAVE_STRUCT_SOCKADDR_STORAGE_SS_FAMILY - Success
+2026-06-01T15:50:30.8937620Z -- Performing Test EVENT__HAVE_STRUCT_SOCKADDR_STORAGE___SS_FAMILY
+2026-06-01T15:50:30.9973500Z -- Performing Test EVENT__HAVE_STRUCT_SOCKADDR_STORAGE___SS_FAMILY - Failed
+2026-06-01T15:50:30.9974430Z -- Check size of struct linger
+2026-06-01T15:50:31.1462930Z -- Check size of struct linger - done
+2026-06-01T15:50:31.3087620Z -- LIBEVENT_VERSION_STRING 2.1.11-stable
+2026-06-01T15:50:31.3088360Z -- LIBEVENT_VERSION (bundled) 2.1.11
+2026-06-01T15:50:31.3164650Z -- Looking for include files sys/types.h, sasl/sasl.h
+2026-06-01T15:50:31.4590980Z -- Looking for include files sys/types.h, sasl/sasl.h - found
+2026-06-01T15:50:31.4664510Z -- SASL_LIBRARY /Applications/Xcode_15.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/libsasl2.tbd
+2026-06-01T15:50:31.4814030Z -- LBER_LIBRARY /Applications/Xcode_15.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/liblber.tbd
+2026-06-01T15:50:31.4814900Z -- LDAP_LIBRARY /Applications/Xcode_15.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/LDAP.framework
+2026-06-01T15:50:31.4815450Z -- Looking for lber.h
+2026-06-01T15:50:31.6194480Z -- Looking for lber.h - found
+2026-06-01T15:50:31.6196140Z -- Looking for ldap.h
+2026-06-01T15:50:31.7706350Z -- Looking for ldap.h - found
+2026-06-01T15:50:31.7706950Z -- WITH_PROTOBUF=bundled
+2026-06-01T15:50:31.7789150Z -- Performing Test HAVE_NO_DEPRECATED_DECLARATIONS
+2026-06-01T15:50:31.9217020Z -- Performing Test HAVE_NO_DEPRECATED_DECLARATIONS - Success
+2026-06-01T15:50:31.9218240Z -- Performing Test HAVE_NO_SIGN_COMPARE
+2026-06-01T15:50:32.0708570Z -- Performing Test HAVE_NO_SIGN_COMPARE - Success
+2026-06-01T15:50:32.0709610Z -- Performing Test HAVE_NO_UNUSED_TYPEDEFS
+2026-06-01T15:50:32.2108540Z -- Performing Test HAVE_NO_UNUSED_TYPEDEFS - Success
+2026-06-01T15:50:32.2109330Z -- Performing Test HAVE_NO_IGNORED_QUALIFIERS
+2026-06-01T15:50:32.3740470Z -- Performing Test HAVE_NO_IGNORED_QUALIFIERS - Success
+2026-06-01T15:50:32.3741360Z -- Performing Test HAVE_NO_RETURN_TYPE
+2026-06-01T15:50:32.5184880Z -- Performing Test HAVE_NO_RETURN_TYPE - Success
+2026-06-01T15:50:32.5185630Z -- Performing Test HAVE_NO_UNUSED_FUNCTION
+2026-06-01T15:50:32.6598860Z -- Performing Test HAVE_NO_UNUSED_FUNCTION - Success
+2026-06-01T15:50:32.6599740Z -- Performing Test HAVE_MAYBE_UNINITIALIZED
+2026-06-01T15:50:32.8089430Z -- Performing Test HAVE_MAYBE_UNINITIALIZED - Failed
+2026-06-01T15:50:32.8090220Z -- Performing Test HAVE_UNUSED_BUT_SET
+2026-06-01T15:50:32.9444010Z -- Performing Test HAVE_UNUSED_BUT_SET - Success
+2026-06-01T15:50:32.9755990Z -- protobuf version is 2.6
+2026-06-01T15:50:32.9756870Z -- You need to set WITH_CURL. This variable needs to point to curl library.
+2026-06-01T15:50:32.9757710Z -- Performing Test HAVE_SYS_THREAD_SELFID
+2026-06-01T15:50:33.1065960Z -- Performing Test HAVE_SYS_THREAD_SELFID - Success
+2026-06-01T15:50:33.1066690Z -- Performing Test HAVE_SYS_GETTID
+2026-06-01T15:50:33.2561420Z -- Performing Test HAVE_SYS_GETTID - Success
+2026-06-01T15:50:33.2562170Z -- Performing Test HAVE_PTHREAD_GETTHREADID_NP
+2026-06-01T15:50:33.3724330Z -- Performing Test HAVE_PTHREAD_GETTHREADID_NP - Failed
+2026-06-01T15:50:33.3727750Z -- Performing Test HAVE_INTEGER_PTHREAD_SELF
+2026-06-01T15:50:33.4950170Z -- Performing Test HAVE_INTEGER_PTHREAD_SELF - Failed
+2026-06-01T15:50:33.5186250Z -- Creating LDAP authentication SASL client library.
+2026-06-01T15:50:33.5205020Z -- MERGE_CONVENIENCE_LIBRARIES TARGET mysqlclient
+2026-06-01T15:50:33.5205450Z -- MERGE_CONVENIENCE_LIBRARIES LIBS clientlib;dbug;strings;vio;mysys;mysys_ssl;zlib
+2026-06-01T15:50:33.5205900Z -- MERGE_CONVENIENCE_LIBRARIES MYLIBS clientlib;dbug;strings;vio;mysys;mysys_ssl;zlib
+2026-06-01T15:50:33.5324400Z -- Looking for include file endian.h
+2026-06-01T15:50:33.6321160Z -- Looking for include file endian.h - not found
+2026-06-01T15:50:33.6322740Z -- Check size of long long
+2026-06-01T15:50:33.7893150Z -- Check size of long long - done
+2026-06-01T15:50:33.7894620Z -- Check size of long
+2026-06-01T15:50:33.9431070Z -- Check size of long - done
+2026-06-01T15:50:33.9433960Z -- Check size of int
+2026-06-01T15:50:34.1069580Z -- Check size of int - done
+2026-06-01T15:50:34.1251240Z -- Looking for sched_getcpu
+2026-06-01T15:50:34.2509600Z -- Looking for sched_getcpu - not found
+2026-06-01T15:50:34.2510620Z -- Looking for nanosleep
+2026-06-01T15:50:34.3876370Z -- Looking for nanosleep - found
+2026-06-01T15:50:34.3877190Z -- Performing Test HAVE_FALLOC_PUNCH_HOLE_AND_KEEP_SIZE
+2026-06-01T15:50:34.4899370Z -- Performing Test HAVE_FALLOC_PUNCH_HOLE_AND_KEEP_SIZE - Failed
+2026-06-01T15:50:34.4900470Z -- Performing Test HAVE_IB_GCC_SYNC_SYNCHRONISE
+2026-06-01T15:50:34.6186880Z -- Performing Test HAVE_IB_GCC_SYNC_SYNCHRONISE - Success
+2026-06-01T15:50:34.6187530Z -- Performing Test HAVE_IB_GCC_ATOMIC_THREAD_FENCE
+2026-06-01T15:50:34.7616730Z -- Performing Test HAVE_IB_GCC_ATOMIC_THREAD_FENCE - Success
+2026-06-01T15:50:34.7617610Z -- Performing Test HAVE_IB_GCC_ATOMIC_COMPARE_EXCHANGE
+2026-06-01T15:50:34.9081710Z -- Performing Test HAVE_IB_GCC_ATOMIC_COMPARE_EXCHANGE - Success
+2026-06-01T15:50:34.9083830Z -- Performing Test HAVE_IB_ATOMIC_PTHREAD_T_GCC
+2026-06-01T15:50:35.0591410Z -- Performing Test HAVE_IB_ATOMIC_PTHREAD_T_GCC - Success
+2026-06-01T15:50:35.0600940Z -- Performing Test HAVE_IB_LINUX_FUTEX
+2026-06-01T15:50:35.1679500Z -- Performing Test HAVE_IB_LINUX_FUTEX - Failed
+2026-06-01T15:50:35.1680210Z -- Looking for asprintf
+2026-06-01T15:50:35.3050100Z -- Looking for asprintf - found
+2026-06-01T15:50:35.3153710Z -- Performing Test HAVE_CAST_FUNCTION_TYPE
+2026-06-01T15:50:35.4487630Z -- Performing Test HAVE_CAST_FUNCTION_TYPE - Success
+2026-06-01T15:50:35.4793470Z -- Using cmake version 4.3.2
+2026-06-01T15:50:35.4800630Z -- Not building NDB
+2026-06-01T15:50:35.4973000Z -- Performing Test HAVE_PEERCRED
+2026-06-01T15:50:35.5881930Z -- Performing Test HAVE_PEERCRED - Failed
+2026-06-01T15:50:35.5972580Z -- Performing Test HAVE_UNUSED_TYPEDEFS
+2026-06-01T15:50:35.7247650Z -- Performing Test HAVE_UNUSED_TYPEDEFS - Success
+2026-06-01T15:50:35.8516460Z -- Performing Test HAVE_STRUCT_SOCKADDR_SA_LEN
+2026-06-01T15:50:35.9825330Z -- Performing Test HAVE_STRUCT_SOCKADDR_SA_LEN - Success
+2026-06-01T15:50:35.9826170Z -- Performing Test HAVE_STRUCT_IFREQ_IFR_NAME
+2026-06-01T15:50:36.1544820Z -- Performing Test HAVE_STRUCT_IFREQ_IFR_NAME - Success
+2026-06-01T15:50:36.1545300Z -- Performing Test HAVE_XDR_OPS_X_PUTINT32
+2026-06-01T15:50:36.2541020Z -- Performing Test HAVE_XDR_OPS_X_PUTINT32 - Failed
+2026-06-01T15:50:36.2541990Z -- Performing Test HAVE_XDR_OPS_X_GETINT32
+2026-06-01T15:50:36.3407360Z -- Performing Test HAVE_XDR_OPS_X_GETINT32 - Failed
+2026-06-01T15:50:36.3408300Z -- Performing Test HAVE___CONST
+2026-06-01T15:50:36.4439670Z -- Performing Test HAVE___CONST - Failed
+2026-06-01T15:50:36.4440370Z -- Performing Test HAVE_RPC_INLINE_T
+2026-06-01T15:50:36.5332760Z -- Performing Test HAVE_RPC_INLINE_T - Failed
+2026-06-01T15:50:36.5362140Z -- RPC_INCLUDE_DIRS /Applications/Xcode_15.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
+2026-06-01T15:50:36.5425910Z -- Using Boost headers from /Users/runner/work/mysql-archive/mysql-archive/boost/boost_1_59_0
+2026-06-01T15:50:36.5486140Z -- Performing Test CXX_HAVE_SIGN_COMPARE
+2026-06-01T15:50:36.6729150Z -- Performing Test CXX_HAVE_SIGN_COMPARE - Success
+2026-06-01T15:50:36.6729460Z -- Performing Test CXX_HAVE_UNUSED_VARIABLE
+2026-06-01T15:50:36.8123530Z -- Performing Test CXX_HAVE_UNUSED_VARIABLE - Success
+2026-06-01T15:50:36.8278780Z -- MYSQLX - Text log of protobuf messages enabled
+2026-06-01T15:50:36.8294210Z -- Performing Test HAVE_UNUSED_PARAMETER
+2026-06-01T15:50:36.9879950Z -- Performing Test HAVE_UNUSED_PARAMETER - Success
+2026-06-01T15:50:37.0327450Z -- Performing Test HAVE_MISLEADING_INDENTATION
+2026-06-01T15:50:37.1545810Z -- Performing Test HAVE_MISLEADING_INDENTATION - Success
+2026-06-01T15:50:37.1548030Z -- Performing Test HAVE_NO_BUILTIN_MEMCMP
+2026-06-01T15:50:37.3019220Z -- Performing Test HAVE_NO_BUILTIN_MEMCMP - Success
+2026-06-01T15:50:37.3322550Z -- executable target mysqld debug_target /Users/runner/work/mysql-archive/mysql-archive/debug/sql/mysqld
+2026-06-01T15:50:37.3332050Z CMake Warning (dev) at cmake/bison.cmake:30 (EXEC_PROGRAM):
+2026-06-01T15:50:37.3333350Z   Policy CMP0153 is not set: The exec_program command should not be called.
+2026-06-01T15:50:37.3334540Z   Run "cmake --help-policy CMP0153" for policy details.  Use the cmake_policy
+2026-06-01T15:50:37.3335590Z   command to set the policy and suppress this warning.
+2026-06-01T15:50:37.3336130Z 
+2026-06-01T15:50:37.3336340Z   Use execute_process() instead.
+2026-06-01T15:50:37.3336920Z Call Stack (most recent call first):
+2026-06-01T15:50:37.3337540Z   sql/CMakeLists.txt:621 (INCLUDE)
+2026-06-01T15:50:37.3338310Z This warning is for project developers.  Use -Wno-dev to suppress it.
+2026-06-01T15:50:37.3339030Z 
+2026-06-01T15:50:37.3565370Z -- MERGE_CONVENIENCE_LIBRARIES TARGET mysqlserver
+2026-06-01T15:50:37.3568500Z -- MERGE_CONVENIENCE_LIBRARIES LIBS dbug;strings;regex;mysys;mysys_ssl;vio;zlib;imported_openssl;imported_crypto;archive_embedded;blackhole_embedded;csv_embedded;federated_embedded;heap_embedded;innobase;lz4_lib;myisam_embedded;myisammrg_embedded;partition_embedded;ngram_parser;sql_embedded
+2026-06-01T15:50:37.3573300Z -- MERGE_CONVENIENCE_LIBRARIES MYLIBS dbug;strings;regex;mysys;mysys_ssl;vio;zlib;imported_openssl;imported_crypto;archive_embedded;blackhole_embedded;csv_embedded;federated_embedded;heap_embedded;innobase;lz4_lib;myisam_embedded;myisammrg_embedded;partition_embedded;ngram_parser;sql_embedded
+2026-06-01T15:50:37.3576730Z -- library target mysqlserver debug_target /Users/runner/work/mysql-archive/mysql-archive/debug/archive_output_directory/libmysqld.a
+2026-06-01T15:50:37.4074940Z -- INSTALL mysqlclient.pc lib/pkgconfig
+2026-06-01T15:50:37.4503570Z CMake Warning (dev) at cmake/tags.cmake:29 (EXEC_PROGRAM):
+2026-06-01T15:50:37.4504640Z   Policy CMP0153 is not set: The exec_program command should not be called.
+2026-06-01T15:50:37.4505780Z   Run "cmake --help-policy CMP0153" for policy details.  Use the cmake_policy
+2026-06-01T15:50:37.4506740Z   command to set the policy and suppress this warning.
+2026-06-01T15:50:37.4507440Z 
+2026-06-01T15:50:37.4507610Z   Use execute_process() instead.
+2026-06-01T15:50:37.4507830Z Call Stack (most recent call first):
+2026-06-01T15:50:37.4508030Z   CMakeLists.txt:782 (INCLUDE)
+2026-06-01T15:50:37.4508300Z This warning is for project developers.  Use -Wno-dev to suppress it.
+2026-06-01T15:50:37.4508530Z 
+2026-06-01T15:50:38.8138200Z -- Cannot find "wix.exe", installer project will not be generated
+2026-06-01T15:50:38.8216260Z -- CMAKE_BUILD_TYPE: Release
+2026-06-01T15:50:38.8218150Z -- COMPILE_DEFINITIONS: HAVE_CONFIG_H;HAVE_TLSv13
+2026-06-01T15:50:38.8218760Z -- CMAKE_C_FLAGS: -fPIC -fno-omit-frame-pointer -fno-strict-aliasing  -Wall -Wextra -Wformat-security -Wvla -Wwrite-strings -Wdeclaration-after-statement
+2026-06-01T15:50:38.8219770Z -- CMAKE_CXX_FLAGS: -fPIC -fno-omit-frame-pointer -fno-strict-aliasing  -Wall -Wextra -Wformat-security -Wvla -Woverloaded-virtual -Wno-unused-parameter -Wno-null-conversion -Wno-unused-private-field
+2026-06-01T15:50:38.8220530Z -- CMAKE_CXX_FLAGS_DEBUG: -DENABLED_DEBUG_SYNC -DSAFE_MUTEX -g
+2026-06-01T15:50:38.8220930Z -- CMAKE_CXX_FLAGS_RELWITHDEBINFO: -ffunction-sections -fdata-sections -O2 -g -DNDEBUG
+2026-06-01T15:50:38.8221370Z -- CMAKE_CXX_FLAGS_RELEASE: -ffunction-sections -fdata-sections -O3 -DNDEBUG
+2026-06-01T15:50:38.8221800Z -- CMAKE_CXX_FLAGS_MINSIZEREL: -ffunction-sections -fdata-sections -Os -DNDEBUG
+2026-06-01T15:50:38.8222240Z -- CMAKE_C_LINK_FLAGS: -Wl,-search_paths_first -Wl,-headerpad_max_install_names
+2026-06-01T15:50:38.8222640Z -- CMAKE_CXX_LINK_FLAGS: -Wl,-search_paths_first -Wl,-headerpad_max_install_names
+2026-06-01T15:50:38.8222940Z -- CMAKE_EXE_LINKER_FLAGS 
+2026-06-01T15:50:38.8223120Z -- CMAKE_MODULE_LINKER_FLAGS 
+2026-06-01T15:50:38.8223300Z -- CMAKE_SHARED_LINKER_FLAGS 
+2026-06-01T15:50:38.8265580Z -- Configuring incomplete, errors occurred!
+2026-06-01T15:50:38.8384190Z ##[error]Process completed with exit code 1.
+2026-06-01T15:50:38.8555910Z Post job cleanup.
+2026-06-01T15:50:39.1920700Z [command]/opt/homebrew/bin/git version
+2026-06-01T15:50:39.2094440Z git version 2.54.0
+2026-06-01T15:50:39.2170730Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/6e1d1d22-9871-49d9-a6c7-b2d32ff80382/.gitconfig'
+2026-06-01T15:50:39.2180940Z Temporarily overriding HOME='/Users/runner/work/_temp/6e1d1d22-9871-49d9-a6c7-b2d32ff80382' before making global git config changes
+2026-06-01T15:50:39.2182620Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-01T15:50:39.2191090Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/mysql-archive/mysql-archive
+2026-06-01T15:50:39.2257460Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-01T15:50:39.2310850Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-01T15:50:39.3312870Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-01T15:50:39.3351890Z http.https://github.com/.extraheader
+2026-06-01T15:50:39.3362420Z [command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-06-01T15:50:39.3423930Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-01T15:50:39.4075310Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-01T15:50:39.4129050Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-01T15:50:39.4964500Z Cleaning up orphan processes
+2026-06-01T15:50:39.8239080Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4. Actions will be forced to run with Node.js 24 by default starting June 16th, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

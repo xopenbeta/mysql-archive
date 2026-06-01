@@ -20,8 +20,24 @@ SRC_DIR="${WORKDIR}/mysql-src"
 echo "=== Building MySQL ${MYSQL_VERSION} for macOS/${ARCH} ==="
 
 # ── 安装构建工具 ────────────────────────────────────────────────────
-brew install cmake ninja pkg-config bison
+BREW_PACKAGES=(ninja pkg-config bison)
+if [[ "${SERIES}" == "5.7" ]]; then
+  BREW_PACKAGES+=(curl)
+else
+  BREW_PACKAGES+=(cmake)
+fi
+
+brew install "${BREW_PACKAGES[@]}"
 export PATH="$(brew --prefix bison)/bin:$PATH"
+
+CMAKE_BIN="cmake"
+CURL_ROOT_DIR=""
+if [[ "${SERIES}" == "5.7" ]]; then
+  python3 -m pip install --user "cmake<4"
+  export PATH="$(python3 -c 'import site; print(site.USER_BASE)')/bin:$PATH"
+  CMAKE_BIN="$(command -v cmake)"
+  CURL_ROOT_DIR="$(brew --prefix curl)"
+fi
 
 # ── 处理 OpenSSL：区分原生 arm64 和交叉编译 x86_64 ─────────────────
 HOST_ARCH="$(uname -m)"   # 运行时真实架构（runner 为 arm64）
@@ -83,7 +99,10 @@ if [[ "${SERIES}" == "8.0" || "${SERIES}" == "5.7" ]]; then
 fi
 
 if [[ "${SERIES}" == "5.7" ]]; then
-  CMAKE_EXTRA_ARGS+=("-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
+  CMAKE_EXTRA_ARGS+=(
+    "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+    "-DWITH_CURL=${CURL_ROOT_DIR}"
+  )
 fi
 
 DEFAULT_COLLATION="utf8mb4_0900_ai_ci"
@@ -91,7 +110,7 @@ if [[ "${SERIES}" == "5.7" ]]; then
   DEFAULT_COLLATION="utf8mb4_general_ci"
 fi
 
-cmake -B "${BUILD_DIR}" -S "${SRC_DIR}" \
+"${CMAKE_BIN}" -B "${BUILD_DIR}" -S "${SRC_DIR}" \
   -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}" \
@@ -109,8 +128,8 @@ cmake -B "${BUILD_DIR}" -S "${SRC_DIR}" \
   ${CMAKE_EXTRA_ARGS[@]+"${CMAKE_EXTRA_ARGS[@]}"}
 
 # ── 编译并安装 ──────────────────────────────────────────────────────
-cmake --build "${BUILD_DIR}" --parallel "$(sysctl -n hw.logicalcpu)"
-cmake --install "${BUILD_DIR}"
+"${CMAKE_BIN}" --build "${BUILD_DIR}" --parallel "$(sysctl -n hw.logicalcpu)"
+"${CMAKE_BIN}" --install "${BUILD_DIR}"
 
 # ── Strip 精简体积 ───────────────────────────────────────────────────
 find "${INSTALL_DIR}/bin" -type f -exec strip {} \; 2>/dev/null || true
