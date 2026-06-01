@@ -50,6 +50,10 @@ if [[ "${SERIES}" == "8.0" || "${SERIES}" == "5.7" ]]; then
   )
 fi
 
+if [[ "${SERIES}" == "5.7" ]]; then
+  CMAKE_EXTRA_ARGS+=("-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
+fi
+
 DEFAULT_COLLATION="utf8mb4_0900_ai_ci"
 if [[ "${SERIES}" == "5.7" ]]; then
   DEFAULT_COLLATION="utf8mb4_general_ci"

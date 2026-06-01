@@ -158,6 +158,10 @@ if ($Series -eq '8.0' -or $Series -eq '5.7') {
     $CmakeArgs += @("-DDOWNLOAD_BOOST=1", "-DWITH_BOOST=$BoostDir")
 }
 
+if ($Series -eq '5.7') {
+    $CmakeArgs += "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+}
+
 if ($Arch -eq 'arm64') {
     # On some arm64 Windows runners, InnoDB picks a Windows MM fence path that
     # pulls x86-style intrinsics and fails in mmintrin.h (C1189).
