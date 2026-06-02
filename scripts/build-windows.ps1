@@ -136,6 +136,7 @@ $CmakeArgs = @(
     "-DCMAKE_BUILD_TYPE=Release",
     "-DCMAKE_INSTALL_PREFIX=$InstallDir",
     "-DCMAKE_TOOLCHAIN_FILE=$VcpkgRoot\scripts\buildsystems\vcpkg.cmake",
+    "-DENABLE_DTRACE=OFF",
     "-DWITH_SSL=system",
     "-DOPENSSL_ROOT_DIR=$OpenSSLRoot",
     "-DOPENSSL_INCLUDE_DIR=$OpenSSLRoot\include",

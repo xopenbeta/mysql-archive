@@ -54,9 +54,11 @@ if [[ "${ARCH}" == "x86_64" && "${HOST_ARCH}" == "arm64" ]]; then
     && mv "${WORKDIR}/openssl-${OPENSSL_VERSION}" "${OPENSSL_SRC_DIR}"
 
   pushd "${OPENSSL_SRC_DIR}"
+  # Apple Silicon runner 上交叉构建 x86_64 OpenSSL 时，汇编路径不稳定；
+  # 禁用 asm 以换取可重复构建。
   MACOSX_DEPLOYMENT_TARGET="12.0" ./Configure darwin64-x86_64 \
     --prefix="${OPENSSL_INSTALL_DIR}" \
-    no-shared no-tests
+    no-asm no-shared no-tests
   MACOSX_DEPLOYMENT_TARGET="12.0" make -j"$(sysctl -n hw.logicalcpu)"
   make install_sw
   popd
