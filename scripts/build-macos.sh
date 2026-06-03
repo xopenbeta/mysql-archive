@@ -33,9 +33,11 @@ export PATH="$(brew --prefix bison)/bin:$PATH"
 CMAKE_BIN="cmake"
 CURL_ROOT_DIR=""
 if [[ "${SERIES}" == "5.7" ]]; then
-  python3 -m pip install --user "cmake<4"
-  export PATH="$(python3 -c 'import site; print(site.USER_BASE)')/bin:$PATH"
-  CMAKE_BIN="$(command -v cmake)"
+  CMAKE_VENV_DIR="${WORKDIR}/.cmake-venv"
+  python3 -m venv "${CMAKE_VENV_DIR}"
+  "${CMAKE_VENV_DIR}/bin/python" -m pip install --upgrade pip
+  "${CMAKE_VENV_DIR}/bin/python" -m pip install "cmake<4"
+  CMAKE_BIN="${CMAKE_VENV_DIR}/bin/cmake"
   CURL_ROOT_DIR="$(brew --prefix curl)"
 fi
 
