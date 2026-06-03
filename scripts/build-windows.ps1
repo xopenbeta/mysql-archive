@@ -161,6 +161,7 @@ if ($Series -eq '8.0' -or $Series -eq '5.7') {
 
 if ($Series -eq '5.7') {
     $CmakeArgs += "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+    $CmakeArgs += "-DCMAKE_CXX_STANDARD=14"
 }
 
 if ($Arch -eq 'arm64') {
