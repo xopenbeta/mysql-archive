@@ -134,7 +134,7 @@ if [[ "${SERIES}" == "8.0" || "${SERIES}" == "5.7" ]]; then
   )
 fi
 
-if [[ "${SERIES}" == "9.6" && "${ARCH}" == "x86_64" && "${HOST_ARCH}" == "arm64" ]]; then
+if [[ "${SERIES}" == "9.6" ]]; then
   CMAKE_EXTRA_ARGS+=("-DCMAKE_CXX_STANDARD=17")
 fi
 
