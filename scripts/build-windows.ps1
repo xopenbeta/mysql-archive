@@ -104,6 +104,30 @@ if (-not $ExtractedDir) {
 if (Test-Path $SrcDir) { Remove-Item -Recurse -Force $SrcDir }
 Rename-Item -Path $ExtractedDir.FullName -NewName (Split-Path $SrcDir -Leaf)
 
+# ── Patch MySQL 5.7 for modern MSVC STL compatibility ─────────────
+# VS2022 + recent STL removes std::binary_function; 5.7 myisam sort.cc still inherits it.
+if ($Series -eq '5.7') {
+    $MyisamSortCc = Join-Path $SrcDir 'storage\myisam\sort.cc'
+    if (-not (Test-Path $MyisamSortCc)) {
+        throw "MySQL 5.7 compatibility patch target not found: $MyisamSortCc"
+    }
+
+    $sortCc = [System.IO.File]::ReadAllText($MyisamSortCc)
+    $binaryFunctionPattern = ':\s*public\s+std::binary_function\s*<[^>]+>'
+    $matchCount = [System.Text.RegularExpressions.Regex]::Matches($sortCc, $binaryFunctionPattern).Count
+    if ($matchCount -lt 1) {
+        throw "MySQL 5.7 compatibility patch did not match std::binary_function inheritance in $MyisamSortCc"
+    }
+
+    $patchedSortCc = [System.Text.RegularExpressions.Regex]::Replace($sortCc, $binaryFunctionPattern, '', 1)
+    if ($patchedSortCc -eq $sortCc) {
+        throw "MySQL 5.7 compatibility patch made no changes in $MyisamSortCc"
+    }
+
+    [System.IO.File]::WriteAllText($MyisamSortCc, $patchedSortCc)
+    Write-Host "Patched myisam sort.cc for VS2022 STL compatibility"
+}
+
 # ── CMake 平台参数 ───────────────────────────────────────────────────
 # x86_64 → x64，arm64 → ARM64
 $CmakePlatform = if ($Arch -eq 'x86_64') { 'x64' } else { 'ARM64' }
