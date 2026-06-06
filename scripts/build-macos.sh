@@ -93,6 +93,49 @@ tar -xzf "${SRC_ARCHIVE}" -C "${SRC_DIR}" --strip-components=1
 
 if [[ "${SERIES}" == "9.6" ]]; then
   COLLATIONS_INTERNAL_CC="${SRC_DIR}/strings/collations_internal.cc"
+  PARSE_OPTIONS_H="${SRC_DIR}/libs/mysql/strconv/decode/parse_options.h"
+
+  if [[ ! -f "${PARSE_OPTIONS_H}" ]]; then
+    echo "MySQL 9.6 compatibility patch target not found: ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'return Compound_parse_options<std::tuple<Format_t>>(format);' "${PARSE_OPTIONS_H}"; then
+    echo "MySQL 9.6 compatibility patch did not find Format_t constructor return in ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'return Compound_parse_options<std::tuple<Repeat_t>>(repeat);' "${PARSE_OPTIONS_H}"; then
+    echo "MySQL 9.6 compatibility patch did not find Repeat_t constructor return in ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'return Compound_parse_options<std::tuple<Checker_t>>(checker);' "${PARSE_OPTIONS_H}"; then
+    echo "MySQL 9.6 compatibility patch did not find Checker_t constructor return in ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
+  perl -0pi -e 's/return Compound_parse_options<std::tuple<Format_t>>\(format\);/return Compound_parse_options<std::tuple<Format_t>>{std::tuple<Format_t>{format}};/' "${PARSE_OPTIONS_H}"
+  perl -0pi -e 's/return Compound_parse_options<std::tuple<Repeat_t>>\(repeat\);/return Compound_parse_options<std::tuple<Repeat_t>>{std::tuple<Repeat_t>{repeat}};/' "${PARSE_OPTIONS_H}"
+  perl -0pi -e 's/return Compound_parse_options<std::tuple<Checker_t>>\(checker\);/return Compound_parse_options<std::tuple<Checker_t>>{std::tuple<Checker_t>{checker}};/' "${PARSE_OPTIONS_H}"
+
+  if ! grep -Fq 'return Compound_parse_options<std::tuple<Format_t>>{std::tuple<Format_t>{format}};' "${PARSE_OPTIONS_H}"; then
+    echo "MySQL 9.6 compatibility patch verification failed for Format_t constructor return in ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'return Compound_parse_options<std::tuple<Repeat_t>>{std::tuple<Repeat_t>{repeat}};' "${PARSE_OPTIONS_H}"; then
+    echo "MySQL 9.6 compatibility patch verification failed for Repeat_t constructor return in ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'return Compound_parse_options<std::tuple<Checker_t>>{std::tuple<Checker_t>{checker}};' "${PARSE_OPTIONS_H}"; then
+    echo "MySQL 9.6 compatibility patch verification failed for Checker_t constructor return in ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
+  echo "Patched parse_options.h for macOS MySQL 9.6 aggregate construction compatibility"
+
   if [[ ! -f "${COLLATIONS_INTERNAL_CC}" ]]; then
     echo "MySQL 9.6 compatibility patch target not found: ${COLLATIONS_INTERNAL_CC}" >&2
     exit 1
