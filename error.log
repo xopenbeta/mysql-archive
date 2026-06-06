@@ -1,0 +1,294 @@
+2026-06-06T09:12:40.4023920Z Current runner version: '2.334.0'
+2026-06-06T09:12:40.4044751Z ##[group]Runner Image Provisioner
+2026-06-06T09:12:40.4045359Z Hosted Compute Agent
+2026-06-06T09:12:40.4045806Z Version: 20260520.533
+2026-06-06T09:12:40.4046252Z Commit: 189110e25284a9812c124fd27b339e2fb4f2f9db
+2026-06-06T09:12:40.4046762Z Build Date: 2026-05-20T17:44:04Z
+2026-06-06T09:12:40.4047266Z Worker ID: {2f822f12-982c-4958-a383-b8b9540c8eb1}
+2026-06-06T09:12:40.4047782Z Azure Region: westus
+2026-06-06T09:12:40.4048176Z ##[endgroup]
+2026-06-06T09:12:40.4049136Z ##[group]Operating System
+2026-06-06T09:12:40.4049584Z Microsoft Windows Server 2025
+2026-06-06T09:12:40.4050034Z 10.0.26100
+2026-06-06T09:12:40.4050394Z Datacenter
+2026-06-06T09:12:40.4050801Z ##[endgroup]
+2026-06-06T09:12:40.4051204Z ##[group]Runner Image
+2026-06-06T09:12:40.4051610Z Image: windows-2025
+2026-06-06T09:12:40.4052004Z Version: 20260525.149.1
+2026-06-06T09:12:40.4053092Z Included Software: https://github.com/actions/runner-images/blob/win25/20260525.149/images/windows/Windows2025-Readme.md
+2026-06-06T09:12:40.4054627Z Image Release: https://github.com/actions/runner-images/releases/tag/win25%2F20260525.149
+2026-06-06T09:12:40.4055356Z ##[endgroup]
+2026-06-06T09:12:40.4056360Z ##[group]GITHUB_TOKEN Permissions
+2026-06-06T09:12:40.4057806Z Contents: read
+2026-06-06T09:12:40.4058238Z Metadata: read
+2026-06-06T09:12:40.4058622Z Packages: read
+2026-06-06T09:12:40.4059022Z ##[endgroup]
+2026-06-06T09:12:40.4060580Z Secret source: Actions
+2026-06-06T09:12:40.4061123Z Prepare workflow directory
+2026-06-06T09:12:40.4327207Z Prepare all required actions
+2026-06-06T09:12:40.4357422Z Getting action download info
+2026-06-06T09:12:40.7957307Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-06-06T09:12:40.8808676Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-06-06T09:12:41.3232904Z Complete job name: Build - windows - x86_64 - MySQL 5.7.44
+2026-06-06T09:12:41.5555833Z ##[group]Run actions/checkout@v4
+2026-06-06T09:12:41.5558221Z with:
+2026-06-06T09:12:41.5558627Z   repository: xopenbeta/mysql-archive
+2026-06-06T09:12:41.5562900Z   token: ***
+2026-06-06T09:12:41.5563252Z   ssh-strict: true
+2026-06-06T09:12:41.5563602Z   ssh-user: git
+2026-06-06T09:12:41.5563963Z   persist-credentials: true
+2026-06-06T09:12:41.5564353Z   clean: true
+2026-06-06T09:12:41.5564717Z   sparse-checkout-cone-mode: true
+2026-06-06T09:12:41.5565140Z   fetch-depth: 1
+2026-06-06T09:12:41.5565484Z   fetch-tags: false
+2026-06-06T09:12:41.5565839Z   show-progress: true
+2026-06-06T09:12:41.5566203Z   lfs: false
+2026-06-06T09:12:41.5566530Z   submodules: false
+2026-06-06T09:12:41.5566880Z   set-safe-directory: true
+2026-06-06T09:12:41.5567451Z ##[endgroup]
+2026-06-06T09:12:41.6996333Z Syncing repository: xopenbeta/mysql-archive
+2026-06-06T09:12:41.6997873Z ##[group]Getting Git version info
+2026-06-06T09:12:41.6998509Z Working directory is 'D:\a\mysql-archive\mysql-archive'
+2026-06-06T09:12:41.7808777Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-06-06T09:12:42.3552580Z git version 2.54.0.windows.1
+2026-06-06T09:12:42.3595153Z ##[endgroup]
+2026-06-06T09:12:42.3612426Z Temporarily overriding HOME='D:\a\_temp\31de7442-fe5d-4005-87d7-65dbf17f246e' before making global git config changes
+2026-06-06T09:12:42.3613893Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-06T09:12:42.3621629Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\mysql-archive\mysql-archive
+2026-06-06T09:12:42.4468788Z Deleting the contents of 'D:\a\mysql-archive\mysql-archive'
+2026-06-06T09:12:42.4473734Z ##[group]Initializing the repository
+2026-06-06T09:12:42.4482144Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\mysql-archive\mysql-archive
+2026-06-06T09:12:42.5634805Z Initialized empty Git repository in D:/a/mysql-archive/mysql-archive/.git/
+2026-06-06T09:12:42.5677364Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/xopenbeta/mysql-archive
+2026-06-06T09:12:42.6293786Z ##[endgroup]
+2026-06-06T09:12:42.6295395Z ##[group]Disabling automatic garbage collection
+2026-06-06T09:12:42.6302928Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-06-06T09:12:42.6531455Z ##[endgroup]
+2026-06-06T09:12:42.6532834Z ##[group]Setting up auth
+2026-06-06T09:12:42.6541400Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-06-06T09:12:42.6781917Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-06-06T09:12:45.3092140Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-06T09:12:45.3336761Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-06-06T09:12:45.7389528Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-06T09:12:45.7626046Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-06-06T09:12:46.1829811Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-06-06T09:12:46.2076685Z ##[endgroup]
+2026-06-06T09:12:46.2077177Z ##[group]Fetching the repository
+2026-06-06T09:12:46.2088366Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +b4b3e0bdf9f90facf6907667b778127a9f80e381:refs/tags/v202606061712
+2026-06-06T09:12:48.5606193Z From https://github.com/xopenbeta/mysql-archive
+2026-06-06T09:12:48.5607346Z  * [new ref]         b4b3e0bdf9f90facf6907667b778127a9f80e381 -> v202606061712
+2026-06-06T09:12:48.6090053Z ##[endgroup]
+2026-06-06T09:12:48.6090382Z ##[group]Determining the checkout info
+2026-06-06T09:12:48.6093057Z ##[endgroup]
+2026-06-06T09:12:48.6102764Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-06-06T09:12:48.6613760Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-06-06T09:12:48.6856604Z ##[group]Checking out the ref
+2026-06-06T09:12:48.6864262Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force refs/tags/v202606061712
+2026-06-06T09:12:48.7907381Z Note: switching to 'refs/tags/v202606061712'.
+2026-06-06T09:12:48.7907616Z 
+2026-06-06T09:12:48.7907814Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-06-06T09:12:48.7908360Z changes and commit them, and you can discard any commits you make in this
+2026-06-06T09:12:48.7908737Z state without impacting any branches by switching back to a branch.
+2026-06-06T09:12:48.7908945Z 
+2026-06-06T09:12:48.7909081Z If you want to create a new branch to retain commits you create, you may
+2026-06-06T09:12:48.7909468Z do so (now or later) by using -c with the switch command. Example:
+2026-06-06T09:12:48.7909680Z 
+2026-06-06T09:12:48.7909772Z   git switch -c <new-branch-name>
+2026-06-06T09:12:48.7909910Z 
+2026-06-06T09:12:48.7909996Z Or undo this operation with:
+2026-06-06T09:12:48.7910163Z 
+2026-06-06T09:12:48.7910253Z   git switch -
+2026-06-06T09:12:48.7910342Z 
+2026-06-06T09:12:48.7910507Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-06-06T09:12:48.7910733Z 
+2026-06-06T09:12:48.7919548Z HEAD is now at b4b3e0b ff
+2026-06-06T09:12:48.8161297Z ##[endgroup]
+2026-06-06T09:12:48.8611949Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-06-06T09:12:48.8867643Z b4b3e0bdf9f90facf6907667b778127a9f80e381
+2026-06-06T09:12:48.9208125Z ##[group]Run .\scripts\build-windows.ps1 -Arch "x86_64" -MysqlVersion "5.7.44"
+2026-06-06T09:12:48.9208677Z [36;1m.\scripts\build-windows.ps1 -Arch "x86_64" -MysqlVersion "5.7.44"[0m
+2026-06-06T09:12:49.0220924Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-06-06T09:12:49.0221234Z ##[endgroup]
+2026-06-06T09:12:59.3283949Z === Building MySQL 5.7.44 for Windows/x86_64 ===
+2026-06-06T09:12:59.3292068Z Installing OpenSSL via vcpkg for x86_64...
+2026-06-06T09:13:00.2243527Z Computing installation plan...
+2026-06-06T09:13:05.0541740Z A suitable version of cmake was not found (required v4.3.2).
+2026-06-06T09:13:05.0542585Z Downloading https://github.com/Kitware/CMake/releases/download/v4.3.2/cmake-4.3.2-windows-x86_64.zip -> cmake-4.3.2-windows-x86_64.zip
+2026-06-06T09:13:05.4928865Z Successfully downloaded cmake-4.3.2-windows-x86_64.zip
+2026-06-06T09:13:05.4929327Z Extracting cmake...
+2026-06-06T09:13:05.6516121Z A suitable version of 7zip was not found (required v26.1.0).
+2026-06-06T09:13:05.6516823Z Downloading https://github.com/ip7z/7zip/releases/download/26.01/7z2601-x64.exe -> 7z2601-x64.7z.exe
+2026-06-06T09:13:05.7428564Z Successfully downloaded 7z2601-x64.7z.exe
+2026-06-06T09:13:05.7428945Z Extracting 7zip...
+2026-06-06T09:13:05.7449348Z A suitable version of 7zr was not found (required v26.1.0).
+2026-06-06T09:13:05.7450081Z Downloading https://github.com/ip7z/7zip/releases/download/26.01/7zr.exe -> f798fab8-7zr.exe
+2026-06-06T09:13:05.8478820Z Successfully downloaded f798fab8-7zr.exe
+2026-06-06T09:13:18.3060068Z The following packages will be built and installed:
+2026-06-06T09:13:18.3060526Z     openssl:x64-windows@3.6.2
+2026-06-06T09:13:18.3060853Z   * vcpkg-cmake:x64-windows@2024-04-23
+2026-06-06T09:13:18.3061197Z   * vcpkg-cmake-config:x64-windows@2024-05-23
+2026-06-06T09:13:18.3061520Z   * vcpkg-cmake-get-vars:x64-windows@2025-05-29
+2026-06-06T09:13:18.3061985Z Additional packages (*) will be modified to complete this operation.
+2026-06-06T09:13:18.8310137Z Detecting compiler hash for triplet x64-windows...
+2026-06-06T09:13:18.9733264Z A suitable version of powershell-core was not found (required v7.5.4).
+2026-06-06T09:13:18.9733932Z Downloading https://github.com/PowerShell/PowerShell/releases/download/v7.6.1/PowerShell-7.6.1-win-x64.zip -> PowerShell-7.6.1-win-x64.zip
+2026-06-06T09:13:19.4882518Z Successfully downloaded PowerShell-7.6.1-win-x64.zip
+2026-06-06T09:13:19.4883188Z Extracting powershell-core...
+2026-06-06T09:13:36.4895719Z Compiler found: C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe
+2026-06-06T09:13:36.6810169Z Restored 0 package(s) from C:\Users\runneradmin\AppData\Local\vcpkg\archives in 66.1 us. Use --debug to see more details.
+2026-06-06T09:13:36.6810918Z Installing 1/4 vcpkg-cmake:x64-windows@2024-04-23...
+2026-06-06T09:13:36.6811591Z vcpkg-cmake:x64-windows@2024-04-23 package ABI: a4ff717f975de5fa4c3ee409a6f892a145aa365f38d062b29f28aeea2346cbcd
+2026-06-06T09:13:36.6812227Z Building vcpkg-cmake:x64-windows@2024-04-23...
+2026-06-06T09:13:36.7212789Z -- Installing: C:/vcpkg/packages/vcpkg-cmake_x64-windows/share/vcpkg-cmake/vcpkg_cmake_configure.cmake
+2026-06-06T09:13:36.7219618Z -- Installing: C:/vcpkg/packages/vcpkg-cmake_x64-windows/share/vcpkg-cmake/vcpkg_cmake_build.cmake
+2026-06-06T09:13:36.7225938Z -- Installing: C:/vcpkg/packages/vcpkg-cmake_x64-windows/share/vcpkg-cmake/vcpkg_cmake_install.cmake
+2026-06-06T09:13:36.7333108Z -- Installing: C:/vcpkg/packages/vcpkg-cmake_x64-windows/share/vcpkg-cmake/vcpkg-port-config.cmake
+2026-06-06T09:13:36.7339642Z -- Installing: C:/vcpkg/packages/vcpkg-cmake_x64-windows/share/vcpkg-cmake/copyright
+2026-06-06T09:13:36.7598896Z -- Performing post-build validation
+2026-06-06T09:13:36.8071264Z Starting submission of vcpkg-cmake:x64-windows@2024-04-23 to 1 binary cache(s) in the background
+2026-06-06T09:13:36.8221971Z Elapsed time to handle vcpkg-cmake:x64-windows: 126 ms
+2026-06-06T09:13:36.8224443Z Installing 2/4 vcpkg-cmake-config:x64-windows@2024-05-23...
+2026-06-06T09:13:36.8225232Z vcpkg-cmake-config:x64-windows@2024-05-23 package ABI: c5928c7acde3b4801cfee3d01565f4404ddfce2b0a623fa3eb0849b8560c46ce
+2026-06-06T09:13:36.8225918Z Building vcpkg-cmake-config:x64-windows@2024-05-23...
+2026-06-06T09:13:36.8508247Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-config_x64-windows/share/vcpkg-cmake-config/vcpkg_cmake_config_fixup.cmake
+2026-06-06T09:13:36.8515551Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-config_x64-windows/share/vcpkg-cmake-config/vcpkg-port-config.cmake
+2026-06-06T09:13:36.8522087Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-config_x64-windows/share/vcpkg-cmake-config/copyright
+2026-06-06T09:13:36.8598515Z -- Skipping post-build validation due to VCPKG_POLICY_EMPTY_PACKAGE
+2026-06-06T09:13:36.9021978Z Starting submission of vcpkg-cmake-config:x64-windows@2024-05-23 to 1 binary cache(s) in the background
+2026-06-06T09:13:36.9022744Z Elapsed time to handle vcpkg-cmake-config:x64-windows: 79.9 ms
+2026-06-06T09:13:36.9023303Z Completed submission of vcpkg-cmake:x64-windows@2024-04-23 to 1 binary cache(s) in 29 ms
+2026-06-06T09:13:36.9023865Z Installing 3/4 vcpkg-cmake-get-vars:x64-windows@2025-05-29...
+2026-06-06T09:13:36.9024647Z vcpkg-cmake-get-vars:x64-windows@2025-05-29 package ABI: 73feac3e20e8ab68329ec4bec7d753f58787b5c5a8f22ba14a71313884701c4e
+2026-06-06T09:13:36.9025465Z Building vcpkg-cmake-get-vars:x64-windows@2025-05-29...
+2026-06-06T09:13:36.9325232Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-get-vars_x64-windows/share/vcpkg-cmake-get-vars/vcpkg_cmake_get_vars.cmake
+2026-06-06T09:13:36.9332583Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-get-vars_x64-windows/share/vcpkg-cmake-get-vars/cmake_get_vars
+2026-06-06T09:13:36.9338744Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-get-vars_x64-windows/share/vcpkg-cmake-get-vars/cmake_get_vars/CMakeLists.txt
+2026-06-06T09:13:36.9346619Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-get-vars_x64-windows/share/vcpkg-cmake-get-vars/cmake-get-vars.cmake.in
+2026-06-06T09:13:36.9372205Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-get-vars_x64-windows/share/vcpkg-cmake-get-vars/vcpkg-port-config.cmake
+2026-06-06T09:13:36.9418676Z -- Installing: C:/vcpkg/packages/vcpkg-cmake-get-vars_x64-windows/share/vcpkg-cmake-get-vars/copyright
+2026-06-06T09:13:36.9429674Z -- Performing post-build validation
+2026-06-06T09:13:36.9875917Z Starting submission of vcpkg-cmake-get-vars:x64-windows@2025-05-29 to 1 binary cache(s) in the background
+2026-06-06T09:13:36.9876624Z Elapsed time to handle vcpkg-cmake-get-vars:x64-windows: 85.4 ms
+2026-06-06T09:13:36.9877030Z Completed submission of vcpkg-cmake-config:x64-windows@2024-05-23 to 1 binary cache(s) in 23.6 ms
+2026-06-06T09:13:36.9877398Z Installing 4/4 openssl:x64-windows@3.6.2...
+2026-06-06T09:13:36.9877783Z openssl:x64-windows@3.6.2 package ABI: 114fff875dcf365a3e866aee283170d8188d248db8c1da0ca16f391941682829
+2026-06-06T09:13:36.9878153Z Building openssl:x64-windows@3.6.2...
+2026-06-06T09:13:37.0308071Z Downloading https://github.com/openssl/openssl/archive/openssl-3.6.2.tar.gz -> openssl-openssl-openssl-3.6.2.tar.gz
+2026-06-06T09:13:38.5265940Z Successfully downloaded openssl-openssl-openssl-3.6.2.tar.gz
+2026-06-06T09:13:38.6977386Z -- Extracting source C:/vcpkg/downloads/openssl-openssl-openssl-3.6.2.tar.gz
+2026-06-06T09:13:46.8838331Z -- Applying patch cmake-config.patch
+2026-06-06T09:13:46.9164355Z -- Applying patch command-line-length.patch
+2026-06-06T09:13:46.9389261Z -- Applying patch script-prefix.patch
+2026-06-06T09:13:46.9605349Z -- Applying patch windows/install-layout.patch
+2026-06-06T09:13:46.9825080Z -- Applying patch windows/install-pdbs.patch
+2026-06-06T09:13:47.0049432Z -- Applying patch windows/install-programs.diff
+2026-06-06T09:13:47.0267781Z -- Applying patch unix/android-cc.patch
+2026-06-06T09:13:47.0503153Z -- Applying patch unix/move-openssldir.patch
+2026-06-06T09:13:47.0721572Z -- Applying patch unix/no-empty-dirs.patch
+2026-06-06T09:13:47.0938189Z -- Applying patch unix/no-static-libs-for-shared.patch
+2026-06-06T09:13:47.1240486Z -- Using source at C:/vcpkg/buildtrees/openssl/src/nssl-3.6.2-a98581e5a0.clean
+2026-06-06T09:13:47.1462144Z -- Getting CMake variables for x64-windows
+2026-06-06T09:13:50.3494089Z -- Loading CMake variables from C:/vcpkg/buildtrees/openssl/cmake-get-vars_C_CXX-x64-windows.cmake.log
+2026-06-06T09:13:50.3651488Z Downloading https://github.com/StrawberryPerl/Perl-Dist-Strawberry/releases/download/SP_54221_64bit/strawberry-perl-5.42.2.1-64bit-portable.zip -> strawberry-perl-5.42.2.1-64bit-portable.zip
+2026-06-06T09:13:51.9203827Z Successfully downloaded strawberry-perl-5.42.2.1-64bit-portable.zip
+2026-06-06T09:14:11.7216223Z Downloading nasm-3.01-win64.zip, trying https://www.nasm.us/pub/nasm/releasebuilds/3.01/win64/nasm-3.01-win64.zip
+2026-06-06T09:14:11.8027252Z Successfully downloaded nasm-3.01-win64.zip
+2026-06-06T09:14:11.9644197Z -- Getting CMake variables for x64-windows
+2026-06-06T09:14:14.0038472Z Downloading jom_1_1_7.zip, trying https://download.qt.io/official_releases/jom/jom_1_1_7.zip
+2026-06-06T09:14:15.4555960Z Successfully downloaded jom_1_1_7.zip
+2026-06-06T09:14:23.7577903Z -- Prerunning x64-windows-dbg
+2026-06-06T09:14:36.0815709Z -- Building x64-windows-dbg
+2026-06-06T09:17:19.2102257Z -- Prerunning x64-windows-rel
+2026-06-06T09:17:32.0674431Z -- Building x64-windows-rel
+2026-06-06T09:20:22.8320353Z -- Fixing pkgconfig file: C:/vcpkg/packages/openssl_x64-windows/lib/pkgconfig/libcrypto.pc
+2026-06-06T09:20:22.8325306Z -- Fixing pkgconfig file: C:/vcpkg/packages/openssl_x64-windows/lib/pkgconfig/libssl.pc
+2026-06-06T09:20:22.8330709Z -- Fixing pkgconfig file: C:/vcpkg/packages/openssl_x64-windows/lib/pkgconfig/openssl.pc
+2026-06-06T09:20:22.8527029Z Downloading msys2-mingw-w64-x86_64-pkgconf-1~2.5.1-1-any.pkg.tar.zst, trying https://mirror.msys2.org/mingw/mingw64/mingw-w64-x86_64-pkgconf-1~2.5.1-1-any.pkg.tar.zst
+2026-06-06T09:20:23.4759963Z Successfully downloaded msys2-mingw-w64-x86_64-pkgconf-1~2.5.1-1-any.pkg.tar.zst
+2026-06-06T09:20:23.4901860Z Downloading msys2-msys2-runtime-3.6.5-1-x86_64.pkg.tar.zst, trying https://mirror.msys2.org/msys/x86_64/msys2-runtime-3.6.5-1-x86_64.pkg.tar.zst
+2026-06-06T09:20:24.3583572Z Successfully downloaded msys2-msys2-runtime-3.6.5-1-x86_64.pkg.tar.zst
+2026-06-06T09:20:24.4675132Z -- Using msys root at C:/vcpkg/downloads/tools/msys2/3e71d1f8e22ab23f
+2026-06-06T09:20:24.4998883Z -- Fixing pkgconfig file: C:/vcpkg/packages/openssl_x64-windows/debug/lib/pkgconfig/libcrypto.pc
+2026-06-06T09:20:24.5005366Z -- Fixing pkgconfig file: C:/vcpkg/packages/openssl_x64-windows/debug/lib/pkgconfig/libssl.pc
+2026-06-06T09:20:24.5010876Z -- Fixing pkgconfig file: C:/vcpkg/packages/openssl_x64-windows/debug/lib/pkgconfig/openssl.pc
+2026-06-06T09:20:24.5199022Z -- Installing: C:/vcpkg/packages/openssl_x64-windows/share/openssl/usage
+2026-06-06T09:20:24.5238049Z -- Installing: C:/vcpkg/packages/openssl_x64-windows/share/openssl/copyright
+2026-06-06T09:20:24.5304888Z -- Performing post-build validation
+2026-06-06T09:20:24.7356671Z Starting submission of openssl:x64-windows@3.6.2 to 1 binary cache(s) in the background
+2026-06-06T09:20:24.7361737Z Elapsed time to handle openssl:x64-windows: 6.8 min
+2026-06-06T09:20:24.7402680Z Total install time: 6.8 min
+2026-06-06T09:20:24.7403494Z Installed contents are licensed to you by owners. Microsoft is not responsible for, nor does it grant any licenses to, third-party packages.
+2026-06-06T09:20:24.7404386Z Packages installed in this vcpkg installation declare the following licenses:
+2026-06-06T09:20:24.7404911Z Apache-2.0
+2026-06-06T09:20:24.7405215Z MIT
+2026-06-06T09:20:24.7405768Z Completed submission of vcpkg-cmake-get-vars:x64-windows@2025-05-29 to 1 binary cache(s) in 23.6 ms
+2026-06-06T09:20:24.7406473Z Waiting for 1 remaining binary cache submissions...
+2026-06-06T09:20:27.0255237Z Completed submission of openssl:x64-windows@3.6.2 to 1 binary cache(s) in 2.3 s (1/1)
+2026-06-06T09:20:27.0256070Z All requested installations completed successfully in: 6.8 min
+2026-06-06T09:20:27.3199310Z OpenSSL root: C:\vcpkg\installed\x64-windows
+2026-06-06T09:20:27.3419379Z Using OpenSSL executable from PATH: C:\Program Files\OpenSSL\bin\openssl.exe
+2026-06-06T09:20:29.0607128Z Chocolatey v2.7.2
+2026-06-06T09:20:29.2998100Z Installing the following packages:
+2026-06-06T09:20:29.3001990Z ninja
+2026-06-06T09:20:29.3004867Z By installing, you accept licenses for the packages.
+2026-06-06T09:20:31.2614410Z ninja v1.13.2 already installed.
+2026-06-06T09:20:31.2614933Z  Use --force to reinstall, specify a version to install, or try upgrade.
+2026-06-06T09:20:31.2686117Z 
+2026-06-06T09:20:31.2686495Z Chocolatey installed 0/1 packages. 
+2026-06-06T09:20:31.2686890Z  See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
+2026-06-06T09:20:31.2689217Z 
+2026-06-06T09:20:31.2691597Z Warnings:
+2026-06-06T09:20:31.2695884Z  - ninja - ninja v1.13.2 already installed.
+2026-06-06T09:20:31.2696355Z  Use --force to reinstall, specify a version to install, or try upgrade.
+2026-06-06T09:20:31.9072310Z Chocolatey v2.7.2
+2026-06-06T09:20:32.0358957Z Installing the following packages:
+2026-06-06T09:20:32.0362517Z winflexbison3
+2026-06-06T09:20:32.0365568Z By installing, you accept licenses for the packages.
+2026-06-06T09:20:32.8839436Z Downloading package from source 'https://community.chocolatey.org/api/v2/'
+2026-06-06T09:20:33.2227292Z 
+2026-06-06T09:20:33.2227797Z winflexbison3 v2.5.24.20210105 [Approved]
+2026-06-06T09:20:33.2480186Z winflexbison3 package files install completed. Performing other installation steps.
+2026-06-06T09:20:34.3995080Z Downloading winflexbison3 
+2026-06-06T09:20:34.3995607Z   from 'https://github.com/lexxmark/winflexbison/releases/download/v2.5.24/win_flex_bison-2.5.24.zip'
+2026-06-06T09:20:34.5283852Z 
+2026-06-06T09:20:34.5302802Z Download of win_flex_bison-2.5.24.zip (1018.19 KB) completed.
+2026-06-06T09:20:39.2136466Z Hashes match.
+2026-06-06T09:20:39.2467362Z Extracting C:\Users\runneradmin\AppData\Local\Temp\chocolatey\winflexbison3\2.5.24.20210105\win_flex_bison-2.5.24.zip to C:\ProgramData\chocolatey\lib\winflexbison3\tools...
+2026-06-06T09:20:39.6339038Z C:\ProgramData\chocolatey\lib\winflexbison3\tools
+2026-06-06T09:20:40.6968646Z  ShimGen has successfully created a shim for win_bison.exe
+2026-06-06T09:20:40.8659104Z  ShimGen has successfully created a shim for win_flex.exe
+2026-06-06T09:20:40.8926003Z  The install of winflexbison3 was successful.
+2026-06-06T09:20:40.8928110Z   Deployed to 'C:\ProgramData\chocolatey\lib\winflexbison3\tools'
+2026-06-06T09:20:40.9044651Z 
+2026-06-06T09:20:40.9044861Z Chocolatey installed 1/1 packages. 
+2026-06-06T09:20:40.9045227Z  See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
+2026-06-06T09:20:40.9047715Z 
+2026-06-06T09:20:40.9051572Z Warnings:
+2026-06-06T09:20:40.9055461Z  - winflexbison3 - Issues found with nuspec elements
+2026-06-06T09:20:40.9056238Z CHCU0002: <license> elements are not supported in Chocolatey CLI, use <licenseUrl> instead.
+2026-06-06T09:20:40.9350828Z Downloading source from https://cdn.mysql.com/Downloads/MySQL-5.7/mysql-5.7.44.zip
+2026-06-06T09:20:42.0058222Z Extracting source...
+2026-06-06T09:20:48.3646632Z Patched myisam sort.cc for VS2022 STL compatibility
+2026-06-06T09:20:48.7711813Z [31;1mException: [0mD:\a\mysql-archive\mysql-archive\scripts\build-windows.ps1:138[0m
+2026-06-06T09:20:48.7712514Z [31;1m[0m[36;1mLine |[0m
+2026-06-06T09:20:48.7718425Z [31;1m[0m[36;1m[36;1m 138 | [0m         [36;1mthrow "MySQL 5.7 compatibility patch did not match std::binar[0m …[0m
+2026-06-06T09:20:48.7719245Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m     | [31;1m         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2026-06-06T09:20:48.7720046Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m     | [31;1mMySQL 5.7 compatibility patch did not match std::binary_function inheritance in[0m
+2026-06-06T09:20:48.7721099Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m[31;1m[36;1m     | [31;1mD:\a\mysql-archive\mysql-archive\mysql-src\sql\json_dom.h[0m
+2026-06-06T09:20:48.7959788Z ##[error]Process completed with exit code 1.
+2026-06-06T09:20:48.8173254Z Post job cleanup.
+2026-06-06T09:20:49.0289991Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-06-06T09:20:49.0525723Z git version 2.54.0.windows.1
+2026-06-06T09:20:49.0591089Z Temporarily overriding HOME='D:\a\_temp\00d75782-e8f7-4321-bae7-75f0a457977a' before making global git config changes
+2026-06-06T09:20:49.0592062Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-06T09:20:49.0600833Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\mysql-archive\mysql-archive
+2026-06-06T09:20:49.0858552Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-06-06T09:20:49.1213354Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-06-06T09:20:49.5932747Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-06T09:20:49.6157322Z http.https://github.com/.extraheader
+2026-06-06T09:20:49.6200936Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-06-06T09:20:49.6467081Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-06-06T09:20:50.1628775Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-06T09:20:50.1927816Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-06-06T09:20:50.6836210Z Cleaning up orphan processes
+2026-06-06T09:20:50.7373367Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4. Actions will be forced to run with Node.js 24 by default starting June 16th, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

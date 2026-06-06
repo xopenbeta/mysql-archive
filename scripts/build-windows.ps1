@@ -113,7 +113,7 @@ if ($Series -eq '5.7') {
     }
 
     $sortCc = [System.IO.File]::ReadAllText($MyisamSortCc)
-    $binaryFunctionPattern = ':\s*public\s+std::binary_function\s*<[^>]+>'
+    $binaryFunctionPattern = ':\s*(?:public\s+)?std::binary_function\s*<[^>]+>'
     $matchCount = [System.Text.RegularExpressions.Regex]::Matches($sortCc, $binaryFunctionPattern).Count
     if ($matchCount -lt 1) {
         throw "MySQL 5.7 compatibility patch did not match std::binary_function inheritance in $MyisamSortCc"
