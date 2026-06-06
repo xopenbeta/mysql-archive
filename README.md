@@ -16,7 +16,7 @@ git push origin v202606062252
 
 | 系列 | 最新版本 | 类型 |
 |------|---------|------|
-| 9.6 | 9.6.0 | Innovation |
+| 9.7 | 9.7.0 | LTS |
 | 8.4 | 8.4.7 | Long-Term Support |
 | 5.7 | 5.7.44 | End of Life |
 
@@ -39,7 +39,7 @@ git push origin v202606062252
 - **默认字符集**: `utf8mb4` / `utf8mb4_0900_ai_ci`
 - **单元测试**: 禁用
 - **jemalloc**: 禁用
-- **Boost**: MySQL 5.7 在配置阶段自动下载；MySQL 8.4 / 9.6 使用源码内置 Boost
+- **Boost**: MySQL 5.7 在配置阶段自动下载；MySQL 8.4 / 9.7 使用源码内置 Boost
 - **源码**: 从 [cdn.mysql.com](https://cdn.mysql.com/Downloads/) 下载
 
 ## 使用方法
