@@ -91,6 +91,28 @@ curl -fSL "${SRC_URL}" -o "${SRC_ARCHIVE}"
 mkdir -p "${SRC_DIR}"
 tar -xzf "${SRC_ARCHIVE}" -C "${SRC_DIR}" --strip-components=1
 
+if [[ "${SERIES}" == "9.6" ]]; then
+  COLLATIONS_INTERNAL_CC="${SRC_DIR}/strings/collations_internal.cc"
+  if [[ ! -f "${COLLATIONS_INTERNAL_CC}" ]]; then
+    echo "MySQL 9.6 compatibility patch target not found: ${COLLATIONS_INTERNAL_CC}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'auto it = hash.find((key));' "${COLLATIONS_INTERNAL_CC}"; then
+    echo "MySQL 9.6 compatibility patch did not find 'hash.find((key))' in ${COLLATIONS_INTERNAL_CC}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'auto it = hash.find(key);' "${COLLATIONS_INTERNAL_CC}"; then
+    echo "MySQL 9.6 compatibility patch did not find 'hash.find(key)' in ${COLLATIONS_INTERNAL_CC}" >&2
+    exit 1
+  fi
+
+  perl -0pi -e 's/auto it = hash\.find\(\(key\)\);/auto it = hash.find(std::string(key));/' "${COLLATIONS_INTERNAL_CC}"
+  perl -0pi -e 's/auto it = hash\.find\(key\);/auto it = hash.find(std::string(key));/' "${COLLATIONS_INTERNAL_CC}"
+  echo "Patched collations_internal.cc for macOS MySQL 9.6 string_view lookup compatibility"
+fi
+
 # ── CMake 配置 ──────────────────────────────────────────────────────
 mkdir -p "${BUILD_DIR}"
 
@@ -102,7 +124,7 @@ if [[ "${SERIES}" == "8.0" || "${SERIES}" == "5.7" ]]; then
   )
 fi
 
-if [[ "${SERIES}" == "9.6" ]]; then
+if [[ "${SERIES}" == "9.6" && "${ARCH}" == "x86_64" && "${HOST_ARCH}" == "arm64" ]]; then
   CMAKE_EXTRA_ARGS+=("-DCMAKE_CXX_STANDARD=17")
 fi
 
