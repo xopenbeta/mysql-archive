@@ -115,9 +115,16 @@ if [[ "${SERIES}" == "9.6" ]]; then
     exit 1
   fi
 
+  if ! grep -Fq 'return Compound_parse_options(' "${PARSE_OPTIONS_H}"; then
+    echo "MySQL 9.6 compatibility patch did not find operator| compound return in ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
   perl -0pi -e 's/return Compound_parse_options<std::tuple<Format_t>>\(format\);/return Compound_parse_options<std::tuple<Format_t>>{std::tuple<Format_t>{format}};/' "${PARSE_OPTIONS_H}"
   perl -0pi -e 's/return Compound_parse_options<std::tuple<Repeat_t>>\(repeat\);/return Compound_parse_options<std::tuple<Repeat_t>>{std::tuple<Repeat_t>{repeat}};/' "${PARSE_OPTIONS_H}"
   perl -0pi -e 's/return Compound_parse_options<std::tuple<Checker_t>>\(checker\);/return Compound_parse_options<std::tuple<Checker_t>>{std::tuple<Checker_t>{checker}};/' "${PARSE_OPTIONS_H}"
+  perl -0pi -e 's/return Compound_parse_options\(\n\s*std::tuple_cat\(/return Compound_parse_options{\n      std::tuple_cat(/' "${PARSE_OPTIONS_H}"
+  perl -0pi -e 's/\)\.m_tuple,\n\s*detail::make_compound_parse_options\(opt2\)\.m_tuple\)\);/)\.m_tuple,\n                     detail::make_compound_parse_options(opt2).m_tuple)};/s' "${PARSE_OPTIONS_H}"
 
   if ! grep -Fq 'return Compound_parse_options<std::tuple<Format_t>>{std::tuple<Format_t>{format}};' "${PARSE_OPTIONS_H}"; then
     echo "MySQL 9.6 compatibility patch verification failed for Format_t constructor return in ${PARSE_OPTIONS_H}" >&2
@@ -131,6 +138,11 @@ if [[ "${SERIES}" == "9.6" ]]; then
 
   if ! grep -Fq 'return Compound_parse_options<std::tuple<Checker_t>>{std::tuple<Checker_t>{checker}};' "${PARSE_OPTIONS_H}"; then
     echo "MySQL 9.6 compatibility patch verification failed for Checker_t constructor return in ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'return Compound_parse_options{' "${PARSE_OPTIONS_H}"; then
+    echo "MySQL 9.6 compatibility patch verification failed for operator| compound return in ${PARSE_OPTIONS_H}" >&2
     exit 1
   fi
 
