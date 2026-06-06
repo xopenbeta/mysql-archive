@@ -102,6 +102,10 @@ if [[ "${SERIES}" == "8.0" || "${SERIES}" == "5.7" ]]; then
   )
 fi
 
+if [[ "${SERIES}" == "9.6" ]]; then
+  CMAKE_EXTRA_ARGS+=("-DCMAKE_CXX_STANDARD=17")
+fi
+
 if [[ "${SERIES}" == "5.7" ]]; then
   CMAKE_EXTRA_ARGS+=(
     "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
