@@ -98,18 +98,28 @@ if [[ "${SERIES}" == "9.6" ]]; then
     exit 1
   fi
 
+  if ! grep -Fq 'CHARSET_INFO *find_in_hash(const sv_hash_map &hash, std::string_view key)' "${COLLATIONS_INTERNAL_CC}"; then
+    echo "MySQL 9.6 compatibility patch did not find sv_hash_map find_in_hash() in ${COLLATIONS_INTERNAL_CC}" >&2
+    exit 1
+  fi
+
   if ! grep -Fq 'auto it = hash.find((key));' "${COLLATIONS_INTERNAL_CC}"; then
-    echo "MySQL 9.6 compatibility patch did not find 'hash.find((key))' in ${COLLATIONS_INTERNAL_CC}" >&2
+    echo "MySQL 9.6 compatibility patch did not find expected sv_hash_map lookup in ${COLLATIONS_INTERNAL_CC}" >&2
+    exit 1
+  fi
+
+  perl -0pi -e 's/CHARSET_INFO \*find_in_hash\(const sv_hash_map &hash, std::string_view key\) \{\n  auto it = hash\.find\(\(key\)\);/CHARSET_INFO *find_in_hash(const sv_hash_map \&hash, std::string_view key) {\n  auto it = hash.find(std::string(key));/s' "${COLLATIONS_INTERNAL_CC}"
+
+  if ! grep -Fq 'CHARSET_INFO *find_in_hash(const id_hash_map &hash, unsigned key)' "${COLLATIONS_INTERNAL_CC}"; then
+    echo "MySQL 9.6 compatibility patch did not find id_hash_map find_in_hash() in ${COLLATIONS_INTERNAL_CC}" >&2
     exit 1
   fi
 
   if ! grep -Fq 'auto it = hash.find(key);' "${COLLATIONS_INTERNAL_CC}"; then
-    echo "MySQL 9.6 compatibility patch did not find 'hash.find(key)' in ${COLLATIONS_INTERNAL_CC}" >&2
+    echo "MySQL 9.6 compatibility patch verification failed for id_hash_map lookup in ${COLLATIONS_INTERNAL_CC}" >&2
     exit 1
   fi
 
-  perl -0pi -e 's/auto it = hash\.find\(\(key\)\);/auto it = hash.find(std::string(key));/' "${COLLATIONS_INTERNAL_CC}"
-  perl -0pi -e 's/auto it = hash\.find\(key\);/auto it = hash.find(std::string(key));/' "${COLLATIONS_INTERNAL_CC}"
   echo "Patched collations_internal.cc for macOS MySQL 9.6 string_view lookup compatibility"
 fi
 
