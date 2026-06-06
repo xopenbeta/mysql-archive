@@ -135,16 +135,16 @@ if ($Series -eq '5.7') {
     $jsonDom = [System.IO.File]::ReadAllText($JsonDomH)
     $jsonMatchCount = [System.Text.RegularExpressions.Regex]::Matches($jsonDom, $binaryFunctionPattern).Count
     if ($jsonMatchCount -lt 1) {
-        throw "MySQL 5.7 compatibility patch did not match std::binary_function inheritance in $JsonDomH"
-    }
+        Write-Warning "MySQL 5.7 compatibility patch did not match std::binary_function inheritance in $JsonDomH; continuing"
+    } else {
+        $patchedJsonDom = [System.Text.RegularExpressions.Regex]::Replace($jsonDom, $binaryFunctionPattern, '', 1)
+        if ($patchedJsonDom -eq $jsonDom) {
+            throw "MySQL 5.7 compatibility patch made no changes in $JsonDomH"
+        }
 
-    $patchedJsonDom = [System.Text.RegularExpressions.Regex]::Replace($jsonDom, $binaryFunctionPattern, '', 1)
-    if ($patchedJsonDom -eq $jsonDom) {
-        throw "MySQL 5.7 compatibility patch made no changes in $JsonDomH"
+        [System.IO.File]::WriteAllText($JsonDomH, $patchedJsonDom)
+        Write-Host "Patched sql/json_dom.h for VS2022 STL compatibility"
     }
-
-    [System.IO.File]::WriteAllText($JsonDomH, $patchedJsonDom)
-    Write-Host "Patched sql/json_dom.h for VS2022 STL compatibility"
 }
 
 # ── CMake 平台参数 ───────────────────────────────────────────────────
