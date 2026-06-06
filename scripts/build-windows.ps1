@@ -126,6 +126,25 @@ if ($Series -eq '5.7') {
 
     [System.IO.File]::WriteAllText($MyisamSortCc, $patchedSortCc)
     Write-Host "Patched myisam sort.cc for VS2022 STL compatibility"
+
+    $JsonDomH = Join-Path $SrcDir 'sql\json_dom.h'
+    if (-not (Test-Path $JsonDomH)) {
+        throw "MySQL 5.7 compatibility patch target not found: $JsonDomH"
+    }
+
+    $jsonDom = [System.IO.File]::ReadAllText($JsonDomH)
+    $jsonMatchCount = [System.Text.RegularExpressions.Regex]::Matches($jsonDom, $binaryFunctionPattern).Count
+    if ($jsonMatchCount -lt 1) {
+        throw "MySQL 5.7 compatibility patch did not match std::binary_function inheritance in $JsonDomH"
+    }
+
+    $patchedJsonDom = [System.Text.RegularExpressions.Regex]::Replace($jsonDom, $binaryFunctionPattern, '', 1)
+    if ($patchedJsonDom -eq $jsonDom) {
+        throw "MySQL 5.7 compatibility patch made no changes in $JsonDomH"
+    }
+
+    [System.IO.File]::WriteAllText($JsonDomH, $patchedJsonDom)
+    Write-Host "Patched sql/json_dom.h for VS2022 STL compatibility"
 }
 
 # ── CMake 平台参数 ───────────────────────────────────────────────────
