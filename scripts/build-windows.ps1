@@ -104,6 +104,33 @@ if (-not $ExtractedDir) {
 if (Test-Path $SrcDir) { Remove-Item -Recurse -Force $SrcDir }
 Rename-Item -Path $ExtractedDir.FullName -NewName (Split-Path $SrcDir -Leaf)
 
+# ── Patch MySQL install macros to tolerate missing PDB in Release builds ──
+# Some MySQL releases install PDBs unconditionally on Windows. With Ninja+
+# Release this can miss libmysql.pdb and fail cmake --install.
+$InstallMacros = Join-Path $SrcDir 'cmake\install_macros.cmake'
+if (Test-Path $InstallMacros) {
+    $installMacrosText = [System.IO.File]::ReadAllText($InstallMacros)
+    if ($installMacrosText -notmatch 'INSTALL\(FILES\s+\$\{debug_pdb_target_location\}[\s\S]*?OPTIONAL') {
+        $installMacrosRegex = [System.Text.RegularExpressions.Regex]::new(
+            'INSTALL\(FILES\s+\$\{debug_pdb_target_location\}([\s\S]*?CONFIGURATIONS\s+Release\s+RelWithDebInfo\s*)\)'
+        )
+        $patchedInstallMacros = $installMacrosRegex.Replace(
+            $installMacrosText,
+            'INSTALL(FILES ${debug_pdb_target_location}$1OPTIONAL)',
+            1
+        )
+
+        if ($patchedInstallMacros -eq $installMacrosText) {
+            Write-Warning "Could not patch install_macros.cmake for optional PDB install; build may fail if PDB is missing"
+        } else {
+            [System.IO.File]::WriteAllText($InstallMacros, $patchedInstallMacros)
+            Write-Host "Patched install_macros.cmake to make PDB install optional"
+        }
+    }
+} else {
+    Write-Warning "install_macros.cmake not found at $InstallMacros; skipping optional PDB patch"
+}
+
 # ── Patch MySQL 5.7 for modern MSVC STL compatibility ─────────────
 # VS2022 + recent STL removes std::binary_function; 5.7 myisam sort.cc still inherits it.
 if ($Series -eq '5.7') {
