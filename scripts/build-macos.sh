@@ -94,6 +94,7 @@ tar -xzf "${SRC_ARCHIVE}" -C "${SRC_DIR}" --strip-components=1
 if [[ "${SERIES}" == "9.7" ]]; then
   PARSE_OPTIONS_H="${SRC_DIR}/libs/mysql/strconv/decode/parse_options.h"
   URL_PATHS_H="${SRC_DIR}/router/src/mysql_rest_service/src/mrs/endpoint/handler/helper/url_paths.h"
+  JDV_DML_CC="${SRC_DIR}/sql/json_duality_view/dml.cc"
 
   if [[ ! -f "${PARSE_OPTIONS_H}" ]]; then
     echo "MySQL 9.7 compatibility patch target not found: ${PARSE_OPTIONS_H}" >&2
@@ -177,6 +178,25 @@ if [[ "${SERIES}" == "9.7" ]]; then
   fi
 
   echo "Patched url_paths.h for macOS MySQL 9.7 UriPathMatcher aggregate construction compatibility"
+
+  if [[ ! -f "${JDV_DML_CC}" ]]; then
+    echo "MySQL 9.7 compatibility patch target not found: ${JDV_DML_CC}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'resolved_columns.emplace_back(' "${JDV_DML_CC}"; then
+    echo "MySQL 9.7 compatibility patch did not find Resolve_column emplace_back in ${JDV_DML_CC}" >&2
+    exit 1
+  fi
+
+  perl -0pi -e 's/resolved_columns\.emplace_back\(\s*&col,\s*val,\s*field_will_be_auto_generated\(current_thd,\s*\*col\.field\(\),\s*val\)\s*\);/resolved_columns.push_back(Resolve_column{\n          \&col, val,\n          field_will_be_auto_generated(current_thd, *col.field(), val)});/s' "${JDV_DML_CC}"
+
+  if ! grep -Fq 'resolved_columns.push_back(Resolve_column{' "${JDV_DML_CC}"; then
+    echo "MySQL 9.7 compatibility patch verification failed for Resolve_column push_back in ${JDV_DML_CC}" >&2
+    exit 1
+  fi
+
+  echo "Patched json_duality_view/dml.cc for macOS MySQL 9.7 Resolve_column aggregate construction compatibility"
 fi
 
 # ── CMake 配置 ──────────────────────────────────────────────────────
