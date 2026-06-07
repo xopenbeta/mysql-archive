@@ -131,6 +131,30 @@ if (Test-Path $InstallMacros) {
     Write-Warning "install_macros.cmake not found at $InstallMacros; skipping optional PDB patch"
 }
 
+function Set-OptionalPdbInstall {
+    param(
+        [Parameter(Mandatory)][string]$Path
+    )
+
+    if (-not (Test-Path $Path)) {
+        return $false
+    }
+
+    $content = [System.IO.File]::ReadAllText($Path)
+    $updated = [System.Text.RegularExpressions.Regex]::Replace(
+        $content,
+        'file\(INSTALL(\s+DESTINATION\s+"[^"]+"\s+TYPE\s+FILE)\s+FILES\s+((?:"[^"]+\.pdb"\s*)+)\)',
+        'file(INSTALL$1 OPTIONAL FILES $2)'
+    )
+
+    if ($updated -eq $content) {
+        return $false
+    }
+
+    [System.IO.File]::WriteAllText($Path, $updated)
+    return $true
+}
+
 # ── Patch MySQL 5.7 for modern MSVC STL compatibility ─────────────
 # VS2022 + recent STL removes std::binary_function; 5.7 myisam sort.cc still inherits it.
 if ($Series -eq '5.7') {
@@ -249,6 +273,17 @@ cmake @CmakeArgs
 if ($LASTEXITCODE -ne 0) {
     throw "cmake configure failed (exit code $LASTEXITCODE)"
 }
+
+# Some releases still generate cmake_install.cmake entries that install PDBs
+# unconditionally even after source macro patching. Make generated install rules
+# tolerate missing Release PDBs before running the install step.
+$optionalPdbPatchCount = 0
+Get-ChildItem -Path $BuildDir -Recurse -File -Filter "cmake_install.cmake" | ForEach-Object {
+    if (Set-OptionalPdbInstall -Path $_.FullName) {
+        $optionalPdbPatchCount++
+    }
+}
+Write-Host "Patched $optionalPdbPatchCount generated cmake_install.cmake file(s) for optional PDB installs"
 
 # ── Patch Boost 1.77.0 for ARM64 MSVC (intel_intrinsics.hpp bug) ───
 # Boost 1.77 guards with !defined(__arm__) but omits !defined(__aarch64__)
