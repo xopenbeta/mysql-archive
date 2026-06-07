@@ -23,7 +23,7 @@ echo "=== Building MySQL ${MYSQL_VERSION} for linux/${ARCH} ==="
 sudo apt-get update -y
 sudo apt-get install -y \
   cmake ninja-build gcc g++ make \
-  libssl-dev libncurses-dev \
+  libssl-dev libncurses-dev libcurl4-openssl-dev \
   pkg-config bison \
   libtirpc-dev rpcsvc-proto \
   libaio-dev libldap-dev libsasl2-dev \

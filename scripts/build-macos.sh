@@ -91,6 +91,94 @@ curl -fSL "${SRC_URL}" -o "${SRC_ARCHIVE}"
 mkdir -p "${SRC_DIR}"
 tar -xzf "${SRC_ARCHIVE}" -C "${SRC_DIR}" --strip-components=1
 
+if [[ "${SERIES}" == "9.7" ]]; then
+  PARSE_OPTIONS_H="${SRC_DIR}/libs/mysql/strconv/decode/parse_options.h"
+  URL_PATHS_H="${SRC_DIR}/router/src/mysql_rest_service/src/mrs/endpoint/handler/helper/url_paths.h"
+
+  if [[ ! -f "${PARSE_OPTIONS_H}" ]]; then
+    echo "MySQL 9.7 compatibility patch target not found: ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'return Compound_parse_options<std::tuple<Format_t>>(format);' "${PARSE_OPTIONS_H}"; then
+    echo "MySQL 9.7 compatibility patch did not find Format_t constructor return in ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'return Compound_parse_options<std::tuple<Repeat_t>>(repeat);' "${PARSE_OPTIONS_H}"; then
+    echo "MySQL 9.7 compatibility patch did not find Repeat_t constructor return in ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'return Compound_parse_options<std::tuple<Checker_t>>(checker);' "${PARSE_OPTIONS_H}"; then
+    echo "MySQL 9.7 compatibility patch did not find Checker_t constructor return in ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'return Compound_parse_options(' "${PARSE_OPTIONS_H}"; then
+    echo "MySQL 9.7 compatibility patch did not find operator| compound return in ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
+  perl -0pi -e 's/return Compound_parse_options<std::tuple<Format_t>>\(format\);/return Compound_parse_options<std::tuple<Format_t>>{std::tuple<Format_t>{format}};/' "${PARSE_OPTIONS_H}"
+  perl -0pi -e 's/return Compound_parse_options<std::tuple<Repeat_t>>\(repeat\);/return Compound_parse_options<std::tuple<Repeat_t>>{std::tuple<Repeat_t>{repeat}};/' "${PARSE_OPTIONS_H}"
+  perl -0pi -e 's/return Compound_parse_options<std::tuple<Checker_t>>\(checker\);/return Compound_parse_options<std::tuple<Checker_t>>{std::tuple<Checker_t>{checker}};/' "${PARSE_OPTIONS_H}"
+  perl -0pi -e 's/return Compound_parse_options\(\n\s*std::tuple_cat\(/return Compound_parse_options{\n      std::tuple_cat(/' "${PARSE_OPTIONS_H}"
+  perl -0pi -e 's/\)\.m_tuple,\n\s*detail::make_compound_parse_options\(opt2\)\.m_tuple\)\);/)\.m_tuple,\n                     detail::make_compound_parse_options(opt2).m_tuple)};/s' "${PARSE_OPTIONS_H}"
+
+  if ! grep -Fq 'return Compound_parse_options<std::tuple<Format_t>>{std::tuple<Format_t>{format}};' "${PARSE_OPTIONS_H}"; then
+    echo "MySQL 9.7 compatibility patch verification failed for Format_t constructor return in ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'return Compound_parse_options<std::tuple<Repeat_t>>{std::tuple<Repeat_t>{repeat}};' "${PARSE_OPTIONS_H}"; then
+    echo "MySQL 9.7 compatibility patch verification failed for Repeat_t constructor return in ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'return Compound_parse_options<std::tuple<Checker_t>>{std::tuple<Checker_t>{checker}};' "${PARSE_OPTIONS_H}"; then
+    echo "MySQL 9.7 compatibility patch verification failed for Checker_t constructor return in ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'return Compound_parse_options{' "${PARSE_OPTIONS_H}"; then
+    echo "MySQL 9.7 compatibility patch verification failed for operator| compound return in ${PARSE_OPTIONS_H}" >&2
+    exit 1
+  fi
+
+  echo "Patched parse_options.h for macOS MySQL 9.7 aggregate construction compatibility"
+
+  if [[ ! -f "${URL_PATHS_H}" ]]; then
+    echo "MySQL 9.7 compatibility patch target not found: ${URL_PATHS_H}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'result.emplace_back(service_schema_path, false, false);' "${URL_PATHS_H}"; then
+    echo "MySQL 9.7 compatibility patch did not find root UriPathMatcher emplace_back in ${URL_PATHS_H}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'result.emplace_back(service_schema_path + "/", false, false);' "${URL_PATHS_H}"; then
+    echo "MySQL 9.7 compatibility patch did not find slash UriPathMatcher emplace_back in ${URL_PATHS_H}" >&2
+    exit 1
+  fi
+
+  perl -0pi -e 's/result\.emplace_back\(service_schema_path, false, false\);/result.push_back(::http::base::UriPathMatcher{service_schema_path, false, false});/g' "${URL_PATHS_H}"
+  perl -0pi -e 's/result\.emplace_back\(service_schema_path \+ "\/", false, false\);/result.push_back(::http::base::UriPathMatcher{service_schema_path + "\/", false, false});/g' "${URL_PATHS_H}"
+
+  if ! grep -Fq 'result.push_back(::http::base::UriPathMatcher{service_schema_path, false, false});' "${URL_PATHS_H}"; then
+    echo "MySQL 9.7 compatibility patch verification failed for root UriPathMatcher push_back in ${URL_PATHS_H}" >&2
+    exit 1
+  fi
+
+  if ! grep -Fq 'result.push_back(::http::base::UriPathMatcher{service_schema_path + "/", false, false});' "${URL_PATHS_H}"; then
+    echo "MySQL 9.7 compatibility patch verification failed for slash UriPathMatcher push_back in ${URL_PATHS_H}" >&2
+    exit 1
+  fi
+
+  echo "Patched url_paths.h for macOS MySQL 9.7 UriPathMatcher aggregate construction compatibility"
+fi
+
 # ── CMake 配置 ──────────────────────────────────────────────────────
 mkdir -p "${BUILD_DIR}"
 
