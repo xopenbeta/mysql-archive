@@ -270,6 +270,7 @@ if ($LASTEXITCODE -ne 0) {
 
 Write-Host "Installing..."
 $installAttempts = 0
+$installSucceeded = $false
 do {
     $installAttempts++
     cmake --install $BuildDir --config Release
@@ -278,11 +279,22 @@ do {
             Write-Host "cmake --install failed (attempt $installAttempts/3, exit code $LASTEXITCODE), retrying in 10s..."
             Start-Sleep -Seconds 10
         } else {
-            Write-Warning "cmake --install failed after 3 attempts (exit code $LASTEXITCODE). Continuing with packaging..."
-            $global:LASTEXITCODE = 0
+            throw "cmake --install failed after 3 attempts (exit code $LASTEXITCODE)"
         }
+    } else {
+        $installSucceeded = $true
     }
-} while ($LASTEXITCODE -ne 0 -and $installAttempts -lt 3)
+} while (-not $installSucceeded -and $installAttempts -lt 3)
+
+$ExpectedBinaries = @(
+    (Join-Path $InstallDir 'bin\mysqld.exe'),
+    (Join-Path $InstallDir 'bin\mysql.exe')
+)
+
+$MissingBinaries = $ExpectedBinaries | Where-Object { -not (Test-Path $_) }
+if ($MissingBinaries.Count -gt 0) {
+    throw "Install output is incomplete. Missing expected binaries: $($MissingBinaries -join ', ')"
+}
 
 # ── 打包 ────────────────────────────────────────────────────────────
 Write-Host "Creating zip archive..."
