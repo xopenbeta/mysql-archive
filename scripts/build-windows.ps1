@@ -353,7 +353,7 @@ $ExpectedBinaries = @(
     (Join-Path $InstallDir 'bin\mysql.exe')
 )
 
-$MissingBinaries = $ExpectedBinaries | Where-Object { -not (Test-Path $_) }
+$MissingBinaries = @($ExpectedBinaries | Where-Object { -not (Test-Path $_) })
 if ($MissingBinaries.Count -gt 0) {
     throw "Install output is incomplete. Missing expected binaries: $($MissingBinaries -join ', ')"
 }
